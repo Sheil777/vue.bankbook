@@ -23,6 +23,9 @@ export default {
         noActive: {
             type: Boolean,
             default: false,
+        },
+        editing: {
+            type: Boolean,
         }
     },
     data(){
