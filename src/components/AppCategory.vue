@@ -4,7 +4,7 @@
             <img style="background-color: rgb(108, 32, 183); " :src="require('../assets/img/icons/' + img)" alt="">
         </div>
         <div class="category__text"><slot /></div>
-        <div class="category__delete visible" id_cc="590">
+        <div class="category__delete" :class="{'visible': editing}" id_cc="590">
             <img src="../assets/img/icons/delete.svg">
         </div>
         <div href="#popup-categories" class="category__edit popup-link visible">

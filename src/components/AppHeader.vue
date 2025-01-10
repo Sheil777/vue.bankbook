@@ -1,6 +1,8 @@
 <template>
     <header>
+        <router-link to="/">
         <img src="../assets/img/logo.png" alt="Logo">
+        </router-link>
     </header> 
 </template>
 

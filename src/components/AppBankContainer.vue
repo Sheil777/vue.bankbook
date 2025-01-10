@@ -7,14 +7,15 @@
             </div>
         </div>
         <div class="bank__categories">
-            <app-category img="book.svg">10% Книги</app-category>
+            <slot />
+            <!-- <app-category img="book.svg">10% Книги</app-category>
             <app-category img="package.svg" noActive>1% Все покупки</app-category>
             <app-category img="train.svg" noActive>5% Транспорт</app-category>
             <app-category img="package.svg" noActive>5% Цифровые товары</app-category>
             <app-category img="package.svg" noActive>5% Активный отдых</app-category>
-            <app-category img="package.svg" noActive>5% Красота</app-category>
+            <app-category img="package.svg" noActive>5% Красота</app-category> -->
         </div>
-        <div id_b="2" class="bank__add-category add-category popup-link visible" href="#popup-categories" @click="async">
+        <div id_b="2" class="bank__add-category add-category popup-link" :class="{'visible': editing}" href="#popup-categories" @click="async">
             <div class="add-category__icon">
                 <img src="../assets/img/icons/plus.svg" alt="">
             </div>
@@ -24,10 +25,15 @@
 </template>
 
 <script>
-import AppCategory from "./AppCategory.vue";
 
 export default {
-    components: { AppCategory },
+    props: {
+        editing: {
+            type: Boolean,
+            // default: false,
+        }
+    },
+    components: {  },
     methods: {
         async() {
             // // Создаём новый объект XMLHttpRequest
