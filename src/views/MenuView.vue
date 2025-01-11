@@ -1,20 +1,32 @@
 <template>
   <div class="container _container">
-    <app-header></app-header>
+    <the-header></the-header>
     <h1>Меню</h1>
   </div>
 </template>
 
 <script>
-import AppHeader from "../components/AppHeader.vue";
+
 
 export default {
-  components: {AppHeader}
+    
 }
 </script>
 
 <style lang="scss">
-  @import '../assets/css/unit';
+  // @import '../assets/css/unit';
+
+    h1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        font-size: 20px;
+        font-weight: 600;
+        position: relative;
+        background-color: #5382c4; 
+        color: white;
+    }
 
   .main {
       &__item {

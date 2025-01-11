@@ -1,19 +1,13 @@
 <template>
     <div class="container__bank">
-        <div id_b="2" class="bank__header" style="background-color: red; color: white;">
-            <span>Альфа-Банк</span>
-            <div class="bank__delete popup-link visible" href="#popup-delete-current-bank">
+        <div id_b="2" class="bank__header" :style="{ backgroundColor: backgroundColor, color: color }">
+            <span>{{ title }}</span>
+            <div class="bank__delete popup-link" :class="{'visible': editing}" href="#popup-delete-current-bank">
                 <img src="../assets/img/icons/delete.svg">
             </div>
         </div>
         <div class="bank__categories">
             <slot />
-            <!-- <app-category img="book.svg">10% Книги</app-category>
-            <app-category img="package.svg" noActive>1% Все покупки</app-category>
-            <app-category img="train.svg" noActive>5% Транспорт</app-category>
-            <app-category img="package.svg" noActive>5% Цифровые товары</app-category>
-            <app-category img="package.svg" noActive>5% Активный отдых</app-category>
-            <app-category img="package.svg" noActive>5% Красота</app-category> -->
         </div>
         <div id_b="2" class="bank__add-category add-category popup-link" :class="{'visible': editing}" href="#popup-categories" @click="async">
             <div class="add-category__icon">
@@ -28,9 +22,20 @@
 
 export default {
     props: {
+        title: {
+            type: String,
+            required: true,
+        },
         editing: {
             type: Boolean,
-            // default: false,
+            required: false,
+            default: false,
+        },
+        backgroundColor: {
+            type: String,
+        },
+        color: {
+            type: String,
         }
     },
     components: {  },

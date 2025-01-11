@@ -1,20 +1,20 @@
 <template>
   <div class="container _container">
-    <app-header></app-header>
-    <app-bank-container :editing="editing">
-      <app-category img="book.svg">10% Книги</app-category>
-      <app-category img="package.svg" noActive>1% Все покупки</app-category>
-      <app-category img="train.svg" noActive>5% Транспорт</app-category>
-      <app-category img="package.svg" noActive>5% Цифровые товары</app-category>
-      <app-category img="package.svg" noActive>5% Активный отдых</app-category>
-      <app-category img="package.svg" noActive>5% Красота</app-category>
+    <the-header></the-header>
+    <app-bank-container :title="bank.name" :editing="editing" v-for="bank in currentBanks" :key="bank.id" :backgroundColor="bank.backgroundColor" :color="bank.color">
+      <app-category 
+        v-for="category in bank.categories"
+        :key="category.id"
+        :img="category.img"
+        :editing="editing"
+        :no-active="category.noActive"
+      >{{ category.name }}</app-category>
     </app-bank-container>
-    <app-button-edit @toggleEditing="toggleEditing"></app-button-edit>
+    <app-button-edit @toggle-editing="toggleEditing"></app-button-edit>
   </div>
 </template>
 
 <script>
-import AppHeader from "../components/AppHeader.vue";
 import AppBankContainer from "../components/AppBankContainer.vue";
 import AppCategory from "../components/AppCategory.vue";
 import AppButtonEdit from "../components/AppButtonEdit.vue";
@@ -22,11 +22,85 @@ import AppButtonEdit from "../components/AppButtonEdit.vue";
 export default {
   data() {
     return {
+      currentBanks: [
+        {
+          id: 2,
+          name: 'Альфа-Банк',
+          backgroundColor: 'red',
+          color: 'white',
+          categories: [
+            {
+              id: 1,
+              name: "10% Книги",
+              img: "book.svg",
+              noActive: false,
+            },
+            {
+              id: 2,
+              name: "1% Все покупки",
+              img: "package.svg",
+              noActive: false,
+            },
+            {
+              id: 3,
+              name: "5% Транспорт",
+              img: "train.svg",
+              noActive: true,
+            },
+            {
+              id: 4,
+              name: "5% Цифровые товары",
+              img: "package.svg",
+              noActive: true,
+            },
+            {
+              id: 5,
+              name: "5% Активный отдых",
+              img: "package.svg",
+              noActive: true,
+            },
+            {
+              id: 6,
+              name: "5% Красота",
+              img: "package.svg",
+              noActive: true,
+            },
+
+          ]
+        },
+        {
+          id: 3,
+          name: 'ВТБ',
+          backgroundColor: 'rgb(28, 66, 159)',
+          color: 'white',
+          categories: [
+            {
+              id: 10,
+              name: "5% Такси",
+              img: "",
+              noActive: false,
+            },
+            {
+              id: 11,
+              name: "15% Платные дороги",
+              img: "package.svg",
+              noActive: false,
+            },
+            {
+              id: 12,
+              name: "8 АЗС",
+              img: "package.svg",
+              noActive: false,
+            },
+            
+
+          ]
+        }
+      ],
       editing: false,
     }
   },
   components: {
-    AppHeader, 
     AppBankContainer, 
     AppCategory, 
     AppButtonEdit
