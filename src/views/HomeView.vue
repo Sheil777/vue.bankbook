@@ -1,16 +1,28 @@
 <template>
   <div class="container _container">
     <the-header></the-header>
-    <app-bank-container :title="bank.name" :editing="editing" v-for="bank in currentBanks" :key="bank.id" :backgroundColor="bank.backgroundColor" :color="bank.color">
+    <app-bank-container 
+      :title="bank.name" 
+      :editing="editing" 
+      v-for="bank in currentBanks" :key="bank.id" 
+      :backgroundColor="bank.backgroundColor" 
+      :color="bank.color"
+      @openPopup="openPopupAddCurrentCategoryMethod" 
+    >
       <app-category 
         v-for="category in bank.categories"
         :key="category.id"
         :img="category.img"
         :editing="editing"
-        :no-active="category.noActive"
+        :no-active="category.noActive" 
       >{{ category.name }}</app-category>
     </app-bank-container>
     <app-button-edit @toggle-editing="toggleEditing"></app-button-edit>
+    <app-popup-add-current-category 
+      :openPopupAddCurrentCategory="openPopupAddCurrentCategory"
+      @closePopup="closePopupAddCurrentCategoryMethod"
+      :currentCategories="currentCategories"
+    ></app-popup-add-current-category>
   </div>
 </template>
 
@@ -18,6 +30,7 @@
 import AppBankContainer from "../components/AppBankContainer.vue";
 import AppCategory from "../components/AppCategory.vue";
 import AppButtonEdit from "../components/AppButtonEdit.vue";
+import AppPopupAddCurrentCategory from "@/components/popups/AppPopupAddCurrentCategory.vue";
 
 export default {
   data() {
@@ -97,18 +110,58 @@ export default {
           ]
         }
       ],
+      currentCategories: [
+        {
+          id: 1,
+          name: "10% Книги",
+          img: "book.svg",
+        },
+        {
+          id: 2,
+          name: "1% Все покупки",
+          img: "package.svg",
+        },
+        {
+          id: 3,
+          name: "5% Транспорт",
+          img: "train.svg",
+        },
+        {
+          id: 4,
+          name: "5% Цифровые товары",
+          img: "package.svg",
+        },
+        {
+          id: 5,
+          name: "5% Активный отдых",
+          img: "package.svg",
+        },
+        {
+          id: 6,
+          name: "5% Красота",
+          img: "package.svg",
+        },
+      ],
       editing: false,
+      openPopupAddCurrentCategory: false,
     }
   },
   components: {
     AppBankContainer, 
     AppCategory, 
-    AppButtonEdit
+    AppButtonEdit,
+    AppPopupAddCurrentCategory
   },
   methods: {
     toggleEditing() {
       this.editing = !this.editing
-    }
+    },
+    openPopupAddCurrentCategoryMethod() {
+      this.openPopupAddCurrentCategory = true
+    },
+    closePopupAddCurrentCategoryMethod() {
+      this.openPopupAddCurrentCategory = false
+    },
   }
 }
 

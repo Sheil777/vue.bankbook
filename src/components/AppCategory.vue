@@ -1,5 +1,5 @@
 <template>
-    <div class="bank__category bank__category_click popup-link" :class="{ 'noActive' : noActive }" href="#popup-category-about" id_c="55" id_cc="590">
+    <div class="bank__category bank__category_click" :class="{ 'noActive' : noActive }">
         <div class="category__logo">
             <img 
                 style="background-color: rgb(108, 32, 183); " 
@@ -11,7 +11,7 @@
         <div class="category__delete" :class="{'visible': editing}" id_cc="590">
             <img src="../assets/img/icons/delete.svg">
         </div>
-        <div href="#popup-categories" class="category__edit popup-link" :class="{'visible': editing}">
+        <div class="category__edit" :class="{'visible': editing}">
             <img src="../assets/img/icons/edit.svg">
         </div>
     </div>
@@ -42,6 +42,7 @@ export default {
             this.imgSrc = require('../assets/img/icons/' + this.img);
         }catch(e){
             console.warn('Несуществующая картинка в категории')
+            // console.warn('Несуществующая картинка в категории ' + this.$slots + ': ' + this.img)
         }
     }
 }

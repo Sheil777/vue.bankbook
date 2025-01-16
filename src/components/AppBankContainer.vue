@@ -9,7 +9,12 @@
         <div class="bank__categories">
             <slot />
         </div>
-        <div id_b="2" class="bank__add-category add-category popup-link" :class="{'visible': editing}" href="#popup-categories" @click="async">
+        <div id_b="2" 
+            class="bank__add-category add-category popup-link" 
+            :class="{'visible': editing}" 
+            href="#popup-categories" 
+            @click="this.$emit('openPopup')"
+        >
             <div class="add-category__icon">
                 <img src="../assets/img/icons/plus.svg" alt="">
             </div>
@@ -61,7 +66,8 @@ export default {
             // // Отправляем запрос
             // xhr.send();
         },
-    }
+    },
+    emits: ['openPopup']
 }
 
 </script>
