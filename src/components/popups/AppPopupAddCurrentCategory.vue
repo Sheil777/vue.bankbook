@@ -13,6 +13,7 @@
             <app-category
               v-for="category in currentCategories" :key="category.id"
               :img="category.img"
+              @click="this.$emit('add', category)"
             >{{ category.name }}</app-category>
 
         </div>

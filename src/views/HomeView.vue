@@ -23,6 +23,7 @@
       :openPopupAddCurrentCategory="openPopupAddCurrentCategory"
       @closePopup="closePopupAddCurrentCategoryMethod"
       :currentCategories="currentCategories"
+      @add="addCurrentCategory"
     ></app-popup-add-current-category>
   </div>
 </template>
@@ -167,6 +168,10 @@ export default {
       const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories  // Получаем все категории банка
       const newArr = cat.filter(item => { return item.id !== categoryId; })                // Удаляем лишнюю категорию
       this.currentBanks.filter(i => { return i.id === bankId })[0].categories = newArr     // Перезаписываем
+    },
+    addCurrentCategory(category) {
+      // const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories  // Получаем все категории банка
+      console.log(category)
     }
   }
 }
