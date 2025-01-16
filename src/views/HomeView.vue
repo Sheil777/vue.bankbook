@@ -15,6 +15,7 @@
         :img="category.img"
         :editing="editing"
         :no-active="category.noActive" 
+        @delete='deleteCurrentCategory(bank.id, category.id)'
       >{{ category.name }}</app-category>
     </app-bank-container>
     <app-button-edit @toggle-editing="toggleEditing"></app-button-edit>
@@ -162,6 +163,11 @@ export default {
     closePopupAddCurrentCategoryMethod() {
       this.openPopupAddCurrentCategory = false
     },
+    deleteCurrentCategory(bankId, categoryId) {
+      const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories  // Получаем все категории банка
+      const newArr = cat.filter(item => { return item.id !== categoryId; })                // Удаляем лишнюю категорию
+      this.currentBanks.filter(i => { return i.id === bankId })[0].categories = newArr     // Перезаписываем
+    }
   }
 }
 

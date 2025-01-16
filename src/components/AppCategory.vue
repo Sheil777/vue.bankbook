@@ -8,7 +8,7 @@
             >
         </div>
         <div class="category__text"><slot /></div>
-        <div class="category__delete" :class="{'visible': editing}" id_cc="590">
+        <div class="category__delete" :class="{'visible': editing}" @click="this.$emit('delete')">
             <img src="../assets/img/icons/delete.svg">
         </div>
         <div class="category__edit" :class="{'visible': editing}">
@@ -36,6 +36,8 @@ export default {
         return {
             imgSrc: require('../assets/img/icons/package.svg'),
         }
+    },
+    methods: {
     },
     mounted(){
         try {
