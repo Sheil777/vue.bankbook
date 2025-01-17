@@ -1,6 +1,7 @@
 <template>
   <div class="container _container">
     <the-header></the-header>
+    <div align='center' v-if="currentBanks.length === 0">Добавьте новый банк</div>
     <app-bank-container 
       :title="bank.name" 
       :editing="editing" 
@@ -24,7 +25,7 @@
       :open-popup-add-current-category="openPopupAddCurrentCategory"
       @close-popup="closePopupAddCurrentCategoryMethod"
       :current-categories="currentCategories"
-      @add="add-current-category"
+      @add="addCurrentCategory"
     ></app-popup-add-current-category>
     <app-popup-delete-current-bank
       :open-popup-delete-current-bank="openPopupDeleteCurrentBank"
@@ -41,6 +42,7 @@ import AppCategory from "../components/AppCategory.vue";
 import AppButtonEdit from "../components/AppButtonEdit.vue";
 import AppPopupAddCurrentCategory from "@/components/popups/AppPopupAddCurrentCategory.vue";
 import AppPopupDeleteCurrentBank from "@/components/popups/AppPopupDeleteCurrentBank.vue";
+import AppPopupCategoryAbout from "@/components/popups/AppPopupCategoryAbout.vue";
 
 export default {
   data() {
@@ -204,7 +206,8 @@ export default {
     AppCategory, 
     AppButtonEdit,
     AppPopupAddCurrentCategory,
-    AppPopupDeleteCurrentBank
+    AppPopupDeleteCurrentBank,
+    AppPopupCategoryAbout,
   },
 }
 
