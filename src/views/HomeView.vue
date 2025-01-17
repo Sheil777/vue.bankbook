@@ -18,6 +18,11 @@
         :editing="editing"
         :no-active="category.noActive" 
         @delete='deleteCurrentCategory(bank.id, category.id)'
+        @mousedown.prevent="holdByCategory(category.id)"
+        @mouseup.prevent="clearTimer"
+        @pointerdown.prevent="holdByCategory(category.id)"
+        @pointerup.prevent="clearTimer"
+        @pointerleave.prevent="clearTimer2"
       >{{ category.name }}</app-category>
     </app-bank-container>
     <app-button-edit @toggle-editing="toggleEditing"></app-button-edit>
@@ -33,6 +38,10 @@
       @deleteBank="deleteCurrentBank"
       :bankName="bankName"
     ></app-popup-delete-current-bank>
+    <app-popup-category-about
+      :open="openPopupCategoryAbout"
+      @close="closePopupCategoryAboutMethod"
+    ></app-popup-category-about>
   </div>
 </template>
 
@@ -157,11 +166,39 @@ export default {
       editing: false,
       openPopupAddCurrentCategory: false,
       openPopupDeleteCurrentBank: false,
+      openPopupCategoryAbout: false,
       idBank: null,
       bankName: null,
+      timer: null,
+      timerFlag: false,
     }
   },
   methods: {
+    holdByCategory(categoryId) {
+      this.timerFlag = false
+
+      this.timer = setTimeout(_ => {
+        this.toggleNoActive(categoryId)
+        this.timerFlag = true
+      }, 800)      
+    },
+    clearTimer() {
+      if(!this.timerFlag)
+        this.openPopupCategoryAboutMethod()
+
+      clearTimeout(this.timer)  
+    },
+    clearTimer2() {
+      clearTimeout(this.timer)  
+    },
+    toggleNoActive(categoryId) {
+      this.currentBanks.forEach(banks => {
+        let categories = banks.categories
+        let cat = categories.filter(category => {return category.id === categoryId})
+        if(cat.length != 0)
+          cat[0].noActive = !cat[0].noActive
+      });
+    },
     toggleEditing() {
       this.editing = !this.editing
     },
@@ -174,6 +211,13 @@ export default {
       this.bankName = bankName[0].name
       this.idBank = bankId
       this.openPopupDeleteCurrentBank = true
+    },
+    openPopupCategoryAboutMethod() {
+      if(!this.editing)
+        this.openPopupCategoryAbout = true
+    },
+    closePopupCategoryAboutMethod() {
+      this.openPopupCategoryAbout = false
     },
     closePopupAddCurrentCategoryMethod() {
       this.openPopupAddCurrentCategory = false
