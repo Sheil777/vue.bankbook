@@ -1,15 +1,19 @@
 <template>
     <div class="container__bank">
-        <div id_b="2" class="bank__header" :style="{ backgroundColor: backgroundColor, color: color }">
+        <div class="bank__header" :style="{ backgroundColor: backgroundColor, color: color }">
             <span>{{ title }}</span>
-            <div class="bank__delete popup-link" :class="{'visible': editing}" href="#popup-delete-current-bank">
+            <div 
+                class="bank__delete" 
+                :class="{'visible': editing}" 
+                @click="this.$emit('deleteBank')"
+            >
                 <img src="../assets/img/icons/delete.svg">
             </div>
         </div>
         <div class="bank__categories">
             <slot />
         </div>
-        <div id_b="2" 
+        <div
             class="bank__add-category add-category popup-link" 
             :class="{'visible': editing}" 
             href="#popup-categories" 
@@ -67,7 +71,7 @@ export default {
             // xhr.send();
         },
     },
-    emits: ['openPopup']
+    emits: ['openPopup', 'deleteBank']
 }
 
 </script>

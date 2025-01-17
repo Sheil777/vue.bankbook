@@ -7,7 +7,8 @@
       v-for="bank in currentBanks" :key="bank.id" 
       :backgroundColor="bank.backgroundColor" 
       :color="bank.color"
-      @openPopup="openPopupAddCurrentCategoryMethod" 
+      @openPopup="openPopupAddCurrentCategoryMethod(bank.id)" 
+      @delete-bank="openPopupDeleteCurrentBankMethod(bank.id)"
     >
       <app-category 
         v-for="category in bank.categories"
@@ -20,11 +21,16 @@
     </app-bank-container>
     <app-button-edit @toggle-editing="toggleEditing"></app-button-edit>
     <app-popup-add-current-category 
-      :openPopupAddCurrentCategory="openPopupAddCurrentCategory"
-      @closePopup="closePopupAddCurrentCategoryMethod"
-      :currentCategories="currentCategories"
-      @add="addCurrentCategory"
+      :open-popup-add-current-category="openPopupAddCurrentCategory"
+      @close-popup="closePopupAddCurrentCategoryMethod"
+      :current-categories="currentCategories"
+      @add="add-current-category"
     ></app-popup-add-current-category>
+    <app-popup-delete-current-bank
+      :open-popup-delete-current-bank="openPopupDeleteCurrentBank"
+      @closePopup="closePopupDeleteCurrentBankMethod"
+      @deleteBank="deleteCurrentBank"
+    ></app-popup-delete-current-bank>
   </div>
 </template>
 
@@ -33,6 +39,7 @@ import AppBankContainer from "../components/AppBankContainer.vue";
 import AppCategory from "../components/AppCategory.vue";
 import AppButtonEdit from "../components/AppButtonEdit.vue";
 import AppPopupAddCurrentCategory from "@/components/popups/AppPopupAddCurrentCategory.vue";
+import AppPopupDeleteCurrentBank from "@/components/popups/AppPopupDeleteCurrentBank.vue";
 
 export default {
   data() {
@@ -146,23 +153,27 @@ export default {
       ],
       editing: false,
       openPopupAddCurrentCategory: false,
+      openPopupDeleteCurrentBank: false,
+      idBank: null,
     }
-  },
-  components: {
-    AppBankContainer, 
-    AppCategory, 
-    AppButtonEdit,
-    AppPopupAddCurrentCategory
   },
   methods: {
     toggleEditing() {
       this.editing = !this.editing
     },
-    openPopupAddCurrentCategoryMethod() {
+    openPopupAddCurrentCategoryMethod(bankId) {
+      this.idBank = bankId
       this.openPopupAddCurrentCategory = true
+    },
+    openPopupDeleteCurrentBankMethod(bankId) {
+      this.idBank = bankId
+      this.openPopupDeleteCurrentBank = true
     },
     closePopupAddCurrentCategoryMethod() {
       this.openPopupAddCurrentCategory = false
+    },
+    closePopupDeleteCurrentBankMethod() {
+      this.openPopupDeleteCurrentBank = false
     },
     deleteCurrentCategory(bankId, categoryId) {
       const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories  // Получаем все категории банка
@@ -170,10 +181,27 @@ export default {
       this.currentBanks.filter(i => { return i.id === bankId })[0].categories = newArr     // Перезаписываем
     },
     addCurrentCategory(category) {
-      // const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories  // Получаем все категории банка
-      console.log(category)
+      const cat = this.currentBanks.filter(i => { return i.id === this.idBank })[0].categories  // Получаем все категории банка
+      // console.log(this.idBank)
+      // console.log(category)
+      category.noActive = false
+      cat.push(category)
+      // console.log(cat)
+    },
+    deleteCurrentBank() {
+      const banks = this.currentBanks.filter(bank => { return bank.id !== this.idBank })
+      this.currentBanks = banks
+
+      this.closePopupDeleteCurrentBankMethod()
     }
-  }
+  },
+  components: {
+    AppBankContainer, 
+    AppCategory, 
+    AppButtonEdit,
+    AppPopupAddCurrentCategory,
+    AppPopupDeleteCurrentBank
+  },
 }
 
 </script>
