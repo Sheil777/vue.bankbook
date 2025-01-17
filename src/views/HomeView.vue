@@ -30,6 +30,7 @@
       :open-popup-delete-current-bank="openPopupDeleteCurrentBank"
       @closePopup="closePopupDeleteCurrentBankMethod"
       @deleteBank="deleteCurrentBank"
+      :bankName="bankName"
     ></app-popup-delete-current-bank>
   </div>
 </template>
@@ -155,6 +156,7 @@ export default {
       openPopupAddCurrentCategory: false,
       openPopupDeleteCurrentBank: false,
       idBank: null,
+      bankName: null,
     }
   },
   methods: {
@@ -166,6 +168,8 @@ export default {
       this.openPopupAddCurrentCategory = true
     },
     openPopupDeleteCurrentBankMethod(bankId) {
+      let bankName = this.currentBanks.filter(i => { return i.id === bankId})
+      this.bankName = bankName[0].name
       this.idBank = bankId
       this.openPopupDeleteCurrentBank = true
     },
