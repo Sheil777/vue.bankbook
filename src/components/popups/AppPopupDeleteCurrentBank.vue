@@ -1,12 +1,12 @@
 <template>
-  <div id="popup-delete-current-bank" class="popup-delete-current-bank popup" :class="{'open': isOpen}">
+  <div id="popup-delete-current-bank" class="popup-delete-current-bank popup" :class="{'open': isOpen}" @click="close">
     <div class="popup-delete-current-bank__body">
         <div class="popup-delete-current-bank__content popup__content">
             <div class="popup-delete-current-bank__block">
                 <div class="popup-delete-current-bank__header">Вы действительно хотите удалить банк "<span>{{ bankName }}</span>"?</div>
                 <div class="popup-delete-current-bank__buttons">
                     <div class="popup-delete-current-bank__yes" @click="this.$emit('deleteBank')">Да</div>
-                    <div class="popup-delete-current-bank__no" @click="close">Нет</div>
+                    <div class="popup-delete-current-bank__no popup-close" @click="close">Нет</div>
                 </div>
             </div>
         </div>
@@ -34,9 +34,15 @@ export default {
     open() {
       this.isOpen = true
     },
-    close() {
-      this.isOpen = false
-    }
+    close(e){
+      // Если у родителей нажатой области нет .popup__content, значит это темная область
+      if(!e.target.closest('.popup__content')) {
+        this.isOpen = false
+      }
+      if(e.target.closest('.popup-close')) {
+        this.isOpen = false
+      }
+    },
   }
 }
 </script>

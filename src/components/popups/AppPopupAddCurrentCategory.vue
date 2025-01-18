@@ -52,14 +52,7 @@ export default {
       if(e.target.closest('.popup-close')) {
         this.isOpen = false
       }
-      // this.isOpen = false
     },
-    // closePopup(e) {
-    //   // Если у родителей нажатой области нет .popup__content, значит это темная область
-    //   if(!e.target.closest('.popup__content')) {
-    //       this.close()
-    //   }
-    // }
   },
   components: {
     AppCategory
