@@ -9,7 +9,7 @@
       :backgroundColor="bank.backgroundColor" 
       :color="bank.color"
       @openPopup="$refs.popupAddCurrentCategoryRef.open(bank.id)" 
-      @delete-bank="openPopupDeleteCurrentBankMethod(bank.id)"
+      @delete="$refs.popupDeleteCurrentBankRef.open()"
     >
       <app-category 
         v-for="category in bank.categories"
@@ -40,7 +40,9 @@
       @closePopup="closePopupDeleteCurrentBankMethod"
       @deleteBank="deleteCurrentBank"
       :bankName="bankName"
+      ref="popupDeleteCurrentBankRef"
     ></app-popup-delete-current-bank>
+
     <app-popup-category-about
       :open="openPopupCategoryAbout"
       @close="closePopupCategoryAboutMethod"

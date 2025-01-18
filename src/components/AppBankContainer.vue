@@ -5,7 +5,7 @@
             <div 
                 class="bank__delete" 
                 :class="{'visible': editing}" 
-                @click="this.$emit('deleteBank')"
+                @click="this.$emit('delete')"
             >
                 <img src="../assets/img/icons/delete.svg">
             </div>
@@ -71,7 +71,7 @@ export default {
             // xhr.send();
         },
     },
-    emits: ['openPopup', 'deleteBank']
+    emits: ['openPopup', 'delete']
 }
 
 </script>

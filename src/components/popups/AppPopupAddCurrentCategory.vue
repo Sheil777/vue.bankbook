@@ -3,7 +3,7 @@
     id="popup-categories" 
     class="popup-categories popup" 
     :class="{'open': isOpen}"
-    @click="closePopup"
+    @click="close"
   >
     <div class="popup-categories__body">
         <div class="popup-categories__content popup__content">
@@ -44,15 +44,22 @@ export default {
       this.isOpen = true
       this.bankId = bank
     },
-    close(){
-      this.isOpen = false
-    },
-    closePopup(e) {
+    close(e){
       // Если у родителей нажатой области нет .popup__content, значит это темная область
       if(!e.target.closest('.popup__content')) {
-          this.close()
+        this.isOpen = false
       }
-    }
+      if(e.target.closest('.popup-close')) {
+        this.isOpen = false
+      }
+      // this.isOpen = false
+    },
+    // closePopup(e) {
+    //   // Если у родителей нажатой области нет .popup__content, значит это темная область
+    //   if(!e.target.closest('.popup__content')) {
+    //       this.close()
+    //   }
+    // }
   },
   components: {
     AppCategory
