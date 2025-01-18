@@ -26,12 +26,14 @@
       >{{ category.name }}</app-category>
     </app-bank-container>
     <app-button-edit @toggle-editing="toggleEditing"></app-button-edit>
+
     <app-popup-add-current-category 
       :open-popup-add-current-category="openPopupAddCurrentCategory"
       @close-popup="closePopupAddCurrentCategoryMethod"
       :current-categories="currentCategories"
       @add="addCurrentCategory"
     ></app-popup-add-current-category>
+
     <app-popup-delete-current-bank
       :open-popup-delete-current-bank="openPopupDeleteCurrentBank"
       @closePopup="closePopupDeleteCurrentBankMethod"
@@ -111,7 +113,7 @@ export default {
             {
               id: 10,
               name: "5% Такси",
-              img: "",
+              img: "package.svg",
               noActive: false,
             },
             {
@@ -128,6 +130,55 @@ export default {
             },
             
 
+          ]
+        },        {
+          id: 4,
+          name: 'Яндекс',
+          backgroundColor: 'red',
+          color: 'white',
+          categories: [
+            {
+              id: 30,
+              name: "40% Яндекс Плюс",
+              img: "package.svg",
+              noActive: false,
+            },
+            {
+              id: 31,
+              name: "25% Билеты на кинопоиске",
+              img: "package.svg",
+              noActive: false,
+            },
+            {
+              id: 32,
+              name: "100% Онлайн кинотеатры",
+              img: "package.svg",
+              noActive: false,
+            },
+            {
+              id: 33,
+              name: "15% Бургер Кинг",
+              img: "package.svg",
+              noActive: false,
+            },
+            {
+              id: 34,
+              name: "1% Оплата телефоном",
+              img: "package.svg",
+              noActive: false,
+            },
+            {
+              id: 35,
+              name: "5% Кафе и рестораны",
+              img: "package.svg",
+              noActive: false,
+            },
+            {
+              id: 36,
+              name: "20% Книги",
+              img: "package.svg",
+              noActive: false,
+            },
           ]
         }
       ],
@@ -202,6 +253,16 @@ export default {
     toggleEditing() {
       this.editing = !this.editing
     },
+    bodyLock(){
+      const lockPaddingValue = window.innerWidth - document.querySelector(".wrapper").offsetWidth + 'px';
+
+      document.body.style.paddingRight = lockPaddingValue;
+      document.body.classList.add('lock');
+    },
+    bodyUnlock(){
+      document.body.style.paddingRight = '0px';
+      document.body.classList.remove('lock');
+    },
     openPopupAddCurrentCategoryMethod(bankId) {
       this.idBank = bankId
       this.openPopupAddCurrentCategory = true
@@ -213,11 +274,14 @@ export default {
       this.openPopupDeleteCurrentBank = true
     },
     openPopupCategoryAboutMethod() {
-      if(!this.editing)
+      if(!this.editing){
         this.openPopupCategoryAbout = true
+        this.bodyLock()
+      }
     },
     closePopupCategoryAboutMethod() {
       this.openPopupCategoryAbout = false
+      this.bodyUnlock()
     },
     closePopupAddCurrentCategoryMethod() {
       this.openPopupAddCurrentCategory = false
@@ -245,6 +309,14 @@ export default {
       this.closePopupDeleteCurrentBankMethod()
     }
   },
+  // metaInfo() {
+  //   return {
+  //     title: 'Мой заголовок страницы',
+  //     meta: [
+  //       { name: 'description', content: 'Описание страницы' },
+  //     ]
+  //   };
+  // },
   components: {
     AppBankContainer, 
     AppCategory, 

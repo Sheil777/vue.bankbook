@@ -33,6 +33,12 @@ export default {
       type: Array
     },
   },
+  data() {
+    return {
+      isOpen: false,
+      
+    }
+  },
   methods: {
     closePopup(e) {
       // Если у родителей нажатой области нет .popup__content, значит это темная область

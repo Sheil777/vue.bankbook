@@ -5,7 +5,16 @@
 </template>
 
 <script>
-
+export default {
+  // metaInfo() {
+  //   return {
+  //     title: 'Мой заголовок страницы',
+  //     meta: [
+  //       { name: 'description', content: 'Описание страницы' },
+  //     ]
+  //   };
+  // }
+}
 
 </script>
 

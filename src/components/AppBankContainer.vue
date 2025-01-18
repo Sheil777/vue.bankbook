@@ -14,7 +14,7 @@
             <slot />
         </div>
         <div
-            class="bank__add-category add-category popup-link" 
+            class="bank__add-category add-category" 
             :class="{'visible': editing}" 
             href="#popup-categories" 
             @click="this.$emit('openPopup')"

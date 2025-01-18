@@ -2,6 +2,24 @@
   <div class="container _container">
     <the-header></the-header>
     <h1>Меню</h1>
+    <div class="main">
+        <router-link to="/categories">
+            <a class="main__item">Категории</a>
+        </router-link>
+        <router-link to="/newCategory">
+            <a class="main__item">Добавить категорию</a>
+        </router-link>
+        <a href="#popup-add-current-bank" class="main__item popup-link">Добавить новый банк</a>
+        <div class="main__item main-month _no-hover">
+            <a class="main-month__left hide">
+            </a>Дата:&nbsp;<span class="main-month__text">январь</span>&nbsp;
+            <span class="main-month__year">2025</span>&nbsp;г.
+            <a class="main-month__right"></a>
+        </div>
+        <router-link to="/Login">
+            <a class="main__item">Выход</a>
+        </router-link>
+    </div>
   </div>
 </template>
 
@@ -30,6 +48,16 @@ export default {
 
   .main {
       &__item {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        height: 50px;
+        width: 100%;
+        background-color: white;
+        font-size: 20px;
+        border-bottom: 1px solid black;
+        color: black;
+
           justify-content: center;
           background-color: white;
           // color: white;]
