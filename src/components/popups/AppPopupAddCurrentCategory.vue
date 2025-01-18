@@ -2,18 +2,18 @@
   <div 
     id="popup-categories" 
     class="popup-categories popup" 
-    :class="{'open': openPopupAddCurrentCategory}"
+    :class="{'open': isOpen}"
     @click="closePopup"
   >
     <div class="popup-categories__body">
         <div class="popup-categories__content popup__content">
-            <a class="popup-categories__close popup-close" @click="this.$emit('closePopup')"><div></div></a>
+            <a class="popup-categories__close popup-close" @click="close"><div></div></a>
             <div class="popup-categories__header">Выберите категорию</div>
             
             <app-category
               v-for="category in currentCategories" :key="category.id"
               :img="category.img"
-              @click="this.$emit('add', category)"
+              @click="this.$emit('add', category, bankId)"
             >{{ category.name }}</app-category>
 
         </div>
@@ -36,14 +36,21 @@ export default {
   data() {
     return {
       isOpen: false,
-      
+      bankId: null,
     }
   },
   methods: {
+    open(bank) {
+      this.isOpen = true
+      this.bankId = bank
+    },
+    close(){
+      this.isOpen = false
+    },
     closePopup(e) {
       // Если у родителей нажатой области нет .popup__content, значит это темная область
       if(!e.target.closest('.popup__content')) {
-          this.$emit('closePopup')
+          this.close()
       }
     }
   },

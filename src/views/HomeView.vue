@@ -8,7 +8,7 @@
       v-for="bank in currentBanks" :key="bank.id" 
       :backgroundColor="bank.backgroundColor" 
       :color="bank.color"
-      @openPopup="openPopupAddCurrentCategoryMethod(bank.id)" 
+      @openPopup="$refs.popupAddCurrentCategoryRef.open(bank.id)" 
       @delete-bank="openPopupDeleteCurrentBankMethod(bank.id)"
     >
       <app-category 
@@ -32,6 +32,7 @@
       @close-popup="closePopupAddCurrentCategoryMethod"
       :current-categories="currentCategories"
       @add="addCurrentCategory"
+      ref="popupAddCurrentCategoryRef"
     ></app-popup-add-current-category>
 
     <app-popup-delete-current-bank
@@ -263,10 +264,6 @@ export default {
       document.body.style.paddingRight = '0px';
       document.body.classList.remove('lock');
     },
-    openPopupAddCurrentCategoryMethod(bankId) {
-      this.idBank = bankId
-      this.openPopupAddCurrentCategory = true
-    },
     openPopupDeleteCurrentBankMethod(bankId) {
       let bankName = this.currentBanks.filter(i => { return i.id === bankId})
       this.bankName = bankName[0].name
@@ -283,9 +280,6 @@ export default {
       this.openPopupCategoryAbout = false
       this.bodyUnlock()
     },
-    closePopupAddCurrentCategoryMethod() {
-      this.openPopupAddCurrentCategory = false
-    },
     closePopupDeleteCurrentBankMethod() {
       this.openPopupDeleteCurrentBank = false
     },
@@ -294,8 +288,8 @@ export default {
       const newArr = cat.filter(item => { return item.id !== categoryId; })                // Удаляем лишнюю категорию
       this.currentBanks.filter(i => { return i.id === bankId })[0].categories = newArr     // Перезаписываем
     },
-    addCurrentCategory(category) {
-      const cat = this.currentBanks.filter(i => { return i.id === this.idBank })[0].categories  // Получаем все категории банка
+    addCurrentCategory(category, bankId) {
+      const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories  // Получаем все категории банка
       // console.log(this.idBank)
       // console.log(category)
       category.noActive = false
