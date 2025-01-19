@@ -2,12 +2,12 @@
   <div 
     id="popup-category-about" 
     class="popup-category-about popup" 
-    :class="{'open': open}" 
+    :class="{'open': isOpen}" 
     @click="closePopup"
   >
     <div class="popup-category-about__body">
         <div class="popup-category-about__content popup__content">
-            <a class="popup-category-about__close" @click="this.$emit('close')"><div></div></a>
+            <a class="popup-category-about__close" @click="close"><div></div></a>
             <div class="popup-category-about__header">
                 <div id="popup-category-about__logo" class="popup-category-about__logo category__logo" >
                     <img style="background-color: rgb(108, 32, 183)" src="../../assets/img/icons/package.svg" alt="">
@@ -33,17 +33,32 @@
 <script>
 export default {
     props: {
-        open: {
-            type: Boolean,
-        }
+      editing: {
+        type: Boolean,
+      }
+    },
+    data() {
+      return {
+        isOpen: false,
+      }
     },
     methods: {
-        closePopup(e) {
+      open() {
+        if(!this.editing){ // чтобы не открывалось описание при удалении или редактировании
+          this.isOpen = true
+          this.bodyLock()
+        }
+      },
+      close(){
+        this.isOpen = false
+        this.bodyUnlock()
+      },
+      closePopup(e){
         // Если у родителей нажатой области нет .popup__content, значит это темная область
         if(!e.target.closest('.popup__content')) {
-            this.$emit('close')
+          this.close()
         }
-        }
+      }
     },
 }
 </script>

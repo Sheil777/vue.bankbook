@@ -9,7 +9,7 @@
       :backgroundColor="bank.backgroundColor" 
       :color="bank.color"
       @openPopup="$refs.popupAddCurrentCategoryRef.open(bank.id)" 
-      @delete="$refs.popupDeleteCurrentBankRef.open()"
+      @delete="$refs.popupDeleteCurrentBankRef.open(bank.id, bank.name)"
     >
       <app-category 
         v-for="category in bank.categories"
@@ -27,25 +27,20 @@
     </app-bank-container>
     <app-button-edit @toggle-editing="toggleEditing"></app-button-edit>
 
-    <app-popup-add-current-category 
-      :open-popup-add-current-category="openPopupAddCurrentCategory"
-      @close-popup="closePopupAddCurrentCategoryMethod"
+    <app-popup-add-current-category
       :current-categories="currentCategories"
       @add="addCurrentCategory"
       ref="popupAddCurrentCategoryRef"
     ></app-popup-add-current-category>
 
     <app-popup-delete-current-bank
-      :open-popup-delete-current-bank="openPopupDeleteCurrentBank"
-      @closePopup="closePopupDeleteCurrentBankMethod"
       @deleteBank="deleteCurrentBank"
-      :bankName="bankName"
       ref="popupDeleteCurrentBankRef"
     ></app-popup-delete-current-bank>
 
     <app-popup-category-about
-      :open="openPopupCategoryAbout"
-      @close="closePopupCategoryAboutMethod"
+      :editing="editing"
+      ref="popupCategoryAboutRef"
     ></app-popup-category-about>
   </div>
 </template>
@@ -134,7 +129,8 @@ export default {
             
 
           ]
-        },        {
+        },        
+        {
           id: 4,
           name: 'Яндекс',
           backgroundColor: 'red',
@@ -218,11 +214,6 @@ export default {
         },
       ],
       editing: false,
-      openPopupAddCurrentCategory: false,
-      openPopupDeleteCurrentBank: false,
-      openPopupCategoryAbout: false,
-      idBank: null,
-      bankName: null,
       timer: null,
       timerFlag: false,
     }
@@ -238,7 +229,7 @@ export default {
     },
     clearTimer() {
       if(!this.timerFlag)
-        this.openPopupCategoryAboutMethod()
+        this.$refs.popupCategoryAboutRef.open() // Открываем попап
 
       clearTimeout(this.timer)  
     },
@@ -256,35 +247,6 @@ export default {
     toggleEditing() {
       this.editing = !this.editing
     },
-    bodyLock(){
-      const lockPaddingValue = window.innerWidth - document.querySelector(".wrapper").offsetWidth + 'px';
-
-      document.body.style.paddingRight = lockPaddingValue;
-      document.body.classList.add('lock');
-    },
-    bodyUnlock(){
-      document.body.style.paddingRight = '0px';
-      document.body.classList.remove('lock');
-    },
-    openPopupDeleteCurrentBankMethod(bankId) {
-      let bankName = this.currentBanks.filter(i => { return i.id === bankId})
-      this.bankName = bankName[0].name
-      this.idBank = bankId
-      this.openPopupDeleteCurrentBank = true
-    },
-    openPopupCategoryAboutMethod() {
-      if(!this.editing){
-        this.openPopupCategoryAbout = true
-        this.bodyLock()
-      }
-    },
-    closePopupCategoryAboutMethod() {
-      this.openPopupCategoryAbout = false
-      this.bodyUnlock()
-    },
-    closePopupDeleteCurrentBankMethod() {
-      this.openPopupDeleteCurrentBank = false
-    },
     deleteCurrentCategory(bankId, categoryId) {
       const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories  // Получаем все категории банка
       const newArr = cat.filter(item => { return item.id !== categoryId; })                // Удаляем лишнюю категорию
@@ -292,17 +254,16 @@ export default {
     },
     addCurrentCategory(category, bankId) {
       const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories  // Получаем все категории банка
-      // console.log(this.idBank)
       // console.log(category)
       category.noActive = false
       cat.push(category)
       // console.log(cat)
     },
-    deleteCurrentBank() {
-      const banks = this.currentBanks.filter(bank => { return bank.id !== this.idBank })
+    deleteCurrentBank(bankId) {
+      const banks = this.currentBanks.filter(bank => { return bank.id !== bankId })
       this.currentBanks = banks
 
-      this.closePopupDeleteCurrentBankMethod()
+      this.$refs.popupDeleteCurrentBankRef.close()
     }
   },
   // metaInfo() {
