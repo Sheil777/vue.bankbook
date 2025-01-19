@@ -156,6 +156,7 @@ $popup-categories-color: #4f92e0;
       position: absolute;
       top: 10px;
       right: 10px;
+      cursor: pointer;
   
       & div {
         width: 30px;

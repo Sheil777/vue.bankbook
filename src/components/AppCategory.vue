@@ -2,12 +2,14 @@
     <div class="bank__category bank__category_click" :class="{ 'noActive' : noActive }">
         <div class="category__logo">
             <img 
-                style="background-color: rgb(108, 32, 183); " 
+                :style="{backgroundColor: backgroundColor ? backgroundColor : 'rgb(108, 32, 183)'}" 
                 :src="imgSrc" 
                 alt=""
             >
         </div>
-        <div class="category__text"><slot /></div>
+        <div class="category__text">
+            <slot />
+        </div>
         <div class="category__delete" :class="{'visible': editing}" @click="this.$emit('delete')">
             <img src="../assets/img/icons/delete.svg">
         </div>
@@ -24,12 +26,17 @@ export default {
             type: String,
             default: 'package.svg',
         },
+        backgroundColor: {
+            type: String,
+            default: 'rgb(108, 32, 183)',
+        },
         noActive: {
             type: Boolean,
             default: false,
         },
         editing: {
             type: Boolean,
+            default: false,
         }
     },
     data(){

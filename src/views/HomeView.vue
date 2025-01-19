@@ -15,9 +15,11 @@
         v-for="category in bank.categories"
         :key="category.id"
         :img="category.img"
+        :background-color="category.backgroundColor"
         :editing="editing"
         :no-active="category.noActive" 
         @delete='deleteCurrentCategory(bank.id, category.id)'
+    
         @mousedown.prevent="holdByCategory(category.id)"
         @mouseup.prevent="clearTimer"
         @pointerdown.prevent="holdByCategory(category.id)"
@@ -28,7 +30,7 @@
     <app-button-edit @toggle-editing="toggleEditing"></app-button-edit>
 
     <app-popup-add-current-category
-      :current-categories="currentCategories"
+      :current-categories="$store.state.currentCategories"
       @add="addCurrentCategory"
       ref="popupAddCurrentCategoryRef"
     ></app-popup-add-current-category>
@@ -68,6 +70,8 @@ export default {
               name: "10% Книги",
               img: "book.svg",
               noActive: false,
+              backgroundColor: "#f5770a",
+              about: null,
             },
             {
               id: 2,
@@ -180,38 +184,6 @@ export default {
             },
           ]
         }
-      ],
-      currentCategories: [
-        {
-          id: 1,
-          name: "10% Книги",
-          img: "book.svg",
-        },
-        {
-          id: 2,
-          name: "1% Все покупки",
-          img: "package.svg",
-        },
-        {
-          id: 3,
-          name: "5% Транспорт",
-          img: "train.svg",
-        },
-        {
-          id: 4,
-          name: "5% Цифровые товары",
-          img: "package.svg",
-        },
-        {
-          id: 5,
-          name: "5% Активный отдых",
-          img: "package.svg",
-        },
-        {
-          id: 6,
-          name: "5% Красота",
-          img: "package.svg",
-        },
       ],
       editing: false,
       timer: null,

@@ -43,14 +43,17 @@ export default {
     open(bank) {
       this.isOpen = true
       this.bankId = bank
+      this.bodyLock()
     },
     close(e){
       // Если у родителей нажатой области нет .popup__content, значит это темная область
       if(!e.target.closest('.popup__content')) {
         this.isOpen = false
+        this.bodyUnlock()
       }
       if(e.target.closest('.popup-close')) {
         this.isOpen = false
+        this.bodyUnlock()
       }
     },
   },
