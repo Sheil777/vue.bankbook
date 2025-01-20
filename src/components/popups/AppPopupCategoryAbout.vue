@@ -22,7 +22,7 @@
                 <ul>
                     <li v-for="shop in shops" :key="shop" @click="openShop = shop.id">
                       <span>{{ shop.name }}</span>
-                      <span class="add-store__delete" :class="{'open': openShop == shop.id}">✕</span>
+                      <span class="add-store__delete" :class="{'open': openShop == shop.id}" @click="removeShop(shop.id)">✕</span>
                     </li>
                     <li class="add-store" :class="{'active': addStoreVisible}">
                       <input class="add-store__input" type="text" placeholder="Введите наименование" @keypress.enter="addStore" v-model="inputAddStore">
@@ -62,12 +62,18 @@ export default {
     methods: {
       addStore() {
         if(this.inputAddStore.trim() != '') {
-          this.$store.commit('addStore', {
+          this.$store.commit('addShop', {
             idCategory: this.idCategory,
             nameCategory: this.inputAddStore.trim(),
           })
           this.inputAddStore = ''
         }
+      },
+      removeShop(idShop) {
+        this.$store.commit('removeShop', {
+          idShop: idShop,
+          idCategory: this.idCategory,
+        })
       },
       open(category) {
         if(!this.editing){ // чтобы не открывалось описание при удалении или редактировании
@@ -87,12 +93,14 @@ export default {
         this.isOpen = false
         this.bodyUnlock()
         this.addStoreVisible = false
+        this.openShop = -1
       },
       closePopup(e){
         // Если у родителей нажатой области нет .popup__content, значит это темная область
-        if(!e.target.closest('.popup__content')) {
-          this.close()
-        }
+        if(!e.target.classList.contains('add-store__delete'))
+          if(!e.target.closest('.popup__content')) {
+            this.close()
+          }
       }
     },
 }

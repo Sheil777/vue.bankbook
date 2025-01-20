@@ -147,9 +147,21 @@ export default createStore({
         }
     }, 
     mutations: {
-      addStore(state, payload) {
+      addShop(state, payload) {
         const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
         cat.shops.push({id: Math.random() * (1000 - 1) + 1, name: payload.nameCategory})
+      },
+      removeShop(state, payload) {
+        const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
+        // const shops = cat.shops.filter(item => {return item.id != payload.idShop})
+        for(let i = 0; i < cat.shops.length; i++){
+          if(cat.shops[i].id == payload.idShop)
+            cat.shops.splice(i, 1)
+        }
+        
+        // cat.shops = shops
+
+        // console.log(state.categories.filter(item => {return item.id == payload.idCategory})[0])
       }
     }
 })
