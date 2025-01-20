@@ -11,7 +11,10 @@ export default createStore({
                   backgroundColor: "#f5770a",
                   about: null,
                   shops: [
-                    'Читай город',
+                    {
+                      id: 1,
+                      name: 'Читай город',
+                    },
                   ]
                 },
                 {
@@ -60,7 +63,11 @@ export default createStore({
                   img: "fuel.svg",
                   backgroundColor: '#42aaff',
                   about: null,
-                  shops: ['Лукойл', 'ГазпромНефть', 'Роснефть']
+                  shops: [
+                    {id: 2, name: 'Лукойл'},
+                    {id: 3, name: 'ГазпромНефть'},
+                    {id: 4, name: 'Роснефть'},
+                  ]
                 },
                 {
                   id: 10,
@@ -81,7 +88,11 @@ export default createStore({
                   name: "8% АЗС",
                   img: "package.svg",
                   noActive: false,
-                  shops: ['Лукойл', 'ГазпромНефть', 'Роснефть'],
+                  shops: [
+                    {id: 5, name: 'Лукойл'},
+                    {id: 6, name: 'ГазпромНефть'},
+                    {id: 7, name: 'Роснефть'},
+                  ]
                 },
                 {
                   id: 30,
@@ -138,7 +149,7 @@ export default createStore({
     mutations: {
       addStore(state, payload) {
         const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
-        cat.shops.push(payload.nameCategory)
+        cat.shops.push({id: Math.random() * (1000 - 1) + 1, name: payload.nameCategory})
       }
     }
 })

@@ -20,14 +20,17 @@
             <div id="popup-category-about__shops" class="popup-category-about__shops" v-if="addStoreVisible || shops.length">
                 <div>Магазины:</div>
                 <ul>
-                    <li v-for="shop in shops" :key="shop">{{ shop }}</li>
+                    <li v-for="shop in shops" :key="shop" @click="openShop = shop.id">
+                      <span>{{ shop.name }}</span>
+                      <span class="add-store__delete" :class="{'open': openShop == shop.id}">✕</span>
+                    </li>
                     <li class="add-store" :class="{'active': addStoreVisible}">
-                      <input class="add-store__input" type="text" placeholder="Введите наименование" v-model="inputAddStore">
-                      <div class="add-store__submit" @click="addStore">&#10003</div>
+                      <input class="add-store__input" type="text" placeholder="Введите наименование" @keypress.enter="addStore" v-model="inputAddStore">
+                      <div class="add-store__submit" @click="addStore" >&#10003;</div>
                     </li>
                 </ul>
             </div>
-            <div class="_button" style="">
+            <div class="_button add-store__button" :class="{'hidden': addStoreVisible}">
               <a href="#" @click.prevent="addStoreVisible = true">Добавить магазин</a>
             </div>
         </div>
@@ -53,6 +56,7 @@ export default {
         shops: [],
         addStoreVisible: false,
         inputAddStore: '',
+        openShop: -1,
       }
     },
     methods: {
@@ -175,7 +179,8 @@ export default {
         }
 
         ul {
-            margin-left: 20px;
+          margin-left: 20px;
+          
         }
     }
   
@@ -246,6 +251,25 @@ export default {
         font-size: 16px;
 
         cursor: pointer;
+    }
+
+    &__button.hidden {
+      display: none;
+    }
+
+    &__delete {
+      display: inline-block;
+      color: darkred; 
+      margin-left: 8px; 
+      cursor: pointer;
+      transform: translateX(-11px);
+      transition: transform 0.5s, visibility 0.1s;
+      visibility: hidden;
+
+      &.open {
+        visibility: visible;
+        transform: translateX(0);
+      }
     }
   }
 </style>
