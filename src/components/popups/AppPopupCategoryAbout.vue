@@ -52,16 +52,18 @@ export default {
         about: 'Описание отсутствует',
         shops: [],
         addStoreVisible: false,
-        inputAddStore: null,
+        inputAddStore: '',
       }
     },
     methods: {
       addStore() {
-        this.$store.commit('addStore', {
-          idCategory: this.idCategory,
-          nameCategory: this.inputAddStore,
-        })
-        this.inputAddStore = null
+        if(this.inputAddStore.trim() != '') {
+          this.$store.commit('addStore', {
+            idCategory: this.idCategory,
+            nameCategory: this.inputAddStore.trim(),
+          })
+          this.inputAddStore = ''
+        }
       },
       open(category) {
         if(!this.editing){ // чтобы не открывалось описание при удалении или редактировании
