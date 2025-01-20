@@ -4,7 +4,7 @@
         <div class="bank__header" style="background-color: #5382c4; color: white;">Категории</div>
         <div class="categories">
             <app-category
-                v-for="category in $store.state.currentCategories" :key="category.id"
+                v-for="category in $store.state.categories" :key="category.id"
                 :img="category.img"
                 :background-color="category.backgroundColor"
                 @click="$refs.popupCategoryAboutRef.open()"

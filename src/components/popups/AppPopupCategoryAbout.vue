@@ -10,20 +10,25 @@
             <a class="popup-category-about__close" @click="close"><div></div></a>
             <div class="popup-category-about__header">
                 <div id="popup-category-about__logo" class="popup-category-about__logo category__logo" >
-                    <img style="background-color: rgb(108, 32, 183)" src="../../assets/img/icons/package.svg" alt="">
+                    <img :style="{backgroundColor: imgBackground}" :src="img" alt="">
                 </div>
-                <div id="popup-category-about__name" class="popup-category-about__name">1% Все покупки</div>
+                <div id="popup-category-about__name" class="popup-category-about__name">{{ name }}</div>
             </div>
             <div id="popup-category-about__about" class="popup-category-about__about">
-                1% на все покупки за каждые 100 руб.
+                {{ about }}
             </div>
-            <div id="popup-category-about__shops" class="popup-category-about__shops">
+            <div id="popup-category-about__shops" class="popup-category-about__shops" v-if="addStoreVisible || shops.length">
                 <div>Магазины:</div>
                 <ul>
-                    <li>Электрон</li>
-                    <li>Пятерочка</li>
-                    <li>Магнит</li>
+                    <li v-for="shop in shops" :key="shop">{{ shop }}</li>
+                    <li class="add-store" :class="{'active': addStoreVisible}">
+                      <input class="add-store__input" type="text" placeholder="Введите наименование" v-model="inputAddStore">
+                      <div class="add-store__submit" @click="addStore">&#10003</div>
+                    </li>
                 </ul>
+            </div>
+            <div class="_button" style="">
+              <a href="#" @click.prevent="addStoreVisible = true">Добавить магазин</a>
             </div>
         </div>
     </div>
@@ -35,16 +40,39 @@ export default {
     props: {
       editing: {
         type: Boolean,
-      }
+      },
     },
     data() {
       return {
         isOpen: false,
+        idCategory: null,
+        name: null,
+        img: require('../../assets/img/icons/package.svg'),
+        imgBackground: 'rgb(108, 32, 183)',
+        about: 'Описание отсутствует',
+        shops: [],
+        addStoreVisible: false,
+        inputAddStore: null,
       }
     },
     methods: {
-      open() {
+      addStore() {
+        this.$store.commit('addStore', {
+          idCategory: this.idCategory,
+          nameCategory: this.inputAddStore,
+        })
+        this.inputAddStore = null
+      },
+      open(category) {
         if(!this.editing){ // чтобы не открывалось описание при удалении или редактировании
+          this.idCategory = category.id
+          this.name = category.name
+          this.imgBackground = category.backgroundColor ? category.backgroundColor : 'rgb(108, 32, 183)'
+          this.img = category.img ? require('../../assets/img/icons/' + category.img) : require('../../assets/img/icons/package.svg')
+          this.about = category.about ? category.about : 'Описание отсутствует'
+          const shops = this.$store.state.categories.filter(item => {return item.id == category.id})[0].shops
+          this.shops = shops ? shops : []
+
           this.isOpen = true
           this.bodyLock()
         }
@@ -52,6 +80,7 @@ export default {
       close(){
         this.isOpen = false
         this.bodyUnlock()
+        this.addStoreVisible = false
       },
       closePopup(e){
         // Если у родителей нажатой области нет .popup__content, значит это темная область
@@ -64,9 +93,9 @@ export default {
 </script>
 
 <style lang="scss">
-$popup-categories-color: #4f92e0;
+  @import '../../assets/css/variables';
 
-.popup-category-about {
+  .popup-category-about {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -89,7 +118,6 @@ $popup-categories-color: #4f92e0;
   
     &.open .popup-category-about__content {
       opacity: 1;
-      // transform: translate(0px, 0px);
       transform: perspective(400px) translate(0px, 0px) rotateX(0deg);
     }
   
@@ -105,7 +133,6 @@ $popup-categories-color: #4f92e0;
   
     &__content {
       background-color: white;
-      //background: #141414;
       color: black;
   
       border: 2px solid $popup-categories-color;
@@ -114,11 +141,9 @@ $popup-categories-color: #4f92e0;
   
       transition: 0.8s;
       opacity: 0;
-      // transform: translate(0px, -100%);
       transform: perspective(400px) translate(0px, -120%) rotateX(45deg);
       
       width: 100%;
-      // min-height: 200px;
     }
 
     &__header {
@@ -183,6 +208,42 @@ $popup-categories-color: #4f92e0;
       & div:before {
         transform: rotate(45deg);
       }
+    }
+  }
+
+  .add-store {
+    margin-top: 4px;
+    display: none;
+
+    &.active {
+        display: flex;
+    }
+
+    &__input {
+        font-size: 20px;
+        // border: 2px solid $popup-add-current-bank-color;
+        border-bottom: 2px solid $popup-add-current-bank-color;
+        // border-radius: 5px;
+        height: 30px;
+        max-width: 235px;
+        padding-left: 4px;
+        outline: none;
+    }
+
+    &__submit {
+        display: flex;
+        border: 2px solid $popup-add-current-bank-color;
+        border-radius: 5px;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        margin-left: 10px;
+        color: $popup-add-current-bank-color;
+        font-weight: 500;
+        font-size: 16px;
+
+        cursor: pointer;
     }
   }
 </style>

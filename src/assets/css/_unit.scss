@@ -11,27 +11,27 @@
 
 
 /* Кнопка */
-._button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70px;
+// ._button {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 70px;
 
-    a {
-        padding: 4px;
-        box-sizing: border-box;
-        min-width: 130px;
-        min-height: 35px;
+//     a {
+//         padding: 4px;
+//         box-sizing: border-box;
+//         min-width: 130px;
+//         min-height: 35px;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 2px solid $popup-add-current-bank-color;
-        border-radius: 8px;
-        color: $popup-add-current-bank-color;
-        font-weight: 600;
-    }
-}
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         border: 2px solid $popup-add-current-bank-color;
+//         border-radius: 8px;
+//         color: $popup-add-current-bank-color;
+//         font-weight: 600;
+//     }
+// }
 
 
 /* Категория (вид на главной странице) */
