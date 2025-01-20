@@ -138,14 +138,7 @@ export default createStore({
     mutations: {
       addStore(state, payload) {
         const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
-
-        if(cat.shops){
-          console.log('da')
-          cat.shops.push(payload.nameCategory)
-        }else{
-          console.log('net')
-          
-        }
+        cat.shops.push(payload.nameCategory)
       }
     }
 })
