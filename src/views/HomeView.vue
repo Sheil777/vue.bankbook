@@ -254,13 +254,6 @@ export default {
       this.$refs.popupDeleteCurrentBankRef.close()
     }
   },
-  // metaInfo: {
-  //     title: 'Мой заголовок страницы',
-  //     htmlAttrs: {
-  //       lang: 'ru',
-  //       amp: true
-  //     }
-  // },
   components: {
     AppBankContainer, 
     AppCategory, 

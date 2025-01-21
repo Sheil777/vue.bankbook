@@ -6,13 +6,7 @@
 
 <script>
 export default {
-  // metaInfo: {
-  //     title: 'Мой заголовок страницы',
-  //     htmlAttrs: {
-  //       lang: 'ru',
-  //       amp: true
-  //     }
-  // },
+  
 }
 
 </script>
