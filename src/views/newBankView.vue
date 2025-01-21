@@ -4,7 +4,7 @@
       <h1>Добавление нового банка</h1>
 
         <div class="nbank__main">
-            <form action="nbank-progress.php" method="POST">
+            <form>
                 <div class="text-field text-field_floating-2">
                     <input class="text-field__input" type="input" id="name" name="name" placeholder="Тинькофф">
                     <label class="text-field__label" for="name">Наименование</label>
