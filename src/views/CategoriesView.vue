@@ -7,7 +7,7 @@
                 v-for="category in $store.state.categories" :key="category.id"
                 :img="category.img"
                 :background-color="category.backgroundColor"
-                @click="$refs.popupCategoryAboutRef.open()"
+                @click="$refs.popupCategoryAboutRef.open(category)"
             >{{ category.name }}</app-category>
         </div>
         <app-popup-category-about

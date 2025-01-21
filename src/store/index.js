@@ -162,6 +162,18 @@ export default createStore({
         // cat.shops = shops
 
         // console.log(state.categories.filter(item => {return item.id == payload.idCategory})[0])
+      },
+      addCategory(state, payload) {
+        state.categories.push(
+          {
+            id: Math.random() * (1000 - 1) + 1,
+            name: payload.nameCategory,
+            img: "package.svg",
+            noActive: false,
+            about: payload.about,
+            shops: [],
+          }
+        )
       }
     }
 })
