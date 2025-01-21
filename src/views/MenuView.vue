@@ -9,7 +9,7 @@
         <router-link to="/newCategory">
             <a class="main__item">Добавить категорию</a>
         </router-link>
-        <a href="#popup-add-current-bank" class="main__item popup-link">Добавить новый банк</a>
+        <a class="main__item" @click="$refs.popupAddCurrentBankRef.open()">Добавить новый банк</a>
         <div class="main__item main-month _no-hover">
             <a class="main-month__left hide">
             </a>Дата:&nbsp;<span class="main-month__text">январь</span>&nbsp;
@@ -20,14 +20,15 @@
             <a class="main__item">Выход</a>
         </router-link>
     </div>
+    <app-popup-add-current-bank ref="popupAddCurrentBankRef"></app-popup-add-current-bank>
   </div>
 </template>
 
 <script>
-
+import AppPopupAddCurrentBank from '@/components/popups/AppPopupAddCurrentBank.vue';
 
 export default {
-    
+    components: {AppPopupAddCurrentBank}
 }
 </script>
 

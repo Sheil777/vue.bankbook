@@ -4,6 +4,7 @@ import MenuView from '../views/MenuView.vue'
 import CategoriesView from '../views/CategoriesView.vue'
 import NewCategoryView from '@/views/NewCategoryView.vue'
 import LoginView from '@/views/LoginView.vue'
+import newBank from '@/views/newBankView.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView,
+  },
+  {
+    path: '/newBank',
+    name: 'newBank',
+    component: newBank,
   },
 ]
 
