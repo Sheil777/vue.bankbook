@@ -20,7 +20,7 @@
             <div id="popup-category-about__shops" class="popup-category-about__shops" v-if="addStoreVisible || shops.length">
                 <div>Магазины:</div>
                 <ul>
-                    <li v-for="shop in shops" :key="shop" @click="openShop = shop.id">
+                    <li v-for="shop in shops" :key="shop" @click="openShopMethod(shop.id)">
                       <span>{{ shop.name }}</span>
                       <span class="add-store__delete" :class="{'open': openShop == shop.id}" @click="removeShop(shop.id)">✕</span>
                     </li>
@@ -60,6 +60,12 @@ export default {
       }
     },
     methods: {
+      openShopMethod(id) {
+        if(this.openShop == id)
+          this.openShop = -1
+        else
+          this.openShop = id
+      },  
       addStore() {
         if(this.inputAddStore.trim() != '') {
           this.$store.commit('addShop', {
