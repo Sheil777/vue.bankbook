@@ -6,14 +6,13 @@
 
 <script>
 export default {
-  // metaInfo() {
-  //   return {
+  // metaInfo: {
   //     title: 'Мой заголовок страницы',
-  //     meta: [
-  //       { name: 'description', content: 'Описание страницы' },
-  //     ]
-  //   };
-  // }
+  //     htmlAttrs: {
+  //       lang: 'ru',
+  //       amp: true
+  //     }
+  // },
 }
 
 </script>

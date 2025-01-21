@@ -4,7 +4,7 @@ import router from './router'
 import TheHeader from './components/TheHeader'
 import store from './store'
 import bodyLockMixin from './mixins/bodyLock'
-// import VueMeta from 'vue-meta';
+// import { createMetaManager } from 'vue-meta'
 
 
 const app = createApp(App)
@@ -15,5 +15,5 @@ app.component('the-header', TheHeader)
     app.mixin(bodyLockMixin)
     app.use(store)
     app.use(router)
-    // app.use(VueMeta)
+    // app.use(createMetaManager())
     app.mount('#app')
