@@ -11,10 +11,10 @@
         </router-link>
         <a class="main__item" @click="$refs.popupAddCurrentBankRef.open()">Добавить новый банк</a>
         <div class="main__item main-month _no-hover">
-            <a class="main-month__left hide">
+            <a class="main-month__left" :class="{'hide': arrowMonth}" @click="prevMonth">
             </a>Дата:&nbsp;<span class="main-month__text">январь</span>&nbsp;
             <span class="main-month__year">2025</span>&nbsp;г.
-            <a class="main-month__right"></a>
+            <a class="main-month__right" :class="{'hide': !arrowMonth}" @click="nextMonth"></a>
         </div>
         <router-link to="/Login">
             <a class="main__item">Выход</a>
@@ -28,6 +28,19 @@
 import AppPopupAddCurrentBank from '@/components/popups/AppPopupAddCurrentBank.vue';
 
 export default {
+    data() {
+        return {
+            arrowMonth: true,
+        }
+    },
+    methods: {
+        nextMonth() {
+            this.arrowMonth = false
+        },
+        prevMonth() {
+            this.arrowMonth = true
+        }
+    },
     components: {AppPopupAddCurrentBank}
 }
 </script>
