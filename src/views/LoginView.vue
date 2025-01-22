@@ -1,5 +1,5 @@
 <template>
-    <div class="container _container-login">
+    <div class="container _container">
         <the-header></the-header>
         <div class="login">
             <input id='form-login' type="text" placeholder="Введите логин">
@@ -23,7 +23,7 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 * {
     margin: 0;
     padding: 0;
@@ -60,7 +60,7 @@ body {
     overflow: hidden;
 }
 
-._container-login {
+._container {
     max-width: 393px;
     margin: 0px auto;
     padding: 0 15px;
@@ -68,7 +68,7 @@ body {
 }
 
 @media (min-width: 393px) {
-    ._container-login {
+    ._container {
         padding: 0;
     }
 }
@@ -194,6 +194,7 @@ body {
     margin-top: 30px;
     margin-bottom: -10px;
 }
+
 
 
 

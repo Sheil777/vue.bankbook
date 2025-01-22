@@ -46,7 +46,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $popup-add-current-bank-color: #4f92e0;
 
 .popup-add-current-bank {

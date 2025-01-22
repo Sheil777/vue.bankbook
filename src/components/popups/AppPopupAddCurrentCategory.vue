@@ -64,7 +64,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   $popup-categories-color: #4f92e0;
 
   .popup-categories {

@@ -76,7 +76,7 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     // Нужно ещё убрать выделение плюсика в добавлении категории 
 
     .bank {

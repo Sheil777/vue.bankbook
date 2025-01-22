@@ -21,7 +21,7 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   ._container-registration {
       max-width: 393px;
       margin: 0px auto;
