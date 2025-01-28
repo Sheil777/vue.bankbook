@@ -52,7 +52,7 @@ export default {
       var xhr = new XMLHttpRequest();
 
       // Настраиваем запрос: метод GET, адрес URL
-      xhr.open('GET', 'http://api.bankbook/api/v1/banks', true); 
+      xhr.open('GET', 'http://192.168.1.88/api/v1/banks', true); 
 
       // Определяем функцию, которая будет вызвана при получении ответа
       // xhr.onload = function () {
