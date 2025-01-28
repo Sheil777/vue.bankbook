@@ -5,8 +5,13 @@
         <a href="" class="popup-add-current-bank__close" @click="close"><div></div></a>
         <div class="popup-add-current-bank__header">Выберите банк</div>
         <div class="popup-add-current-bank__banks">
-            <div class="popup-add-current-bank__bank" style="background-color: white; border-bottom: 1px solid black;; color: red;" id_b="6">
-                Хоум Банк
+            <div 
+              v-for="bank in banks" :key="bank.id"
+              class="popup-add-current-bank__bank" 
+              style="border-bottom: 1px solid black;"
+              :style="{'background': bank.color, 'color': bank.color_text}"
+            >
+                {{ bank.name }}
             </div>
         </div>
         <div class="popup-add-current-bank__add-new-bank">
@@ -24,6 +29,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      banks: [],
     }
   },
   methods: {
@@ -40,8 +46,33 @@ export default {
       if(!e.target.closest('.popup__content')) {
         this.close()
       }
+    },
+    getBanks() {
+      // Создаём новый объект XMLHttpRequest
+      var xhr = new XMLHttpRequest();
+
+      // Настраиваем запрос: метод GET, адрес URL
+      xhr.open('GET', 'http://api.bankbook/api/v1/banks', true); 
+
+      // Определяем функцию, которая будет вызвана при получении ответа
+      // xhr.onload = function () {
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            // Заказ успешно получен, выводим список материалов
+
+            this.banks = JSON.parse(xhr.responseText)
+        } else {
+            // Произошла ошибка при получении заказа
+        }
+      };
+
+      // Отправляем запрос
+      xhr.send();
     }
-  }
+  },
+  mounted() {
+    this.getBanks()
+  },
 
 }
 </script>
