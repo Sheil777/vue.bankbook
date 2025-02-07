@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import MenuView from '../views/MenuView.vue'
+// import MenuView from '../views/MenuView.vue'
 import CategoriesView from '../views/CategoriesView.vue'
 import NewCategoryView from '@/views/NewCategoryView.vue'
 import LoginView from '@/views/LoginView.vue'
@@ -11,37 +11,58 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta: {
+      layout: 'main'
+    }
   },
   {
     path: '/menu',
     name: 'menu',
-    component: MenuView,
+    component: () => import('../views/MenuView.vue'),
+    meta: {
+      layout: 'main'
+    }
   },
   {
     path: '/categories',
     name: 'categories',
     component: CategoriesView,
+    meta: {
+      layout: 'main'
+    }
   },
   {
     path: '/newCategory',
     name: 'newCategory',
     component: NewCategoryView,
+    meta: {
+      layout: 'main'
+    }
   },
   {
     path: '/newBank',
     name: 'newBank',
     component: newBank,
+    meta: {
+      layout: 'main'
+    }
   },
   {
     path: '/login',
     name: 'login',
     component: LoginView,
+    meta: {
+      layout: 'auth'
+    }
   },
   {
     path: '/registration',
     name: 'registration',
     component: RegistrationView,
+    meta: {
+      layout: 'auth'
+    }
   },
 ]
 
