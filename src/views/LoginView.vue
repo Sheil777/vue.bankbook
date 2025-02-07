@@ -1,16 +1,25 @@
 <template>
     <div class="container _container">
         <the-header></the-header>
-        <div class="login">
-            <input id='form-login' type="text" placeholder="Введите логин">
-        </div>
-        <div class="password">
-            <input id='password' type="password" placeholder="Пароль">
-        </div>
-        <div class="report"></div>
-        <div id='button-enter' class="button-enter">
-            <a href="#">Войти</a>
-        </div>
+
+        <form @submit.prevent="onSubmit">
+            <div class="login" :class="{invalid: loginError}">
+                <input id='form-login' type="text" placeholder="Введите логин" v-model="loginValue" @blur="loginBlur">
+                <small v-if="loginError">{{ loginError }}</small>
+            </div>
+            <div class="password" :class="{invalid: passError}">
+                <input id='password' type="password" placeholder="Пароль" v-model="passValue" @blur="emailBlur">
+                <small  v-if="passError">{{ passError }}</small>
+            </div>
+            <div class="report">
+
+            </div>
+            <div id='button-enter' class="button-enter" :class="{disabled: isSubmitting || loginError || passError}">
+                <a href="#" :disabled="isSubmitting">Войти</a>
+            </div>
+            <input type="submit">
+        </form>
+
         <div class="button-register">
             <router-link to="/registration">
                 <a>Зарегистрироваться</a>
@@ -20,7 +29,39 @@
 </template>
 
 <script>
+import * as yup from 'yup'
+import {useField, useForm} from 'vee-validate'
 
+export default {
+    setup() {
+        const {handleSubmit, isSubmitting} = useForm()
+
+        const {value: loginValue, errorMessage: loginError, handleBlur: loginBlur} = useField(
+            'login',
+            yup.string().trim().required('Пожалуйста введите логин')
+        )
+
+        const {value: passValue, errorMessage: passError, handleBlur: passBlur} = useField(
+            'password',
+            yup.string().trim().required('Пожалуйста введите пароль')
+        )
+
+        const onSubmit = handleSubmit((values) => {
+            console.log(values)
+        })
+
+        return {
+            loginValue,
+            passValue,
+            loginError,
+            passError,
+            loginBlur,
+            passBlur,
+            onSubmit,
+            isSubmitting,
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -82,13 +123,19 @@ body {
     }
 }
 
+form {
+    width: 240px;
+    margin: 0 auto;
+}
+
 .login {
     margin-top: 100px;
 
     input {
         display: block;
         height: 30px;
-        width: 240px;
+        // width: 240px;
+        width: 100%;
         margin: 0 auto;
         color: #43679b;
         font-size: 20px;
@@ -109,6 +156,10 @@ body {
     input:focus::-moz-placeholder          {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-moz-placeholder           {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-ms-input-placeholder      {text-indent: 500px; transition: text-indent 0.3s ease;}
+    
+    &.invalid input {
+        border-bottom: 1px solid red;
+    }
 }
 
 .password {
@@ -117,7 +168,8 @@ body {
     input {
         display: block;
         height: 30px;
-        width: 240px;
+        // width: 240px;
+        width: 100%;
         margin: 0 auto;
         color: #43679b;
         font-size: 20px;
@@ -138,12 +190,17 @@ body {
     input:focus::-moz-placeholder          {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-moz-placeholder           {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-ms-input-placeholder      {text-indent: 500px; transition: text-indent 0.3s ease;}
+    
+    &.invalid input {
+        border-bottom: 1px solid red;
+    }
 }
 
 .button-enter {
   background-color: #649eed;
   height: 40px;
-  width: 240px;
+  // width: 240px;
+  width: 100%;
   margin: 0 auto;
   border-radius: 10px;
 
@@ -165,6 +222,23 @@ body {
     font-size: 20px;
 
     color: white;
+  }
+  
+  &.disabled {
+    background-color: #e7e7e7;
+
+    a {
+        color: #707070;
+
+        &:hover {
+            cursor: default;
+        }
+    }
+
+    &:hover {
+        background-color: #e7e7e7;
+        cursor: default;
+    }
   }
 }
 
