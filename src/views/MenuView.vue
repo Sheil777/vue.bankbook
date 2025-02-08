@@ -16,9 +16,7 @@
             <span class="main-month__year">2025</span>&nbsp;г.
             <a class="main-month__right" :class="{'hide': !arrowMonth}" @click="nextMonth"></a>
         </div>
-        <router-link to="/Login">
-            <a class="main__item">Выход</a>
-        </router-link>
+        <a class="main__item" @click.prevent="logout">Выход</a>
     </div>
     <app-popup-add-current-bank ref="popupAddCurrentBankRef"></app-popup-add-current-bank>
   </div>
@@ -39,6 +37,10 @@ export default {
         },
         prevMonth() {
             this.arrowMonth = true
+        },
+        logout() {
+            this.$store.commit('auth/logout')
+            this.$router.push('/login')
         }
     },
     components: {AppPopupAddCurrentBank}

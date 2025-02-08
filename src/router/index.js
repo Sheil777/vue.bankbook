@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-// import MenuView from '../views/MenuView.vue'
-import CategoriesView from '../views/CategoriesView.vue'
+import MenuView from '../views/MenuView.vue'
+// import CategoriesView from '../views/CategoriesView.vue'
 import NewCategoryView from '@/views/NewCategoryView.vue'
-import LoginView from '@/views/LoginView.vue'
+// import LoginView from '@/views/LoginView.vue'
 import newBank from '@/views/newBankView.vue'
-import RegistrationView from '@/views/RegistrationView.vue'
+// import RegistrationView from '@/views/RegistrationView.vue'
+import store from '../store'
 
 const routes = [
   {
@@ -13,23 +14,26 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     }
   },
   {
     path: '/menu',
     name: 'menu',
-    component: () => import('../views/MenuView.vue'),
+    component: MenuView,
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     }
   },
   {
     path: '/categories',
     name: 'categories',
-    component: CategoriesView,
+    component: () => import('../views/CategoriesView.vue'),
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     }
   },
   {
@@ -37,7 +41,8 @@ const routes = [
     name: 'newCategory',
     component: NewCategoryView,
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     }
   },
   {
@@ -45,23 +50,26 @@ const routes = [
     name: 'newBank',
     component: newBank,
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     }
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView,
+    component: () => import('../views/LoginView'),
     meta: {
-      layout: 'auth'
+      layout: 'auth',
+      auth: false
     }
   },
   {
     path: '/registration',
     name: 'registration',
-    component: RegistrationView,
+    component: () => import('../views/RegistrationView'),
     meta: {
-      layout: 'auth'
+      layout: 'auth',
+      auth: false
     }
   },
 ]
@@ -73,7 +81,18 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = 'BankBook';
-  next();
+
+  const requireAuth = to.meta.auth
+
+  if (requireAuth && store.getters['auth/isAuthenticated']){ // Требуется аутентификация и пользователь аутентифицирован
+    next();
+  } else if (requireAuth && !store.getters['auth/isAuthenticated']){ // Требуется аутентификация и пользователь не аутентифицирован
+    next('/login?message=auth')
+  } else { // Аутентификация не требуется
+    next();
+  }
+
+  
 });
 
 export default router

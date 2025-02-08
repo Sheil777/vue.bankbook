@@ -31,9 +31,13 @@
 <script>
 import * as yup from 'yup'
 import {useField, useForm} from 'vee-validate'
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default {
     setup() {
+        const store = useStore()
+        const router = useRouter()
         const {handleSubmit, isSubmitting} = useForm()
 
         const {value: loginValue, errorMessage: loginError, handleBlur: loginBlur} = useField(
@@ -46,8 +50,10 @@ export default {
             yup.string().trim().required('Пожалуйста введите пароль')
         )
 
-        const onSubmit = handleSubmit((values) => {
+        const onSubmit = handleSubmit( async values => {
             console.log(values)
+            await store.dispatch('auth/login', values)
+            router.push('/')
         })
 
         return {
