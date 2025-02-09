@@ -1,3 +1,6 @@
+import axios from 'axios'
+import {error} from '../../utils/error'
+
 export default {
     namespaced: true,
 
@@ -17,8 +20,33 @@ export default {
         }
     },
     actions: {
-        async login({ commit }, payload) {
-            commit('setToken', 'TEST TOKEN')
+        // async login({ commit }, payload) {
+        login({ commit }, payload) {
+            return new Promise((resolve, reject) => {
+                const url = `${process.env.VUE_APP_API_URL}/api/v1/login`
+                const body = {email: payload.login, password: payload.password}
+                
+                axios.post(url, body).then(response => {
+                    // запрос выполнен успешно
+                    commit('setToken', response.data.token)
+                    resolve()
+                }).catch(e => {
+                    // запрос не выполнен
+                    reject(error(e.response.data.message)) // вернуть сообщение об ошибке вызывающей функции
+                })
+            })
+
+
+            // try {
+            //     const url = `${process.env.VUE_APP_API_URL}/api/v1/login`
+            //     const body = {email: payload.login, password: payload.password}
+            //     const {data} = await axios.post(url, body)
+
+            //     commit('setToken', data.token)
+            // } catch (e) {
+            //     console.log(error(e.response.data.message))
+            //     // throw new Error(e.response.data.message)
+            // }
         }
     },
     getters: {

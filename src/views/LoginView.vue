@@ -11,13 +11,10 @@
                 <input id='password' type="password" placeholder="Пароль" v-model="passValue" @blur="emailBlur">
                 <small  v-if="passError">{{ passError }}</small>
             </div>
-            <div class="report">
-
+            <div class="report" v-if="errorAuth">
+                {{ errorAuth }}
             </div>
-            <div id='button-enter' class="button-enter" :class="{disabled: isSubmitting || loginError || passError}">
-                <a href="#" :disabled="isSubmitting">Войти</a>
-            </div>
-            <input type="submit">
+            <button :class="{disabled: isSubmitting || loginError || passError}">Войти</button>
         </form>
 
         <div class="button-register">
@@ -33,9 +30,11 @@ import * as yup from 'yup'
 import {useField, useForm} from 'vee-validate'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 export default {
     setup() {
+        let errorAuth = ref(null) // Ошибки при авторизации
         const store = useStore()
         const router = useRouter()
         const {handleSubmit, isSubmitting} = useForm()
@@ -51,9 +50,13 @@ export default {
         )
 
         const onSubmit = handleSubmit( async values => {
-            console.log(values)
-            await store.dispatch('auth/login', values)
-            router.push('/')
+            // console.log(values)
+            try {
+                await store.dispatch('auth/login', values)
+                router.push('/')
+            } catch (error) {
+                errorAuth.value = error
+            }
         })
 
         return {
@@ -65,6 +68,7 @@ export default {
             passBlur,
             onSubmit,
             isSubmitting,
+            errorAuth
         }
     }
 }
@@ -130,7 +134,7 @@ body {
 }
 
 form {
-    width: 240px;
+    width: 250px;
     margin: 0 auto;
 }
 
@@ -202,50 +206,31 @@ form {
     }
 }
 
-.button-enter {
-  background-color: #649eed;
-  height: 40px;
-  // width: 240px;
-  width: 100%;
-  margin: 0 auto;
-  border-radius: 10px;
-
-  margin-top: 40px;
-
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #5382c4;
-    cursor: pointer;
-  }
-
-  a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+form button {
+    background-color: #649eed;
+    height: 40px;
     width: 100%;
-    height: 100%;
-    font-size: 20px;
-
-    color: white;
-  }
+    margin: 0 auto;
+    border-radius: 10px;
   
-  &.disabled {
-    background-color: #e7e7e7;
+    margin-top: 40px;
 
-    a {
-        color: #707070;
-
-        &:hover {
-            cursor: default;
-        }
+    font-size: 20px;
+    font-family: inherit;
+    color: white;
+  
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #5382c4;
+      cursor: pointer;
     }
 
-    &:hover {
+    &.disabled {
         background-color: #e7e7e7;
+        color: #707070;
         cursor: default;
     }
-  }
 }
 
 .button-register {
