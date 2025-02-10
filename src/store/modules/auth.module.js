@@ -32,7 +32,14 @@ export default {
                     resolve()
                 }).catch(e => {
                     // запрос не выполнен
-                    reject(error(e.response.data.message)) // вернуть сообщение об ошибке вызывающей функции
+                    if(Object.hasOwn(e, 'response')) {
+                        // console.log(e.response.data.message)
+                        reject(error(e.response.data.message)) // вернуть сообщение об ошибке вызывающей функции
+
+                    }else{
+                        // console.log(e.code)
+                        reject(error(e.code))          
+                    }
                 })
             })
 
