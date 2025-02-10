@@ -87,7 +87,7 @@ router.beforeEach((to, from, next) => {
   if (requireAuth && store.getters['auth/isAuthenticated']){ // Требуется аутентификация и пользователь аутентифицирован
     next();
   } else if (requireAuth && !store.getters['auth/isAuthenticated']){ // Требуется аутентификация и пользователь не аутентифицирован
-    next('/login?message=auth')
+    next('/login')
   } else { // Аутентификация не требуется
     next();
   }

@@ -9,7 +9,7 @@
               v-for="bank in banks" :key="bank.id"
               class="popup-add-current-bank__bank" 
               style="border-bottom: 1px solid black;"
-              :style="{'background': bank.color, 'color': bank.color_text}"
+              :style="{'background': bank.color_bg, 'color': bank.color_text}"
             >
                 {{ bank.name }}
             </div>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -48,27 +50,22 @@ export default {
       }
     },
     getBanks() {
-      // Создаём новый объект XMLHttpRequest
-      var xhr = new XMLHttpRequest();
+      const url = `${process.env.VUE_APP_API_URL}/api/v1/banks`
 
-      // Настраиваем запрос: метод GET, адрес URL
-      xhr.open('GET', 'http://192.168.1.88/api/v1/banks', true); 
+      const token = this.$store.getters['auth/token']
 
-      // Определяем функцию, которая будет вызвана при получении ответа
-      // xhr.onload = function () {
-      xhr.onload = () => {
-        if (xhr.status >= 200 && xhr.status < 300) {
-            // Заказ успешно получен, выводим список материалов
-
-            this.banks = JSON.parse(xhr.responseText)
-        } else {
-            // Произошла ошибка при получении заказа
-        }
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
       };
 
-      // Отправляем запрос
-      xhr.send();
-    }
+      axios.get( 
+        url,
+        config
+      ).then((responseText) => {
+        this.banks = responseText.data
+      })
+       .catch(console.log);
+    },
   },
   mounted() {
     this.getBanks()

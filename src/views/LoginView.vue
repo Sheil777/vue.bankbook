@@ -38,7 +38,7 @@ export default {
         const store = useStore()
         const router = useRouter()
         const {handleSubmit, isSubmitting} = useForm()
-
+        
         const {value: loginValue, errorMessage: loginError, handleBlur: loginBlur} = useField(
             'login',
             yup.string().trim().required('Пожалуйста введите логин')
