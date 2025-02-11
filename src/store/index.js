@@ -167,8 +167,7 @@ export default createStore({
         for(let i = 0; i < cat.shops.length; i++){
           if(cat.shops[i].id == payload.idShop)
             cat.shops.splice(i, 1)
-        }
-        
+        }        
         // cat.shops = shops
 
         // console.log(state.categories.filter(item => {return item.id == payload.idCategory})[0])

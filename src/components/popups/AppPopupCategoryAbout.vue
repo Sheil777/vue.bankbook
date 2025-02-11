@@ -71,11 +71,11 @@ export default {
       },  
       addStore() {
         if(this.inputAddStore.trim() != '') {
-          const url = `${process.env.VUE_APP_API_URL}/api/v1/banks`
+          const url = `${process.env.VUE_APP_API_URL}/api/v1/store`
           const token = this.$store.getters['auth/token']
           const body = {
-            "mcc_id": 8,
-            "name": "Антошка",
+            "mcc_id": this.mcc,
+            "name": this.inputAddStore,
             "user": 0
           }
           const config = {
@@ -91,14 +91,29 @@ export default {
           })
           .catch(console.log);
           // Добавление и очистка формы
-          // this.$store.commit('addShop', {
-          //   idCategory: this.idCategory,
-          //   nameCategory: this.inputAddStore.trim(),
-          // })
-          // this.inputAddStore = ''
+          this.$store.commit('addShop', {
+            idCategory: this.idCategory,
+            nameCategory: this.inputAddStore.trim(),
+          })
+          this.inputAddStore = ''
         }
       },
       removeShop(idShop) {
+        const url = `${process.env.VUE_APP_API_URL}/api/v1/store/${idShop}`
+        const token = this.$store.getters['auth/token']
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+
+        axios.delete( 
+          url,
+          config
+        ).then((responseText) => {
+          console.log(responseText.data)
+        })
+        .catch(console.log);
+
+        // Удаление
         this.$store.commit('removeShop', {
           idShop: idShop,
           idCategory: this.idCategory,
@@ -113,9 +128,7 @@ export default {
           this.about = category.about ? category.about : 'Описание отсутствует'
           const shops = this.$store.state.categories.filter(item => {return item.id == category.id})[0].shops
           this.shops = shops ? shops : []
-          console.log(category.id)
-          console.log(this.$store.state.categories)
-          this.mcc = category.mcc
+          this.mcc = category.mcc_id
 
           this.isOpen = true
           this.bodyLock()
