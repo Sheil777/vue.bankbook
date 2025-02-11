@@ -1,6 +1,6 @@
 <template>
     <div class="bank__category bank__category_click" :class="{ 'noActive' : noActive }">
-        <div class="category__logo">
+        <div class="category__logo _categoryLogo">
             <img 
                 :style="{backgroundColor: backgroundColor ? backgroundColor : 'rgb(108, 32, 183)'}" 
                 :src="imgSrc" 
@@ -75,17 +75,6 @@ export default {
     }
 
     .category {
-        &__logo {
-            width: 60px;
-            text-align: center;
-            img {
-                padding: 3px;
-                box-sizing: border-box;
-                width: 35px;
-                height: 35px;
-                border-radius: 50%;
-            }
-        }
 
         &__delete {
             margin-left: auto;

@@ -9,7 +9,7 @@
         <div class="popup-category-about__content popup__content">
             <a class="popup-category-about__close" @click="close"><div></div></a>
             <div class="popup-category-about__header">
-                <div id="popup-category-about__logo" class="popup-category-about__logo category__logo" >
+                <div class="popup-category-about__logo _categoryLogo" >
                     <img :style="{backgroundColor: imgBackground}" :src="img" alt="">
                 </div>
                 <div id="popup-category-about__name" class="popup-category-about__name">{{ name }}</div>
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     props: {
       editing: {
@@ -57,6 +59,7 @@ export default {
         addStoreVisible: false,
         inputAddStore: '',
         openShop: -1,
+        mcc: null,
       }
     },
     methods: {
@@ -68,11 +71,31 @@ export default {
       },  
       addStore() {
         if(this.inputAddStore.trim() != '') {
-          this.$store.commit('addShop', {
-            idCategory: this.idCategory,
-            nameCategory: this.inputAddStore.trim(),
+          const url = `${process.env.VUE_APP_API_URL}/api/v1/banks`
+          const token = this.$store.getters['auth/token']
+          const body = {
+            "mcc_id": 8,
+            "name": "Антошка",
+            "user": 0
+          }
+          const config = {
+            headers: { Authorization: `Bearer ${token}` }
+          };
+
+          axios.post( 
+            url,
+            body,
+            config
+          ).then((responseText) => {
+            console.log(responseText.data)
           })
-          this.inputAddStore = ''
+          .catch(console.log);
+          // Добавление и очистка формы
+          // this.$store.commit('addShop', {
+          //   idCategory: this.idCategory,
+          //   nameCategory: this.inputAddStore.trim(),
+          // })
+          // this.inputAddStore = ''
         }
       },
       removeShop(idShop) {
@@ -90,6 +113,7 @@ export default {
           this.about = category.about ? category.about : 'Описание отсутствует'
           const shops = this.$store.state.categories.filter(item => {return item.id == category.id})[0].shops
           this.shops = shops ? shops : []
+          this.mcc = category.mcc
 
           this.isOpen = true
           this.bodyLock()
