@@ -113,6 +113,8 @@ export default {
           this.about = category.about ? category.about : 'Описание отсутствует'
           const shops = this.$store.state.categories.filter(item => {return item.id == category.id})[0].shops
           this.shops = shops ? shops : []
+          console.log(category.id)
+          console.log(this.$store.state.categories)
           this.mcc = category.mcc
 
           this.isOpen = true

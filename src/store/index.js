@@ -187,6 +187,7 @@ export default createStore({
       },
       setCategories(state, payload) {
         state.categories = payload
+        // console.log(state.categories)
       }
     },
     actions: {
