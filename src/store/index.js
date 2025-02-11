@@ -1,5 +1,6 @@
 import { createStore, createLogger } from "vuex"
 import auth from "./modules/auth.module"
+import axios from "axios"
 
 const plugins = []
 
@@ -183,6 +184,27 @@ export default createStore({
             shops: [],
           }
         )
+      },
+      setCategories(state, payload) {
+        state.categories = payload
+      }
+    },
+    actions: {
+      async fetchCategories({ commit, getters }) {
+        const url = `${process.env.VUE_APP_API_URL}/api/v1/category`
+        const token = getters['auth/token']
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+  
+        axios.get( 
+          url,
+          config
+        ).then((responseText) => {
+          // console.log(responseText.data)
+          commit('setCategories', responseText.data)
+        })
+         .catch(console.log);
       }
     },
     modules: {
