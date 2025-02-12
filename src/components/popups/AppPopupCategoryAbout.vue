@@ -71,29 +71,11 @@ export default {
       },  
       addStore() {
         if(this.inputAddStore.trim() != '') {
-          const url = `${process.env.VUE_APP_API_URL}/api/v1/store`
-          const token = this.$store.getters['auth/token']
-          const body = {
-            "mcc_id": this.mcc,
-            "name": this.inputAddStore,
-            "user": 0
-          }
-          const config = {
-            headers: { Authorization: `Bearer ${token}` }
-          };
-
-          axios.post( 
-            url,
-            body,
-            config
-          ).then((responseText) => {
-            console.log(responseText.data)
-          })
-          .catch(console.log);
           // Добавление и очистка формы
-          this.$store.commit('addShop', {
+          this.$store.dispatch('addShopAction', {
+            mcc: this.mcc,
+            name: this.inputAddStore.trim(),
             idCategory: this.idCategory,
-            nameCategory: this.inputAddStore.trim(),
           })
           this.inputAddStore = ''
         }

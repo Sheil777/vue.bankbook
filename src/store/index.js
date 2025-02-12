@@ -157,9 +157,9 @@ export default createStore({
         }
     }, 
     mutations: {
-      addShop(state, payload) {
+      addShopMutation(state, payload) {
         const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
-        cat.shops.push({id: Math.random() * (1000 - 1) + 1, name: payload.nameCategory})
+        cat.shops.push({id: payload.idStore, name: payload.nameCategory})
       },
       removeShop(state, payload) {
         const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
@@ -167,10 +167,7 @@ export default createStore({
         for(let i = 0; i < cat.shops.length; i++){
           if(cat.shops[i].id == payload.idShop)
             cat.shops.splice(i, 1)
-        }        
-        // cat.shops = shops
-
-        // console.log(state.categories.filter(item => {return item.id == payload.idCategory})[0])
+        } 
       },
       addCategory(state, payload) {
         state.categories.push(
@@ -205,6 +202,31 @@ export default createStore({
           commit('setCategories', responseText.data)
         })
          .catch(console.log);
+      },
+      async addShopAction({ commit, getters }, params) {
+        const url = `${process.env.VUE_APP_API_URL}/api/v1/store`
+        const token = getters['auth/token']
+        const body = {
+          "mcc_id": params.mcc,
+          "name": params.name,
+          "user": 0
+        }
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+
+        axios.post( 
+          url,
+          body,
+          config
+        ).then((responseText) => {
+          commit('addShopMutation', {
+           idCategory: params.idCategory,
+           nameCategory: responseText.data.name,
+           idStore: responseText.data.id
+          })
+        })
+        .catch(console.log);
       }
     },
     modules: {
