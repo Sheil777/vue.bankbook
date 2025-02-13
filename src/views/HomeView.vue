@@ -241,9 +241,27 @@ export default {
     toggleEditing() {
       this.editing = !this.editing
     },
-    deleteCurrentCategory(bankId, categoryId) {
+    async deleteCurrentCategory(bankId, curCatId) {
+      const url = `${process.env.VUE_APP_API_URL}/api/v1/currentCategory/${curCatId}`
+      const token = this.$store.getters['auth/token']
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+
+      await axios.delete( 
+        url,
+        config
+      ).then((responseText) => {
+        console.log(responseText)
+      })
+       .catch((e) => {
+        console.log(e)
+      });
+      
+
+      // Удаление из массива
       const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories    // Получаем все категории банка
-      const newArr = cat.filter(item => { return item.idCC !== categoryId; })                // Удаляем лишнюю категорию
+      const newArr = cat.filter(item => { return item.idCC !== curCatId; })                // Удаляем лишнюю категорию
       this.currentBanks.filter(i => { return i.id === bankId })[0].categories = newArr       // Перезаписываем
     },
     addCurrentCategory(category, bankId) {
@@ -255,12 +273,16 @@ export default {
       cats.push(newCat)
     },
     deleteCurrentBank(bankId) {
+
+
+      // Удаление из массива
       const banks = this.currentBanks.filter(bank => { return bank.id !== bankId })
       this.currentBanks = banks
 
+      // Закрыть попап
       this.$refs.popupDeleteCurrentBankRef.close()
     },
-    getCurrentCategories() {
+    async getCurrentCategories() {
       this.loading = true
       const url = `${process.env.VUE_APP_API_URL}/api/v1/currentCategory`
 
@@ -270,7 +292,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` }
       };
 
-      axios.get( 
+      await axios.get( 
         url,
         config
       ).then((responseText) => {
