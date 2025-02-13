@@ -304,9 +304,11 @@ export default {
   .loading {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
     width: 100%;
+    max-width: 600px;
     height: 100%;
+    transform: translateX(-50%);
 
     display: flex;
     justify-content: center;
