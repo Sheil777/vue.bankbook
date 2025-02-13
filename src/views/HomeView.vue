@@ -264,7 +264,33 @@ export default {
       const newArr = cat.filter(item => { return item.idCC !== curCatId; })                // Удаляем лишнюю категорию
       this.currentBanks.filter(i => { return i.id === bankId })[0].categories = newArr       // Перезаписываем
     },
-    addCurrentCategory(category, bankId) {
+    async addCurrentCategory(category, bankId) {
+      const url = `${process.env.VUE_APP_API_URL}/api/v1/currentCategory`
+      const body = {
+            "bank_id": bankId,
+            "category_perc_id": category.id,
+            "user": 1
+      }
+      const token = this.$store.getters['auth/token']
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+
+      await axios.post( 
+        url,
+        body,
+        config
+      ).then((responseText) => {
+        console.log(responseText)
+      })
+       .catch((e) => {
+        console.log(e)
+      });
+
+
+
+
+      // Добавление в массив
       const cats = this.currentBanks.filter(i => { return i.id === bankId })[0].categories    // Получаем все категории банка
       let newCat = {}
       Object.assign(newCat, category)
