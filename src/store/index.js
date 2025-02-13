@@ -161,7 +161,7 @@ export default createStore({
         const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
         cat.shops.push({id: payload.idStore, name: payload.nameCategory})
       },
-      removeShop(state, payload) {
+      removeShopMutation(state, payload) {
         const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
         // const shops = cat.shops.filter(item => {return item.id != payload.idShop})
         for(let i = 0; i < cat.shops.length; i++){
@@ -215,7 +215,7 @@ export default createStore({
           headers: { Authorization: `Bearer ${token}` }
         };
 
-        axios.post( 
+        await axios.post( 
           url,
           body,
           config
@@ -224,6 +224,24 @@ export default createStore({
            idCategory: params.idCategory,
            nameCategory: responseText.data.name,
            idStore: responseText.data.id
+          })
+        })
+        .catch(console.log);
+      },
+      async removeShopAction({ commit, getters }, params) {
+        const url = `${process.env.VUE_APP_API_URL}/api/v1/store/${params.idShop}`
+        const token = getters['auth/token']
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+
+        await axios.delete( 
+          url,
+          config
+        ).then((responseText) => {
+          commit('removeShopMutation', {
+            idCategory: params.idCategory,
+            idShop: params.idShop
           })
         })
         .catch(console.log);

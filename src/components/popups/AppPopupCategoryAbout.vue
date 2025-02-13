@@ -81,24 +81,9 @@ export default {
         }
       },
       removeShop(idShop) {
-        const url = `${process.env.VUE_APP_API_URL}/api/v1/store/${idShop}`
-        const token = this.$store.getters['auth/token']
-        const config = {
-          headers: { Authorization: `Bearer ${token}` }
-        };
-
-        axios.delete( 
-          url,
-          config
-        ).then((responseText) => {
-          console.log(responseText.data)
-        })
-        .catch(console.log);
-
-        // Удаление
-        this.$store.commit('removeShop', {
+        this.$store.dispatch('removeShopAction', {
           idShop: idShop,
-          idCategory: this.idCategory,
+          idCategory: this.idCategory
         })
       },
       open(category) {
