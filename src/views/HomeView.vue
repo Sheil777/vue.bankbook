@@ -1,7 +1,7 @@
 <template>
   <div class="container _container">
     <the-header></the-header>
-    <div align='center' v-if="currentBanks.length === 0">Добавьте новый банк</div>
+    <div align='center' v-if="currentBanks.length === 0 && !loading">Добавьте новый банк</div>
     <app-bank-container 
       :title="bank.name" 
       :editing="editing" 
@@ -28,6 +28,10 @@
       >{{ category.name }}</app-category>
     </app-bank-container>
     <app-button-edit @toggle-editing="toggleEditing"></app-button-edit>
+
+    <div class="loading" v-if="loading">
+      <img src="../assets/loading.gif">
+    </div>
 
     <app-popup-add-current-category
       :current-categories="$store.state.categories"
@@ -205,6 +209,7 @@ export default {
       editing: false,
       timer: null,
       timerFlag: false,
+      loading: false,
     }
   },
   methods: {
@@ -256,6 +261,7 @@ export default {
       this.$refs.popupDeleteCurrentBankRef.close()
     },
     getCurrentCategories() {
+      this.loading = true
       const url = `${process.env.VUE_APP_API_URL}/api/v1/currentCategory`
 
       const token = this.$store.getters['auth/token']
@@ -270,8 +276,12 @@ export default {
       ).then((responseText) => {
         // console.log(responseText)
         this.currentBanks = responseText.data
+        this.loading = false
       })
-       .catch(console.log);
+       .catch((e) => {
+        console.log(e)
+        this.loading = false
+       });
     },
   },
   mounted() {
@@ -288,3 +298,22 @@ export default {
 }
 
 </script>
+
+
+<style lang="scss" scoped>
+  .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 50%;
+    }
+  }
+</style>
