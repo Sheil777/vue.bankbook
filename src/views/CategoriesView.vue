@@ -1,7 +1,7 @@
 <template>
     <div class="container _container">
         <the-header></the-header>
-        <div class="bank__header" style="background-color: #5382c4; color: white;">Категории</div>
+        <div class="bank__header _menuHeader" style="background-color: #5382c4; color: white;">Категории</div>
         <div class="categories">
             <app-category
                 v-for="category in $store.state.categories" :key="category.id"

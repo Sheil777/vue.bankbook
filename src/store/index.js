@@ -188,6 +188,7 @@ export default createStore({
     },
     actions: {
       async fetchCategories({ commit, getters }) {
+        // console.log('fetchCategories')
         const url = `${process.env.VUE_APP_API_URL}/api/v1/category`
         const token = getters['auth/token']
         const config = {

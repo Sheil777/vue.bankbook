@@ -276,7 +276,6 @@ export default {
   },
   mounted() {
     this.getCurrentCategories()
-    this.$store.dispatch('fetchCategories')
   },
   components: {
     AppBankContainer, 
