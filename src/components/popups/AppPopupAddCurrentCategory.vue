@@ -42,9 +42,9 @@ export default {
   },
   methods: {
     open(bank) {
-      this.isOpen = true
-      this.bankId = bank
-      this.bodyLock()
+      this.isOpen = true;
+      this.bankId = bank;
+      this.bodyLock();
     },
     close(e){
       // Если у родителей нажатой области нет .popup__content, значит это темная область
