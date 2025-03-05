@@ -45,6 +45,7 @@ export default {
       this.isOpen = true;
       this.bankId = bank;
       this.bodyLock();
+      // console.log(this.currentCategories)
     },
     close(e){
       // Если у родителей нажатой области нет .popup__content, значит это темная область

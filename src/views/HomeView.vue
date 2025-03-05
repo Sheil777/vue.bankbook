@@ -1,7 +1,7 @@
 <template>
   <div class="container _container">
     <the-header></the-header>
-    <div align='center' v-if="currentBanks.length === 0 && !loading">Добавьте новый банк</div>
+    <div align='center' v-if="currentBanks.length === 0 && !loading && !error">Добавьте новый банк</div>
     <app-bank-container 
       :title="bank.name" 
       :editing="editing" 
@@ -31,6 +31,11 @@
 
     <div class="loading" v-if="loading">
       <img src="../assets/loading.gif">
+    </div>
+
+    <div class="error" v-if="error">
+      <p>Произошла внутренняя ошибка сервера.</p>
+      <p>Повторите попытку позже.</p>
     </div>
 
     <app-popup-add-current-category
@@ -210,6 +215,7 @@ export default {
       timer: null,
       timerFlag: false,
       loading: false,
+      error: false,
     }
   },
   methods: {
@@ -282,21 +288,18 @@ export default {
         config
       ).then((responseText) => {
         console.log(responseText)
+
+        // Добавление в массив
+        const cats = this.currentBanks.filter(i => { return i.id === bankId })[0].categories    // Получаем все категории банка
+        let newCat = {}
+        Object.assign(newCat, category)
+        newCat.noActive = false
+        newCat.idCC = responseText.data.id;      
+        cats.push(newCat)
       })
        .catch((e) => {
         console.log(e)
       });
-
-
-
-
-      // Добавление в массив
-      const cats = this.currentBanks.filter(i => { return i.id === bankId })[0].categories    // Получаем все категории банка
-      let newCat = {}
-      Object.assign(newCat, category)
-      newCat.noActive = false
-      newCat.idCC = Math.random() * (1000 - 1) + 1;             // Случайное число для категории
-      cats.push(newCat)
     },
     deleteCurrentBank(bankId) {
 
@@ -325,11 +328,11 @@ export default {
         // console.log(responseText)
         this.currentBanks = responseText.data
         this.loading = false
-      })
-       .catch((e) => {
+      }).catch((e) => {
         console.log(e)
+        this.error = true
         this.loading = false
-       });
+      });
     },
   },
   mounted() {
@@ -365,5 +368,9 @@ export default {
     img {
       width: 50%;
     }
+  }
+
+  .error {
+    text-align: center;
   }
 </style>
