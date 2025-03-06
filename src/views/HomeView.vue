@@ -296,8 +296,7 @@ export default {
         newCat.noActive = false
         newCat.idCC = responseText.data.id;      
         cats.push(newCat)
-      })
-       .catch((e) => {
+      }).catch((e) => {
         console.log(e)
       });
     },

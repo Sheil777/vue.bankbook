@@ -1,24 +1,61 @@
 <template>
   <div class="container _container-registration">
       <the-header></the-header>
-      <form action="#">
+      <form action="#" @submit.prevent="submit">
           <div class="login">
-              <input id="form-login" type="text" placeholder="Введите логин" required>
+              <input id="form-login" type="text" placeholder="Введите логин" v-model="login" required>
+          </div>
+          <div class="email">
+              <input id="form-email" type="text" placeholder="Введите email" v-model="email" required>
           </div>
           <div class="password">
-              <input id="password" type="password" placeholder="Пароль" required>
+              <input id="password" type="password" placeholder="Пароль" v-model="password" required>
           </div>
           <div class="password-repeat">
-              <input id="password-repeat" type="password" placeholder="Повторите пароль" required>
+              <input id="password-repeat" type="password" placeholder="Повторите пароль" v-model="passwordRepeat" required>
           </div>
           <input id="button-register" type="submit" class="registration__button" value='Зарегистрироваться' />
       </form>
-      <div id="report" class="report"></div>
+      <div id="report" class="report">{{ report }}</div>
   </div>
 </template>
 
 <script>
+export default {
+    data() {
+        return {
+            login: '',
+            email: '',
+            password: '',
+            passwordRepeat: '',
+            report: '',
+        }
+    },
+    methods: {
+        validateEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(this.email)) 
+                this.report = 'Некорректный email';
+        },
+        equalsPassword() {
+            if(this.password != this.passwordRepeat){
+                this.report = 'Пароли не совпадают';
+            }
+        },
+        submit() {
+            this.report = '';
+            this.validateEmail();
+            this.equalsPassword();
 
+            
+            console.log('aloo')
+
+            if(!this.errors) {
+                console.log('submit')
+            }
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -42,7 +79,7 @@
       }
   }
 
-  .login {
+  .login, .email {
       margin-top: 50px;
 
       input {
@@ -69,6 +106,10 @@
       input:focus::-moz-placeholder          {text-indent: 500px; transition: text-indent 0.3s ease;}
       input:focus:-moz-placeholder           {text-indent: 500px; transition: text-indent 0.3s ease;}
       input:focus:-ms-input-placeholder      {text-indent: 500px; transition: text-indent 0.3s ease;}
+  }
+
+  .email {
+    margin-top: 30px;
   }
 
   .password, .password-repeat {
