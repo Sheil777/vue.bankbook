@@ -23,7 +23,7 @@ export default {
         login({ commit }, payload) {
             return new Promise((resolve, reject) => {
                 const url = `${process.env.VUE_APP_API_URL}/api/v1/login`
-                const body = {email: payload.login, password: payload.password}
+                const body = {login: payload.login, password: payload.password}
                 
                 axios.post(url, body).then(response => {
                     // запрос выполнен успешно
@@ -45,23 +45,34 @@ export default {
         
         registration({ commit }, payload) {
             return new Promise((resolve, reject) => {
-                const url = `${process.env.VUE_APP_API_URL}/api/v1/login`
-                const body = {email: payload.login, password: payload.password}
+                const url = `${process.env.VUE_APP_API_URL}/api/v1/register`
+                const body = {
+                    login: payload.login,
+                    email: payload.email,
+                    password: payload.password
+                }
                 
                 axios.post(url, body).then(response => {
                     // запрос выполнен успешно
-                    commit('setToken', response.data.token)
                     resolve()
                 }).catch(e => {
                     // запрос не выполнен
-                    if(Object.hasOwn(e, 'response')) {
-                        // console.log(e.response.data.message)
-                        reject(error(e.response.data.message)) // вернуть сообщение об ошибке вызывающей функции
-
-                    }else{
-                        // console.log(e.code)
-                        reject(error(e.code))          
+                    console.log(e)
+                    try {
+                        reject(e.response.data.code)
+                    }catch(e) {
+                        reject(3)
                     }
+                    
+
+                    // if(Object.hasOwn(e, 'response')) {
+                    //     // console.log(e.response.data.message)
+                    //     reject(error(e.response.data.message)) // вернуть сообщение об ошибке вызывающей функции
+
+                    // }else{
+                    //     // console.log(e.code)
+                    //     reject(error(e.code))          
+                    // }
                 })
             })
         }

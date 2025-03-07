@@ -3,24 +3,24 @@
       <the-header></the-header>
       <form action="#" @submit.prevent="submit">
           <div class="login" :class="{'invalid': errors.login}">
-              <input id="form-login" type="text" placeholder="Введите логин" v-model="login" required>
+              <input id="form-login" type="text" placeholder="Введите логин" v-model.trim="login" required>
               <small v-if="errors.login">{{ errors.login }}</small>
           </div>
           <div class="email" :class="{'invalid': errors.email}">
-              <input id="form-email" type="text" placeholder="Введите email" v-model="email" required>
+              <input id="form-email" type="text" placeholder="Введите email" v-model.trim="email" required>
               <small v-if="errors.email">{{ errors.email }}</small>
           </div>
           <div class="password" :class="{'invalid': errors.password}">
-              <input id="password" type="password" placeholder="Пароль" v-model="password" required>
+              <input id="password" type="password" placeholder="Пароль" v-model.trim="password" required>
               <small v-if="errors.password">{{ errors.password }}</small>
           </div>
           <div class="password-repeat" :class="{'invalid': errors.passwordRepeat}">
-              <input id="password-repeat" type="password" placeholder="Повторите пароль" v-model="passwordRepeat" required>
+              <input id="password-repeat" type="password" placeholder="Повторите пароль" v-model.trim="passwordRepeat" required>
               <small v-if="errors.passwordRepeat">{{ errors.passwordRepeat }}</small>
           </div>
           <input id="button-register" type="submit" class="registration__button" value='Зарегистрироваться' />
       </form>
-      <div id="report" class="report"></div>
+      <div id="report" class="report" v-if="errors.report">{{ errors.report }}</div>
   </div>
 </template>
 
@@ -36,7 +36,8 @@ export default {
                 login: '',
                 email: '',
                 password: '',
-                passwordRepeat: ''
+                passwordRepeat: '',
+                report: ''
             },
             isFormValid: true,
         }
@@ -75,6 +76,7 @@ export default {
             }
         },
         submit() {
+            this.errors.report = ''
             this.isFormValid = true
             this.validLogin();
             this.validateEmail();
@@ -85,7 +87,31 @@ export default {
             console.log('aloo')
 
             if(this.isFormValid) {
-                console.log('submit')
+                this.$store.dispatch('auth/registration', {
+                    login: this.login.trim(),
+                    email: this.email.trim(),
+                    password: this.password.trim()
+                }).then(() => {
+                    this.$store.dispatch('auth/login', {
+                        login: this.email,
+                        password: this.password
+                    }).then(() => {
+                        this.$router.push('/')
+                    })
+                }).catch((response) => {
+
+                    if(response == 1) {
+                        this.errors.login = 'Логин уже занят'
+                    }else{
+                        if(response == 2) {
+                            this.errors.email = 'Email уже занят'
+                        }else{
+                            this.errors.report = 'Произошла внутренняя ошибка сервера. Повторите попытку позже'
+                        }
+                    }
+
+
+                })
             }
         }
     }
