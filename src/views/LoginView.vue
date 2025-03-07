@@ -75,41 +75,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
+@import '../assets/css/authorization';
 
-img {
-    vertical-align: top;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: inherit;
-    font-size: inherit;
-}
-
-b {
-    font-size: inherit;
-}
-
-a {
-    text-decoration: none;
-}
-
-body {
-    height: 100%;
-    line-height: 1;
-    font-size: 16px;
-    color: #000;
-    font-family: 'Montserrat';
-}
-
-.wrapper {
-    min-height: 100%;
-    overflow: hidden;
-}
 
 ._container {
     max-width: 393px;
@@ -124,14 +91,6 @@ body {
     }
 }
 
-.logo {
-    margin: 0 auto;
-    margin-top: 100px;
-    width: 90%;
-    img {
-        width: 100%;
-    }
-}
 
 form {
     width: 250px;
@@ -200,10 +159,6 @@ form {
     input:focus::-moz-placeholder          {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-moz-placeholder           {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-ms-input-placeholder      {text-indent: 500px; transition: text-indent 0.3s ease;}
-    
-    &.invalid input {
-        border-bottom: 1px solid red;
-    }
 }
 
 form button {

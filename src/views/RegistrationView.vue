@@ -2,21 +2,25 @@
   <div class="container _container-registration">
       <the-header></the-header>
       <form action="#" @submit.prevent="submit">
-          <div class="login">
+          <div class="login" :class="{'invalid': errors.login}">
               <input id="form-login" type="text" placeholder="Введите логин" v-model="login" required>
+              <small v-if="errors.login">{{ errors.login }}</small>
           </div>
-          <div class="email">
+          <div class="email" :class="{'invalid': errors.email}">
               <input id="form-email" type="text" placeholder="Введите email" v-model="email" required>
+              <small v-if="errors.email">{{ errors.email }}</small>
           </div>
-          <div class="password">
+          <div class="password" :class="{'invalid': errors.password}">
               <input id="password" type="password" placeholder="Пароль" v-model="password" required>
+              <small v-if="errors.password">{{ errors.password }}</small>
           </div>
-          <div class="password-repeat">
+          <div class="password-repeat" :class="{'invalid': errors.passwordRepeat}">
               <input id="password-repeat" type="password" placeholder="Повторите пароль" v-model="passwordRepeat" required>
+              <small v-if="errors.passwordRepeat">{{ errors.passwordRepeat }}</small>
           </div>
           <input id="button-register" type="submit" class="registration__button" value='Зарегистрироваться' />
       </form>
-      <div id="report" class="report">{{ report }}</div>
+      <div id="report" class="report"></div>
   </div>
 </template>
 
@@ -28,29 +32,59 @@ export default {
             email: '',
             password: '',
             passwordRepeat: '',
-            report: '',
+            errors: {
+                login: '',
+                email: '',
+                password: '',
+                passwordRepeat: ''
+            },
+            isFormValid: true,
         }
     },
     methods: {
+        validLogin() {
+          this.errors.login = ''
+
+          if(this.login.length <= 2){
+              this.errors.login = 'Логин должен быть больше 2 символов';
+              this.isFormValid = false
+          }
+        },
         validateEmail() {
+            this.errors.email = ''
+
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(this.email)) 
-                this.report = 'Некорректный email';
+            if (!emailRegex.test(this.email)) {
+                this.errors.email = 'Некорректный email';
+                this.isFormValid = false
+            }
+        },
+        validatePassword() {
+            this.errors.password = ''
+            if(this.password.length < 5) {
+                this.errors.password = 'Длина пароля должна быть больше 4 символов';
+                this.isFormValid = false
+            }
         },
         equalsPassword() {
+            this.errors.passwordRepeat = ''
+
             if(this.password != this.passwordRepeat){
-                this.report = 'Пароли не совпадают';
+                this.errors.passwordRepeat = 'Пароли не совпадают';
+                this.isFormValid = false
             }
         },
         submit() {
-            this.report = '';
+            this.isFormValid = true
+            this.validLogin();
             this.validateEmail();
+            this.validatePassword();
             this.equalsPassword();
 
             
             console.log('aloo')
 
-            if(!this.errors) {
+            if(this.isFormValid) {
                 console.log('submit')
             }
         }
@@ -59,6 +93,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '../assets/css/authorization';
   ._container-registration {
       max-width: 393px;
       margin: 0px auto;
@@ -70,14 +105,6 @@ export default {
       }
   }
 
-  .logo {
-      margin: 0 auto;
-      margin-top: 100px;
-      width: 90%;
-      img {
-          width: 100%;
-      }
-  }
 
   .login, .email {
       margin-top: 50px;
