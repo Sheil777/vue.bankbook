@@ -4,13 +4,13 @@
       <h1>Добавление нового банка</h1>
 
         <div class="main">
-            <form>
+            <form @submit.prevent="submit">
                 <div class="text-field text-field_floating-2">
-                    <input class="text-field__input" type="input" id="name" name="name" placeholder="Тинькофф">
+                    <input class="text-field__input" type="input" id="name" name="name" placeholder="Тинькофф" v-model.trim="name" required>
                     <label class="text-field__label" for="name">Наименование</label>
                 </div>
 
-                <select name="color-bg" id="color-bg" required>
+                <select name="color-bg" id="color-bg" v-model.trim="background" required>
                     <option value="" selected="true" disabled="disabled">Цвет фона</option>
                     <option value="white">Белый</option>
                     <option value="yellow">Жёлтый</option>
@@ -19,7 +19,7 @@
                     <option value="green">Зелёный</option>
                 </select>
 
-                <select name="color-text" id="color-text" required>
+                <select name="color-text" id="color-text" v-model.trim="color" required>
                     <option value="" selected="true" disabled="disabled">Цвет текста</option>
                     <option value="white">Белый</option>
                     <option value="yellow">Жёлтый</option>
@@ -30,16 +30,58 @@
 
                 <input class="button__submit" type="submit">
             </form>
+            <div class="report" v-if="report">{{ report }}</div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 
+export default {
+    data() {
+        return {
+            name: '',
+            background: '',
+            color: '',
+            report: '',
+        }
+    },
+    methods: {
+        async submit() {
+            this.report = ''
+            const url = `${process.env.VUE_APP_API_URL}/api/v1/banks`
+            const body = {
+                "name": this.name,
+                "color_bg": this.background,
+                "color_text": this.color
+            }
+            const token = this.$store.getters['auth/token']
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+
+            await axios.post(url, body, config)
+                .then((responseText) => {
+                    this.report = "Банк успешно добавлен"
+                    this.name = ''
+                    this.background = ''
+                    this.color = ''
+                }).catch((response) => {
+                    if(response.status == 422) {
+                        this.report = "Банк уже существует"
+                    }else{
+                        this.report = "Произошла неизвестная ошибка"
+                    }
+                })
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
 @import '../assets/css/variables';
+
 
 // unit
 
@@ -299,5 +341,9 @@ select {
     &:hover {
         cursor: pointer;
     }
+}
+
+.report {
+    margin-top: 10px;    
 }
 </style>
