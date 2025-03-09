@@ -28,7 +28,7 @@
                     <option value="black">Чёрный</option>
                 </select>
 
-                <input class="button__submit" type="submit">
+                <input class="button__submit" type="submit" :disabled="!name || !background || !color">
             </form>
             <div class="report" v-if="report">{{ report }}</div>
         </div>
@@ -340,6 +340,12 @@ select {
 .button__submit {
     &:hover {
         cursor: pointer;
+    }
+    
+    &[disabled] {
+        background-color: #e7e7e7;
+        color: #707070;
+        cursor: default;
     }
 }
 

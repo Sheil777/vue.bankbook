@@ -93,7 +93,7 @@ export default {
                     password: this.password.trim()
                 }).then(() => {
                     this.$store.dispatch('auth/login', {
-                        login: this.email,
+                        login: this.login,
                         password: this.password
                     }).then(() => {
                         this.$router.push('/')

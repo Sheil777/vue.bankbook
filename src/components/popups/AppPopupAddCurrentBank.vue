@@ -2,7 +2,7 @@
   <div id="popup-add-current-bank" class="popup-add-current-bank popup" :class="{'open': isOpen}" @click="closePopup">
     <div class="popup-add-current-bank__body">
       <div class="popup-add-current-bank__content popup__content">
-        <a href="" class="popup-add-current-bank__close" @click="close"><div></div></a>
+        <a href="" class="popup-add-current-bank__close" @click.prevent="close"><div></div></a>
         <div class="popup-add-current-bank__header">Выберите банк</div>
         <div class="popup-add-current-bank__banks">
             <div 
@@ -66,6 +66,9 @@ export default {
       })
        .catch(console.log);
     },
+    addCurrentBank() {
+      // Здесь будет добавляться банк
+    }
   },
   mounted() {
     this.getBanks()
