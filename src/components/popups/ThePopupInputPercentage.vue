@@ -1,24 +1,26 @@
 <template>
-    <div class="popup-input-percentage">
+    <div :class="['popup-input-percentage', {'open': isOpen}]" @click="close">
         <div class="popup-input-percentage__body">
-            <div class="popup-input-percentage__content">
+            <div class="popup-input-percentage__content popup__content">
                 <div class="popup-close"></div>
                 <div class="popup-input-percentage__header">Введите процент</div>
-                <form class="popup-input-percentage__form">
+                <form class="popup-input-percentage__form" v-if="category">
                     <div class="category">
                         <div class="_categoryLogo">
                             <img 
-                                :style="{backgroundColor: backgroundColor ? backgroundColor : 'rgb(108, 32, 183)'}" 
+                                :style="{backgroundColor: category.backgroundColor ? category.backgroundColor : 'rgb(108, 32, 183)'}" 
                                 :src="imgSrc" 
                                 alt=""
                             >
                         </div>
                         <div class="category__text">
-                            <input type="phone">
-                            <span>% Все покупки</span>
+                            <input type="phone" ref="inputField">
+                            <span>% {{ category.name }}</span>
                         </div>
                     </div>
-                    <button type="submit">Добавить</button>
+                    <div class="popup-input-percentage__button">
+                        <button class="popup-input-percentage__submit" type="submit">Добавить</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -26,13 +28,38 @@
 </template>
 
 <script>
+import { nextTick } from 'vue';
 
 export default {
     data() {
         return {
-            backgroundColor: "",
+            isOpen: false,
             imgSrc: require('../../assets/img/icons/package.svg'),
+            category: null,
         }
+    },
+    methods: { 
+        open(category) {
+            this.isOpen = true;
+            this.category = category
+
+            setTimeout(()=> {
+                nextTick(() => {
+                    this.$refs.inputField.focus()
+                })
+            }, 500)
+        },
+        close(e){
+            // Если у родителей нажатой области нет .popup__content, значит это темная область
+            if(!e.target.closest('.popup__content')) {
+                this.isOpen = false
+                // this.bodyUnlock()
+            }
+            if(e.target.closest('.popup-close')) {
+                this.isOpen = false
+                // this.bodyUnlock()
+            }
+        },
     }
 }
 </script>
@@ -51,7 +78,7 @@ export default {
       
         opacity: 0;
         visibility: hidden;
-        transition: 0.8s;
+        transition: 0.4s;
       
         overflow-y: auto;
         overflow-x: hidden;
@@ -95,6 +122,29 @@ export default {
           height: 50px;
           font-size: 20px;
           border-bottom: 1px solid black;
+        }
+
+        &__button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px 0 15px 0;
+        }
+
+        &__submit {
+            background-color: #43679b;
+            color: white;
+            width: 110px;
+            height: 30px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #5583c2;
+            }
         }
     }
 

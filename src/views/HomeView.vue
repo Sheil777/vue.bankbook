@@ -38,8 +38,6 @@
       <p>Повторите попытку позже.</p>
     </div>
 
-    <the-popup-input-percentage></the-popup-input-percentage>
-
     <app-popup-add-current-category
       :current-categories="$store.state.categories"
       @add="addCurrentCategory"
@@ -66,7 +64,6 @@ import AppButtonEdit from "../components/AppButtonEdit.vue";
 import AppPopupAddCurrentCategory from "@/components/popups/AppPopupAddCurrentCategory.vue";
 import AppPopupDeleteCurrentBank from "@/components/popups/AppPopupDeleteCurrentBank.vue";
 import AppPopupCategoryAbout from "@/components/popups/AppPopupCategoryAbout.vue";
-import ThePopupInputPercentage from '@/components/popups/ThePopupInputPercentage.vue';
 
 export default {
   data() {
@@ -347,7 +344,6 @@ export default {
     AppPopupAddCurrentCategory,
     AppPopupDeleteCurrentBank,
     AppPopupCategoryAbout,
-    ThePopupInputPercentage,
   },
 }
 

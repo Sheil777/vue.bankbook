@@ -14,16 +14,21 @@
               v-for="category in currentCategories" :key="category.id"
               :img="category.img"
               :background-color="category.backgroundColor"
-              @click="this.$emit('add', category, bankId)"
+              @click="clickOnCategory(category)"
             >{{ category.name }}</app-category>
 
         </div>
     </div>
   </div>
+  
+  <the-popup-input-percentage
+    ref="popupInputPercentageRef"
+  ></the-popup-input-percentage>
 </template>
 
 <script>
 import AppCategory from '../AppCategory.vue';
+import ThePopupInputPercentage from '@/components/popups/ThePopupInputPercentage.vue';
 
 export default {
   props: {
@@ -58,9 +63,14 @@ export default {
         this.bodyUnlock()
       }
     },
+    clickOnCategory(category) {
+      // this.$emit('add', category, this.bankId)
+      this.$refs.popupInputPercentageRef.open(category)
+    }
   },
   components: {
-    AppCategory
+    AppCategory,
+    ThePopupInputPercentage,
   }
 }
 </script>
