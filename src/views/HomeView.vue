@@ -46,7 +46,6 @@
 
     <app-popup-add-current-category
       :current-categories="$store.state.categories"
-      @add="addCurrentCategory"
       ref="popupAddCurrentCategoryRef"
     ></app-popup-add-current-category>
 

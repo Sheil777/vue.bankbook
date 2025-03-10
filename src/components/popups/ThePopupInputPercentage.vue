@@ -4,7 +4,7 @@
             <div class="popup-input-percentage__content popup__content">
                 <div class="popup-close"></div>
                 <div class="popup-input-percentage__header">Введите процент</div>
-                <form class="popup-input-percentage__form" v-if="category">
+                <form class="popup-input-percentage__form" v-if="category" @submit.prevent="submit">
                     <div class="category">
                         <div class="_categoryLogo">
                             <img 
@@ -14,7 +14,7 @@
                             >
                         </div>
                         <div class="category__text">
-                            <input type="phone" ref="inputField">
+                            <input type="phone" ref="inputField" v-model="percent">
                             <span>% {{ category.name }}</span>
                         </div>
                     </div>
@@ -36,6 +36,7 @@ export default {
             isOpen: false,
             imgSrc: require('../../assets/img/icons/package.svg'),
             category: null,
+            percent: null,
         }
     },
     methods: { 
@@ -60,6 +61,12 @@ export default {
                 // this.bodyUnlock()
             }
         },
+        submit() {
+            console.log("submit")
+
+            this.percent = null
+            this.isOpen = false
+        }
     }
 }
 </script>
