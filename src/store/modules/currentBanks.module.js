@@ -67,6 +67,33 @@ export default {
                 });
 
             })
+        },
+        async addCurrentBank({ rootGetters }, bankId) {
+            return new Promise((resolve, reject) => {
+                const body = {     
+                    "bank_id": bankId,
+                    "percent": 0,
+                    "category_id": 0,
+                    "always": 1
+                }
+                const token = rootGetters['auth/token']
+                const config = {
+                  headers: { Authorization: `Bearer ${token}` }
+                };
+          
+                axios.post( 
+                  `${process.env.VUE_APP_API_URL}/api/v1/currentCategory`,
+                  body,
+                  config
+                ).then(() => {
+                    resolve()
+                }).catch((e) => {
+                    reject(e)
+                })
+            })
+        },
+        async removeCurrentBank() {
+            
         }
     },
     getters: {

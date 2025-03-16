@@ -10,6 +10,7 @@
               class="popup-add-current-bank__bank" 
               style="border-bottom: 1px solid black;"
               :style="{'background': bank.color_bg, 'color': bank.color_text}"
+              @click="addCurrentBank(bank.id)"
             >
                 {{ bank.name }}
             </div>
@@ -66,9 +67,15 @@ export default {
       })
        .catch(console.log);
     },
-    addCurrentBank() {
+    addCurrentBank(bankId) {
       // Здесь будет добавляться банк
-      
+      this.$store.dispatch('currentBanks/addCurrentBank', bankId)
+        .then(() => {
+          var index = this.banks.map(bank => {
+            return bank.id;
+          }).indexOf(bankId);
+          this.banks.splice(index, 1)
+        })
     }
   },
   mounted() {
