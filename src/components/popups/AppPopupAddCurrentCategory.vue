@@ -65,7 +65,7 @@ export default {
     },
     clickOnCategory(category) {
       // this.$emit('add', category, this.bankId)
-      this.$refs.popupInputPercentageRef.open(category)
+      this.$refs.popupInputPercentageRef.open(category, this.bankId)
     }
   },
   components: {

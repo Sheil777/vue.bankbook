@@ -18,7 +18,7 @@
               <input id="password-repeat" type="password" placeholder="Повторите пароль" v-model.trim="passwordRepeat" required>
               <small v-if="errors.passwordRepeat">{{ errors.passwordRepeat }}</small>
           </div>
-          <input id="button-register" type="submit" class="registration__button" value='Зарегистрироваться' />
+          <input id="button-register" type="submit" class="registration__button" value='Зарегистрироваться' :disabled="disabledButton" />
       </form>
       <div id="report" class="report" v-if="errors.report">{{ errors.report }}</div>
   </div>
@@ -28,6 +28,7 @@
 export default {
     data() {
         return {
+            disabledButton: false,
             login: '',
             email: '',
             password: '',
@@ -83,10 +84,8 @@ export default {
             this.validatePassword();
             this.equalsPassword();
 
-            
-            console.log('aloo')
-
             if(this.isFormValid) {
+                this.disabledButton = true;
                 this.$store.dispatch('auth/registration', {
                     login: this.login.trim(),
                     email: this.email.trim(),
@@ -99,7 +98,7 @@ export default {
                         this.$router.push('/')
                     })
                 }).catch((response) => {
-
+                    this.disabledButton = false;
                     if(response == 1) {
                         this.errors.login = 'Логин уже занят'
                     }else{
@@ -213,6 +212,12 @@ export default {
       background-color: #5382c4;
 
       cursor: pointer;
+    }
+
+    &:disabled {
+        background-color: #e7e7e7;
+        color: #707070;
+        cursor: default;
     }
   }
 

@@ -275,36 +275,6 @@ export default {
       const newArr = cat.filter(item => { return item.idCC !== curCatId; })                // Удаляем лишнюю категорию
       this.currentBanks.filter(i => { return i.id === bankId })[0].categories = newArr       // Перезаписываем
     },
-    async addCurrentCategory(category, bankId) {
-      const url = `${process.env.VUE_APP_API_URL}/api/v1/currentCategory`
-      const body = {
-            "bank_id": bankId,
-            "category_perc_id": category.id,
-            "user": 1
-      }
-      const token = this.$store.getters['auth/token']
-      const config = {
-        headers: { Authorization: `Bearer ${token}` }
-      };
-
-      await axios.post( 
-        url,
-        body,
-        config
-      ).then((responseText) => {
-        console.log(responseText)
-
-        // Добавление в массив
-        const cats = this.currentBanks.filter(i => { return i.id === bankId })[0].categories    // Получаем все категории банка
-        let newCat = {}
-        Object.assign(newCat, category)
-        newCat.noActive = false
-        newCat.idCC = responseText.data.id;      
-        cats.push(newCat)
-      }).catch((e) => {
-        console.log(e)
-      });
-    },
     deleteCurrentBank(bankId) {
 
 
@@ -317,26 +287,21 @@ export default {
     },
     async getCurrentCategories() {
       this.loading = true
-      const url = `${process.env.VUE_APP_API_URL}/api/v1/currentCategory`
-
-      const token = this.$store.getters['auth/token']
-
-      const config = {
-        headers: { Authorization: `Bearer ${token}` }
-      };
-
-      await axios.get( 
-        url,
-        config
-      ).then((responseText) => {
-        // console.log(responseText)
-        this.currentBanks = responseText.data
+      
+      this.$store.dispatch('currentBanks/fetchCurrentBanks').then(() => {
+        this.currentBanks = this.$store.getters['currentBanks/currentBanks']
         this.loading = false
       }).catch((e) => {
-        console.log(e)
-        this.error = true
-        this.loading = false
-      });
+          console.log(e)
+          this.error = true
+          this.loading = false
+
+          if(e.status == 401) {
+            // Человек не авторизирован
+            this.$store.commit('auth/logout')
+            this.$router.push('/login')
+          }
+      })
     },
   },
   mounted() {

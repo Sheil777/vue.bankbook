@@ -37,12 +37,14 @@ export default {
             imgSrc: require('../../assets/img/icons/package.svg'),
             category: null,
             percent: null,
+            bankId: null,
         }
     },
     methods: { 
-        open(category) {
+        open(category, bankId) {
             this.isOpen = true;
             this.category = category
+            this.bankId = bankId
 
             setTimeout(()=> {
                 nextTick(() => {
@@ -63,6 +65,16 @@ export default {
         },
         submit() {
             console.log("submit")
+
+            this.$store.dispatch('currentBanks/addCurrentCategory', {
+                bank_id: this.bankId,
+                percent: this.percent,
+                category_id: this.category.id,
+            }).then(() => {
+                console.log('succ')
+            }).catch(() => {
+                console.log('err')
+            })
 
             this.percent = null
             this.isOpen = false

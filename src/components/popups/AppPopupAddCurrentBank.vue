@@ -68,6 +68,7 @@ export default {
     },
     addCurrentBank() {
       // Здесь будет добавляться банк
+      
     }
   },
   mounted() {

@@ -1,5 +1,6 @@
 import { createStore, createLogger } from "vuex"
 import auth from "./modules/auth.module"
+import currentBanks from "./modules/currentBanks.module"
 import axios from "axios"
 
 const plugins = []
@@ -247,9 +248,48 @@ export default createStore({
           })
         })
         .catch(console.log);
+      },
+      async addCategoryAction({ commit, getters }, params) {
+        return new Promise((resolve, reject) => {
+
+          const url = `${process.env.VUE_APP_API_URL}/api/v1/category`
+          const token = getters['auth/token']
+          const body = {
+            "name": params.name,
+            "about": params.about, 
+            "bank": params.bank,
+          }
+          const config = {
+            headers: { Authorization: `Bearer ${token}` }
+          };
+  
+          axios.post( 
+            url,
+            body,
+            config
+          ).then((responseText) => {
+            // commit('addShopMutation', {
+            //  idCategory: params.idCategory,
+            //  nameCategory: responseText.data.name,
+            //  idStore: responseText.data.id
+            // })
+            resolve(responseText)
+          })
+          .catch((e) => {
+            reject(e)
+          });
+
+        });
+
+      }
+    },
+    getters: {
+      category: (state) => (id) => {
+        return state.categories.find(cat => cat.id === id)
       }
     },
     modules: {
-      auth
+      auth,
+      currentBanks
     }
 })

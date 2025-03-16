@@ -4,18 +4,12 @@
         <h1>Добавление новой категории</h1>
 
 <div class="ncat__main">
-    <form action="" method="POST">
-        <div class="ncat__line">
-            <div class="ncat__percent text-field text-field_floating-2">
-                <input class="text-field__input" type="number" min=0 max=100 id="percent" name="percent" placeholder="5" required v-model="percent">
-                <label class="text-field__label" for="percent">%</label>
-            </div>
-
-            <div class="ncat__name text-field text-field_floating-2">
-                <input class="text-field__input" type="input" id="name" name="name" placeholder="Все категории" required v-model="nameCategory">
-                <label class="text-field__label" for="name">Наименование</label>
-            </div>
+    <form action="" method="POST" @submit.prevent="submit">
+        <div class="ncat__name text-field text-field_floating-2">
+            <input class="text-field__input" type="input" id="name" name="name" placeholder="Все категории" required v-model="nameCategory">
+            <label class="text-field__label" for="name">Наименование</label>
         </div>
+        
 
         <div class="ncat__about_wrap">
             <textarea class="ncat__about" name="about" id="about" rows="4" placeholder="Описание" v-model="about"></textarea>
@@ -28,11 +22,11 @@
             </select>
         </div>
 
-        <input id="ncat__submit" class="button__submit" type="submit" @click.prevent="submit">
+        <input id="ncat__submit" class="button__submit" type="submit" :disabled="buttonDisabled">
     </form>
 
-    <div class="ncat__report">
-        <p>Категория успешно добавлена</p>
+    <div class="ncat__report" :class="{'active': report}">
+        <p>{{ reportMessage }}</p>
     </div>
 </div>
     </div>
@@ -42,21 +36,43 @@
 export default {
     data() {
         return {
-            percent: '',
             nameCategory: '',
             about: '',
             bank: 0,
+            buttonDisabled: false,
+            report: false,
+            reportMessage: ''
         }
     },
     methods: {
+        showReport(message) {
+            this.report = true
+            this.reportMessage = message
+
+        },
+        clearFields(){
+            this.nameCategory = '',
+            this.about = '',
+            this.bank = 0
+        },
         submit() {
-            console.log('percent', this.percent)
-            console.log('name', this.nameCategory)
-            console.log('about', this.about)
-            console.log('bank', this.bank)
-            this.$store.commit('addCategory', {
-                nameCategory: this.percent + '% ' + this.nameCategory,
+            this.buttonDisabled = true
+
+            this.$store.dispatch('addCategoryAction', {
+                name: this.nameCategory, 
                 about: this.about,
+                bank: this.bank,
+            }).then((responseText)=> {
+                console.log(responseText)
+                this.showReport('Категория успешно добавлена')
+                this.clearFields()
+
+                this.buttonDisabled = false
+            }).catch((e) => {
+                console.log(e)
+                this.showReport('Произошла ошибка при добавлении категории')
+
+                this.buttonDisabled = false
             })
         }
     }
@@ -82,7 +98,13 @@ export default {
     margin-top: 15px;
     border-radius: 5px;
     background-color: #5382c4;
-    color: white;
+    color: white;   
+
+    &:disabled {
+        background-color: #e7e7e7;
+        color: #707070;
+        cursor: default;
+    }
 }
 
 select {
@@ -102,10 +124,8 @@ select {
 }
 
 .ncat {
-    &__line {
+    &__name {
         max-width: 300px;
-        display: flex;
-        justify-content: space-between;
     }
 
     &__percent {

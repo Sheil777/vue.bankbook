@@ -63,16 +63,6 @@ export default {
                     }catch(e) {
                         reject(3)
                     }
-                    
-
-                    // if(Object.hasOwn(e, 'response')) {
-                    //     // console.log(e.response.data.message)
-                    //     reject(error(e.response.data.message)) // вернуть сообщение об ошибке вызывающей функции
-
-                    // }else{
-                    //     // console.log(e.code)
-                    //     reject(error(e.code))          
-                    // }
                 })
             })
         }
