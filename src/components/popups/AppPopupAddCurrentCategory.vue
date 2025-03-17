@@ -11,7 +11,7 @@
             <div class="popup-categories__header">Выберите категорию</div>
             
             <app-category
-              v-for="category in currentCategories" :key="category.id"
+              v-for="category in categories" :key="category.id"
               :img="category.img"
               :background-color="category.backgroundColor"
               @click="clickOnCategory(category)"
@@ -43,12 +43,14 @@ export default {
     return {
       isOpen: false,
       bankId: null,
+      categories: null,
     }
   },
   methods: {
     open(bank) {
       this.isOpen = true;
       this.bankId = bank;
+      this.categories = this.currentCategories.filter(category => category.bank == 0 || category.bank == this.bankId)
       this.bodyLock();
       // console.log(this.currentCategories)
     },

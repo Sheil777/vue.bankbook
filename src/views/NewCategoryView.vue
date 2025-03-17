@@ -18,7 +18,7 @@
         <div class="ncat__bank">
             <select name="bank" id="bank" v-model="bank">
                 <option value="0" selected>Любой банк</option>
-                <option value='1'>Тинькофф</option>
+                <option v-for="bank in banksList" :key="bank.id" :value='bank.id'>{{ bank.name }}</option>
             </select>
         </div>
 
@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return {
@@ -41,7 +43,8 @@ export default {
             bank: 0,
             buttonDisabled: false,
             report: false,
-            reportMessage: ''
+            reportMessage: '',
+            banksList: null
         }
     },
     methods: {
@@ -75,6 +78,19 @@ export default {
                 this.buttonDisabled = false
             })
         }
+    },
+    created() {
+        const token = this.$store.getters['auth/token']
+
+        axios.get( 
+            `${process.env.VUE_APP_API_URL}/api/v1/banks`,
+            { headers: { Authorization: `Bearer ${token}` } }
+        ).then((responseText) => {
+            this.banksList = responseText.data
+        })
+        .catch((e) => {
+            console.log(e)
+        });
     }
 }
 </script>
