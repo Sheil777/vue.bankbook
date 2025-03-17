@@ -5,7 +5,7 @@
             <div class="popup-delete-current-bank__block">
                 <div class="popup-delete-current-bank__header">Вы действительно хотите удалить банк "<span>{{ bankName }}</span>"?</div>
                 <div class="popup-delete-current-bank__buttons">
-                    <div class="popup-delete-current-bank__yes" @click="this.$emit('deleteBank', bankId)">Да</div>
+                    <div class="popup-delete-current-bank__yes" @click="deleteCurrentBank">Да</div>
                     <div class="popup-delete-current-bank__no popup-close" @click="close">Нет</div>
                 </div>
             </div>
@@ -47,7 +47,17 @@ export default {
       if(!e.target.closest('.popup__content')) {
         this.close()
       }
-    }
+    },
+    deleteCurrentBank() {
+      // Удаление из базы
+      this.$store.dispatch('currentBanks/removeCurrentBank', this.bankId).then(() => {
+        // Удаление из массива
+        this.$store.commit('currentBanks/removeCurrentBank', this.bankId)
+      })
+
+      // Закрыть попап
+      this.close()
+    },
   }
 }
 </script>

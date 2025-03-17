@@ -50,7 +50,6 @@
     ></app-popup-add-current-category>
 
     <app-popup-delete-current-bank
-      @deleteBank="deleteCurrentBank"
       ref="popupDeleteCurrentBankRef"
     ></app-popup-delete-current-bank>
 
@@ -274,16 +273,6 @@ export default {
       const cat = this.currentBanks.filter(i => { return i.id === bankId })[0].categories    // Получаем все категории банка
       const newArr = cat.filter(item => { return item.idCC !== curCatId; })                // Удаляем лишнюю категорию
       this.currentBanks.filter(i => { return i.id === bankId })[0].categories = newArr       // Перезаписываем
-    },
-    deleteCurrentBank(bankId) {
-
-
-      // Удаление из массива
-      const banks = this.currentBanks.filter(bank => { return bank.id !== bankId })
-      this.currentBanks = banks
-
-      // Закрыть попап
-      this.$refs.popupDeleteCurrentBankRef.close()
     },
     async getCurrentCategories() {
       this.loading = true

@@ -21,7 +21,14 @@ export default {
             newCat.noActive = false
             newCat.idCC = payload.id;      
             cats.push(newCat)
-        }
+        },
+        removeCurrentBank(state, bankId) {
+            // Удаление из массива
+            const index = state.currentBanks.findIndex(bank => bank.id === bankId);
+            if (index !== -1) {
+                state.currentBanks.splice(index, 1);
+            }
+        },
     },
     actions: {
         async fetchCurrentBanks({ commit, rootGetters }) {
@@ -92,8 +99,22 @@ export default {
                 })
             })
         },
-        async removeCurrentBank() {
-            
+        async removeCurrentBank({ rootGetters }, bankId) {
+            return new Promise((resolve, reject) => {
+                const token = rootGetters['auth/token']
+                const config = {
+                  headers: { Authorization: `Bearer ${token}` }
+                };
+          
+                axios.delete( 
+                  `${process.env.VUE_APP_API_URL}/api/v1/currentBank/${bankId}`,
+                  config
+                ).then(() => {
+                    resolve()
+                }).catch((e) => {
+                    reject(e)
+                })
+            })
         }
     },
     getters: {
