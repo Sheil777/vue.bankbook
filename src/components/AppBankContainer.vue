@@ -1,6 +1,6 @@
 <template>
     <div class="container__bank">
-        <div class="bank__header" :style="{ backgroundColor: backgroundColor, color: color }">
+        <div class="bank__header" :style="{ background: backgroundColor, color: color }">
             <span>{{ title }}</span>
             <div 
                 class="bank__delete" 
