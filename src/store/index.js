@@ -17,7 +17,7 @@ export default createStore({
             // categories: [
             //     {
             //       id: 1,
-            //       name: "10% Книги",
+            //       name: "Книги",
             //       img: "book.svg",
             //       backgroundColor: "#f5770a",
             //       about: null,
@@ -30,7 +30,7 @@ export default createStore({
             //     },
             //     {
             //       id: 2,
-            //       name: "1% Все покупки",
+            //       name: "Все покупки",
             //       img: "package.svg",
             //       backgroundColor: 'rgb(108, 32, 183)',
             //       about: '1% на все покупки за каждые 100 руб.',
@@ -38,7 +38,7 @@ export default createStore({
             //     },
             //     {
             //       id: 3,
-            //       name: "5% Транспорт",
+            //       name: "Транспорт",
             //       img: "train.svg",
             //       backgroundColor: null,
             //       about: null,
@@ -46,7 +46,7 @@ export default createStore({
             //     },
             //     {
             //       id: 4,
-            //       name: "5% Цифровые товары",
+            //       name: "Цифровые товары",
             //       img: "package.svg",
             //       backgroundColor: null,
             //       about: null,
@@ -54,7 +54,7 @@ export default createStore({
             //     },
             //     {
             //       id: 5,
-            //       name: "5% Активный отдых",
+            //       name: "Активный отдых",
             //       img: "package.svg",
             //       backgroundColor: null,
             //       about: null,
@@ -62,7 +62,7 @@ export default createStore({
             //     },
             //     {
             //       id: 6,
-            //       name: "5% Красота",
+            //       name: "Красота",
             //       img: "package.svg",
             //       backgroundColor: null,
             //       about: null,
@@ -70,7 +70,7 @@ export default createStore({
             //     },
             //     {
             //       id: 7,
-            //       name: "15% Заправки",
+            //       name: "Заправки",
             //       img: "fuel.svg",
             //       backgroundColor: '#42aaff',
             //       about: null,
@@ -82,21 +82,21 @@ export default createStore({
             //     },
             //     {
             //       id: 10,
-            //       name: "5% Такси",
+            //       name: "Такси",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [],
             //     },
             //     {
             //       id: 11,
-            //       name: "15% Платные дороги",
+            //       name: "Платные дороги",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [],
             //     },
             //     {
             //       id: 12,
-            //       name: "8% АЗС",
+            //       name: "АЗС",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [
@@ -107,49 +107,49 @@ export default createStore({
             //     },
             //     {
             //       id: 30,
-            //       name: "40% Яндекс Плюс",
+            //       name: "Яндекс Плюс",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [],
             //     },
             //     {
             //       id: 31,
-            //       name: "25% Билеты на кинопоиске",
+            //       name: "Билеты на кинопоиске",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [],
             //     },
             //     {
             //       id: 32,
-            //       name: "100% Онлайн кинотеатры",
+            //       name: "Онлайн кинотеатры",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [],
             //     },
             //     {
             //       id: 33,
-            //       name: "15% Бургер Кинг",
+            //       name: "Бургер Кинг",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [],
             //     },
             //     {
             //       id: 34,
-            //       name: "1% Оплата телефоном",
+            //       name: "Оплата телефоном",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [],
             //     },
             //     {
             //       id: 35,
-            //       name: "5% Кафе и рестораны",
+            //       name: "Кафе и рестораны",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [],
             //     },
             //     {
             //       id: 36,
-            //       name: "20% Книги",
+            //       name: "Книги",
             //       img: "package.svg",
             //       noActive: false,
             //       shops: [],
@@ -174,18 +174,22 @@ export default createStore({
       addCategory(state, payload) {
         state.categories.push(
           {
-            id: Math.random() * (1000 - 1) + 1,
-            name: payload.nameCategory,
+            id: payload.id,
+            name: payload.name,
             img: "package.svg",
             noActive: false,
             about: payload.about,
             shops: [],
           }
         )
+
+        // Сортируем массив
+        state.categories.sort((a, b) => {
+          return a.name.localeCompare(b.name)
+        })
       },
       setCategories(state, payload) {
         state.categories = payload
-        // console.log(state.categories)
       }
     },
     actions: {
@@ -268,11 +272,7 @@ export default createStore({
             body,
             config
           ).then((responseText) => {
-            // commit('addShopMutation', {
-            //  idCategory: params.idCategory,
-            //  nameCategory: responseText.data.name,
-            //  idStore: responseText.data.id
-            // })
+            commit('addCategory', responseText.data)
             resolve(responseText)
           })
           .catch((e) => {
