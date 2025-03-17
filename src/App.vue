@@ -22,9 +22,6 @@ export default {
       return this.$route.meta.layout; // Для возврата значения layout
     }
   },
-  created() {
-    this.$store.dispatch('fetchCategories')
-  },
   components: {MainLayout, AuthLayout}
 }
 
