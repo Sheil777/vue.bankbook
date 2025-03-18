@@ -51,7 +51,7 @@ export default {
       }
     },
     getBanks() {
-      const url = `${process.env.VUE_APP_API_URL}/api/v1/banks`
+      const url = `${process.env.VUE_APP_API_URL}/api/v1/currentBank/available`
 
       const token = this.$store.getters['auth/token']
 
