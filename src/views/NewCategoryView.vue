@@ -34,6 +34,7 @@
 
 <script>
 import axios from 'axios'
+import {error} from '../utils/error'
 
 export default {
     data() {
@@ -72,8 +73,11 @@ export default {
 
                 this.buttonDisabled = false
             }).catch((e) => {
-                console.log(e)
-                this.showReport('Произошла ошибка при добавлении категории')
+                if(Object.hasOwn(e, 'response')){
+                    this.showReport(error(e.response.data.error))
+                }else{
+                    this.showReport('Произошла ошибка при добавлении категории')
+                }
 
                 this.buttonDisabled = false
             })
