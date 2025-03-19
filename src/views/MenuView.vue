@@ -24,6 +24,7 @@
 
 <script>
 import AppPopupAddCurrentBank from '@/components/popups/AppPopupAddCurrentBank.vue';
+import axios from 'axios'
 
 export default {
     data() {
@@ -33,17 +34,62 @@ export default {
     },
     methods: {
         nextMonth() {
-            this.arrowMonth = false
+            const url = `${process.env.VUE_APP_API_URL}/api/v1/selectDate/next`
+            const token = this.$store.getters['auth/token']
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+
+            axios.post(url, {}, config).then(response => {
+                // запрос выполнен успешно
+                console.log('Успешно')
+                this.arrowMonth = false
+            }).catch(e => {
+                console.log(e)
+            })
         },
         prevMonth() {
-            this.arrowMonth = true
+            
+            const url = `${process.env.VUE_APP_API_URL}/api/v1/selectDate/prev`
+            const token = this.$store.getters['auth/token']
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+
+            axios.post(url, {}, config).then(response => {
+                // запрос выполнен успешно
+                console.log('Успешно')
+                this.arrowMonth = true
+            }).catch(e => {
+                console.log(e)
+            })     
         },
         logout() {
             this.$store.commit('auth/logout')
             this.$router.push('/login')
         }
     },
-    components: {AppPopupAddCurrentBank}
+    components: {AppPopupAddCurrentBank},
+    mounted() {
+        const url = `${process.env.VUE_APP_API_URL}/api/v1/selectDate`
+        const token = this.$store.getters['auth/token']
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+
+        axios.get(url, config).then(response => {
+            // запрос выполнен успешно
+            console.log(response)
+            let date = new Date();
+
+            // Если установлен следующий месяц
+            if(response.data.month == date.getMonth() + 2) {
+                this.arrowMonth = false
+            }
+        }).catch(e => {
+            console.log(e)
+        })
+    }
 }
 </script>
 
