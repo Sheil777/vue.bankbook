@@ -44,6 +44,21 @@ export default {
                 // запрос выполнен успешно
                 console.log('Успешно')
                 this.arrowMonth = false
+
+                // Меняем месяц во vuex
+                const currentMonth = new Date().getMonth() + 1;
+                const currentYear = new Date().getFullYear();
+                if(currentMonth == 12) {
+                    this.$store.commit('selectDate/setSelectDate', {
+                        month: 1,
+                        year: currentYear+1
+                    })
+                }else{
+                    this.$store.commit('selectDate/setSelectDate', {
+                        month: currentMonth+1,
+                        year: currentYear
+                    })
+                }
             }).catch(e => {
                 console.log(e)
             })
@@ -60,9 +75,26 @@ export default {
                 // запрос выполнен успешно
                 console.log('Успешно')
                 this.arrowMonth = true
+
+                // Меняем месяц во vuex
+                const currentMonth = new Date().getMonth() + 1;
+                const currentYear = new Date().getFullYear();
+                
+                this.$store.commit('selectDate/setSelectDate', {
+                    month: currentMonth,
+                    year: currentYear
+                })
+                    
             }).catch(e => {
                 console.log(e)
             })     
+        },
+        setArrow(month, year) {
+            const currentMonth = new Date().getMonth() + 1;
+            const currentYear = new Date().getFullYear();
+
+            if(month != currentMonth)
+                this.arrowMonth = false
         },
         logout() {
             this.$store.commit('auth/logout')
@@ -70,8 +102,28 @@ export default {
         }
     },
     components: {AppPopupAddCurrentBank},
-    mounted() {
-        // console.log(this.$state.getters['selectDate/selectDate'])
+    created() {    
+        let dates = this.$store.getters['selectDate/selectDate']
+
+        if(dates) {
+            this.setArrow(dates.month, dates.year)
+        }else{
+            let count = 0
+            let timer = setInterval(() => {
+                dates = this.$store.getters['selectDate/selectDate']
+
+                if(dates) {
+                    this.setArrow(dates.month, dates.year)
+                    clearInterval(timer)
+                }
+                
+                if(count > 3) {
+                    clearInterval(timer)
+                }
+
+                count++
+            }, 500)
+        }
     }
 }
 </script>

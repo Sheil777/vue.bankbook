@@ -5,7 +5,6 @@ export default {
 
     state() {
         return {
-          arrowMonth: true, // Стрелка направлено вправо
           selectDate: null,
         }
     },
