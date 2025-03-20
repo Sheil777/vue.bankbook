@@ -71,24 +71,7 @@ export default {
     },
     components: {AppPopupAddCurrentBank},
     mounted() {
-        const url = `${process.env.VUE_APP_API_URL}/api/v1/selectDate`
-        const token = this.$store.getters['auth/token']
-        const config = {
-            headers: { Authorization: `Bearer ${token}` }
-        };
-
-        axios.get(url, config).then(response => {
-            // запрос выполнен успешно
-            console.log(response)
-            let date = new Date();
-
-            // Если установлен следующий месяц
-            if(response.data.month == date.getMonth() + 2) {
-                this.arrowMonth = false
-            }
-        }).catch(e => {
-            console.log(e)
-        })
+        // console.log(this.$state.getters['selectDate/selectDate'])
     }
 }
 </script>
