@@ -13,7 +13,7 @@
         <div class="main__item main-month _no-hover">
             <a class="main-month__left" :class="{'hide': arrowMonth}" @click="prevMonth">
             </a>Дата:&nbsp;<span class="main-month__text">{{ this.$store.getters['selectDate/monthName'] }}</span>&nbsp;
-            <span class="main-month__year">{{ this.$store.getters['selectDate/selectDate'].year }}</span>&nbsp;г.
+            <span class="main-month__year">{{ year }}</span>&nbsp;г.
             <a class="main-month__right" :class="{'hide': !arrowMonth}" @click="nextMonth"></a>
         </div>
         <a class="main__item" @click.prevent="logout">Выход</a>
@@ -30,6 +30,7 @@ export default {
     data() {
         return {
             arrowMonth: true,
+            year: null,
         }
     },
     methods: {
@@ -52,6 +53,7 @@ export default {
                         month: 1,
                         year: currentYear+1
                     })
+                    this.year++
                 }else{
                     this.$store.commit('selectDate/setSelectDate', {
                         month: currentMonth+1,
@@ -82,6 +84,8 @@ export default {
                     month: currentMonth,
                     year: currentYear
                 })
+                
+                this.year--
                     
             }).catch(e => {
                 console.log(e)
@@ -93,6 +97,8 @@ export default {
 
             if(month != currentMonth)
                 this.arrowMonth = false
+
+            this.year = this.$store.getters['selectDate/selectDate'].year
         },
         logout() {
             this.$store.commit('auth/logout')
