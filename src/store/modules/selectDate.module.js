@@ -6,11 +6,27 @@ export default {
     state() {
         return {
           selectDate: null,
+          selectMonthName: null,
+          monthName: {
+            1: 'Январь',
+            2: 'Февраль',
+            3: 'Март',
+            4: 'Апрель',
+            5: 'Май',
+            6: 'Июнь',
+            7: 'Июль',
+            8: 'Август',
+            9: 'Сентябрь',
+            10: 'Октябрь',
+            11: 'Ноябрь',
+            12: 'Декабрь',
+          }
         }
     },
     mutations: {
       setSelectDate(state, date) {
         state.selectDate = date
+        state.selectMonthName = state.monthName[date.month]
       }
     },
     actions: {
@@ -33,6 +49,9 @@ export default {
     getters: {
       selectDate(state) {
         return state.selectDate;
+      },
+      monthName(state) {
+        return state.selectMonthName
       }
     }
 

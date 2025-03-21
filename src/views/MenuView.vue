@@ -12,8 +12,8 @@
         <a class="main__item" @click="$refs.popupAddCurrentBankRef.open()">Добавить новый банк</a>
         <div class="main__item main-month _no-hover">
             <a class="main-month__left" :class="{'hide': arrowMonth}" @click="prevMonth">
-            </a>Дата:&nbsp;<span class="main-month__text">январь</span>&nbsp;
-            <span class="main-month__year">2025</span>&nbsp;г.
+            </a>Дата:&nbsp;<span class="main-month__text">{{ this.$store.getters['selectDate/monthName'] }}</span>&nbsp;
+            <span class="main-month__year">{{ this.$store.getters['selectDate/selectDate'].year }}</span>&nbsp;г.
             <a class="main-month__right" :class="{'hide': !arrowMonth}" @click="nextMonth"></a>
         </div>
         <a class="main__item" @click.prevent="logout">Выход</a>
@@ -42,7 +42,6 @@ export default {
 
             axios.post(url, {}, config).then(response => {
                 // запрос выполнен успешно
-                console.log('Успешно')
                 this.arrowMonth = false
 
                 // Меняем месяц во vuex
@@ -73,7 +72,6 @@ export default {
 
             axios.post(url, {}, config).then(response => {
                 // запрос выполнен успешно
-                console.log('Успешно')
                 this.arrowMonth = true
 
                 // Меняем месяц во vuex
