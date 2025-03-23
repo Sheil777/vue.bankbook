@@ -98,10 +98,12 @@ export default {
     clearTimer2() {
       clearTimeout(this.timer)  
     },
-    toggleNoActive(categoryId) {
+    toggleNoActive(currentCategoryId) {
+      this.$store.dispatch('currentBanks/toggleNoActive', currentCategoryId).catch(() => console.log('Произошла ошибка при смене noActive'))
+
       this.currentBanks.forEach(banks => {
         let categories = banks.categories
-        let cat = categories.filter(category => {return category.idCC === categoryId})
+        let cat = categories.filter(category => {return category.idCC === currentCategoryId})
         if(cat.length != 0)
           cat[0].noActive = !cat[0].noActive
       });

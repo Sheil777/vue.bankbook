@@ -115,11 +115,42 @@ export default {
                     reject(e)
                 })
             })
+        },
+        async toggleNoActive({ rootGetters, getters }, currentCategoryId) {
+            const noActive = getters.currentCategory(currentCategoryId).noActive
+            
+            return new Promise((resolve, reject) => {
+                const body = {     
+                    "no_active": !noActive
+                }
+                const token = rootGetters['auth/token']
+                const config = {
+                  headers: { Authorization: `Bearer ${token}` }
+                };
+          
+                axios.put( 
+                  `${process.env.VUE_APP_API_URL}/api/v1/currentCategory/${currentCategoryId}`,
+                  body,
+                  config
+                ).then((responseText) => {
+                    resolve(responseText)
+                }).catch((e) => {
+                    reject(e)
+                })
+            })
         }
     },
     getters: {
         currentBanks(state) {
             return state.currentBanks
         },
+        currentCategory: (state) => (id) => {
+            for(let i = 0; i < state.currentBanks.length; i++){
+                let categories = state.currentBanks[i].categories
+
+                if(categories.find(cat => cat.idCC == id))
+                    return categories.find(cat => cat.idCC == id)
+            }
+        }
     }
 }
