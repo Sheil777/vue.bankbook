@@ -7,15 +7,15 @@
               <small v-if="errors.login">{{ errors.login }}</small>
           </div>
           <div class="email" :class="{'invalid': errors.email}">
-              <input id="form-email" type="text" placeholder="Введите email" v-model.trim="email" required>
+              <input id="form-email" type="text" placeholder="Введите email" v-model.trim="email" @input="onInputEmail" required>
               <small v-if="errors.email">{{ errors.email }}</small>
           </div>
           <div class="password" :class="{'invalid': errors.password}">
-              <input id="password" type="password" placeholder="Пароль" v-model.trim="password" required>
+              <input id="password" type="password" placeholder="Пароль" v-model.trim="password" @input="onInputPassword" required>
               <small v-if="errors.password">{{ errors.password }}</small>
           </div>
           <div class="password-repeat" :class="{'invalid': errors.passwordRepeat}">
-              <input id="password-repeat" type="password" placeholder="Повторите пароль" v-model.trim="passwordRepeat" required>
+              <input id="password-repeat" type="password" placeholder="Повторите пароль" v-model.trim="passwordRepeat" @input="onInputPasswordRepeat" required>
               <small v-if="errors.passwordRepeat">{{ errors.passwordRepeat }}</small>
           </div>
           <input id="button-register" type="submit" class="registration__button" value='Зарегистрироваться' :disabled="disabledButton" />
@@ -55,7 +55,7 @@ export default {
         validateEmail() {
             this.errors.email = ''
 
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[^\s@]+@[^\s@]{2,}\.[^\s@]{2,}$/;
             if (!emailRegex.test(this.email)) {
                 this.errors.email = 'Некорректный email';
                 this.isFormValid = false
@@ -75,6 +75,18 @@ export default {
                 this.errors.passwordRepeat = 'Пароли не совпадают';
                 this.isFormValid = false
             }
+        },
+        onInputPassword() {
+            if(this.errors.password)
+                this.validatePassword()
+        },
+        onInputEmail(){
+            if(this.errors.email)
+                this.validateEmail()
+        },
+        onInputPasswordRepeat() {
+            // if(this.errors.passwordRepeat)
+                this.equalsPassword()
         },
         submit() {
             this.errors.report = ''
