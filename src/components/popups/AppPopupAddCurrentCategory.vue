@@ -130,7 +130,7 @@ export default {
       align-items: center;
       justify-content: center;
       padding: 3vw 5vw;
-      box-sizing: border-box;
+      // box-sizing: border-box;
       max-width: 550px;
       margin: 0 auto;
     }

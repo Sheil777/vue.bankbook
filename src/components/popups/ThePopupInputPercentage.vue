@@ -45,6 +45,7 @@ export default {
             this.isOpen = true;
             this.category = category
             this.bankId = bankId
+            this.imgSrc = category.img ? require('../../assets/img/icons/' + category.img) : require('../../assets/img/icons/package.svg')
 
             setTimeout(()=> {
                 nextTick(() => {
