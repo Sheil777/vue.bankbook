@@ -14,7 +14,7 @@
                             >
                         </div>
                         <div class="category__text">
-                            <input type="phone" ref="inputField" v-model="percent">
+                            <input type="phone" ref="inputField" v-model="percent" @input="checkInput" required>
                             <span>% {{ category.name }}</span>
                         </div>
                     </div>
@@ -63,6 +63,9 @@ export default {
                 this.isOpen = false
                 // this.bodyUnlock()
             }
+        },
+        checkInput(){
+            this.percent = this.percent.replace(/[^0-9.]/g, '')
         },
         submit() {
             console.log("submit")

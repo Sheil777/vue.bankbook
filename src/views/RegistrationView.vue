@@ -21,6 +21,13 @@
           <input id="button-register" type="submit" class="registration__button" value='Зарегистрироваться' :disabled="disabledButton" />
       </form>
       <div id="report" class="report" v-if="errors.report">{{ errors.report }}</div>
+      
+
+      <div class="button-login">
+            <router-link to="/login">
+                <a>Войти</a>
+            </router-link>
+        </div>
   </div>
 </template>
 
@@ -232,6 +239,27 @@ export default {
         cursor: default;
     }
   }
+  
+
+.button-login {
+    position: absolute;
+    left: 0;
+    bottom: 30px;
+    width: 100%;
+
+    a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: #649eed;
+    }
+
+    @media (max-height: 530px) {
+        position: unset;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
 
   .report {
       margin-top: 30px;
