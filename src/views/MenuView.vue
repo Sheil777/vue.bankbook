@@ -30,8 +30,20 @@ export default {
     data() {
         return {
             arrowMonth: true,
-            year: null,
-            month: null,
+            // year: null,
+            // month: null,
+        }
+    },
+    computed: {
+        month() {
+            return this.$store.state.selectDate.selectMonthName
+        },
+        year() {
+            try {
+                return this.$store.state.selectDate.selectDate.year
+            } catch(e) {
+                return new Date().getFullYear()
+            }
         }
     },
     methods: {
@@ -44,7 +56,12 @@ export default {
 
             axios.post(url, {}, config).then(response => {
                 // запрос выполнен успешно
+
+                // изменяем направление стрелки
                 this.arrowMonth = false
+
+                // обновляем текущие категории
+                this.$store.dispatch('currentBanks/fetchCurrentBanks')
 
                 // Меняем месяц во vuex
                 const currentMonth = new Date().getMonth() + 1;
@@ -54,7 +71,6 @@ export default {
                         month: 1,
                         year: currentYear+1
                     })
-                    this.year++
                 }else{
                     this.$store.commit('selectDate/setSelectDate', {
                         month: currentMonth+1,
@@ -75,7 +91,12 @@ export default {
 
             axios.post(url, {}, config).then(response => {
                 // запрос выполнен успешно
+                
+                // изменяем направление стрелки
                 this.arrowMonth = true
+
+                // обновляем текущие категории
+                this.$store.dispatch('currentBanks/fetchCurrentBanks')
 
                 // Меняем месяц во vuex
                 const currentMonth = new Date().getMonth() + 1;
@@ -86,7 +107,6 @@ export default {
                     year: currentYear
                 })
                 
-                this.year = currentYear
                     
             }).catch(e => {
                 console.log(e)
@@ -98,9 +118,7 @@ export default {
 
             if(month != currentMonth)
                 this.arrowMonth = false
-            
-            this.month = this.$store.getters['selectDate/monthName']
-            this.year = this.$store.getters['selectDate/selectDate'].year
+
         },
         logout() {
             this.$store.commit('auth/logout')
