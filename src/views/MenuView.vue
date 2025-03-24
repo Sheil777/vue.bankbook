@@ -98,8 +98,6 @@ export default {
 
             if(month != currentMonth)
                 this.arrowMonth = false
-
-            console.log(this.$store.getters['selectDate/selectDate'].month)
             
             this.month = this.$store.getters['selectDate/monthName']
             this.year = this.$store.getters['selectDate/selectDate'].year
