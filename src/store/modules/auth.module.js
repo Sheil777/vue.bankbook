@@ -71,9 +71,6 @@ export default {
         token(state) {
             return state.token
         },
-        // isAuthenticated(state) {
-        //     return !!state.token
-        // },
         isAuthenticated(_, getters) {
             return !!getters.token
         }

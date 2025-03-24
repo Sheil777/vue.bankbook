@@ -26,7 +26,7 @@ export default {
     mutations: {
       setSelectDate(state, date) {
         state.selectDate = date
-        state.selectMonthName = state.monthName[date.month]
+        state.selectMonthName = state.monthName[Number(date.month)]
       }
     },
     actions: {

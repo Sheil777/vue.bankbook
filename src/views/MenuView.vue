@@ -12,7 +12,7 @@
         <a class="main__item" @click="$refs.popupAddCurrentBankRef.open()">Добавить новый банк</a>
         <div class="main__item main-month _no-hover">
             <a class="main-month__left" :class="{'hide': arrowMonth}" @click="prevMonth">
-            </a>Дата:&nbsp;<span class="main-month__text">{{ this.$store.getters['selectDate/monthName'] }}</span>&nbsp;
+            </a>Дата:&nbsp;<span class="main-month__text">{{ month }}</span>&nbsp;
             <span class="main-month__year">{{ year }}</span>&nbsp;г.
             <a class="main-month__right" :class="{'hide': !arrowMonth}" @click="nextMonth"></a>
         </div>
@@ -31,6 +31,7 @@ export default {
         return {
             arrowMonth: true,
             year: null,
+            month: null,
         }
     },
     methods: {
@@ -85,7 +86,7 @@ export default {
                     year: currentYear
                 })
                 
-                this.year--
+                this.year = currentYear
                     
             }).catch(e => {
                 console.log(e)
@@ -98,6 +99,9 @@ export default {
             if(month != currentMonth)
                 this.arrowMonth = false
 
+            console.log(this.$store.getters['selectDate/selectDate'].month)
+            
+            this.month = this.$store.getters['selectDate/monthName']
             this.year = this.$store.getters['selectDate/selectDate'].year
         },
         logout() {
