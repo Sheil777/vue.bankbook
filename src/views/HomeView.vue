@@ -2,6 +2,11 @@
   <div class="container _container">
     <the-header></the-header>
     <div align='center' v-if="currentBanks.length === 0 && !loading && !error">Добавьте новый банк</div>
+    <button 
+      class="addCurrentBank" 
+      v-if="currentBanks.length === 0 && !loading && !error"
+      @click.prevent="$refs.popupAddCurrentBankRef.open()"
+    >Добавить банк</button>
     <app-bank-container 
       :title="bank.name" 
       :editing="editing" 
@@ -57,6 +62,11 @@
       :editing="editing"
       ref="popupCategoryAboutRef" 
     ></app-popup-category-about>
+
+    <app-popup-add-current-bank
+      ref="popupAddCurrentBankRef"
+    >
+    </app-popup-add-current-bank>
   </div>
 </template>
 
@@ -68,16 +78,25 @@ import AppButtonEdit from "../components/AppButtonEdit.vue";
 import AppPopupAddCurrentCategory from "@/components/popups/AppPopupAddCurrentCategory.vue";
 import AppPopupDeleteCurrentBank from "@/components/popups/AppPopupDeleteCurrentBank.vue";
 import AppPopupCategoryAbout from "@/components/popups/AppPopupCategoryAbout.vue";
+import AppPopupAddCurrentBank from '@/components/popups/AppPopupAddCurrentBank.vue';
 
 export default {
   data() {
     return {
-      currentBanks: [],
+      // currentBanks: [],
       editing: false,
       timer: null,
       timerFlag: false,
-      loading: false,
+      // loading: false,
       error: false,
+    }
+  },
+  computed: {
+    currentBanks() {
+      return this.$store.state.currentBanks.currentBanks
+    },
+    loading() {
+      return this.$store.state.currentBanks.loading
     }
   },
   methods: {
@@ -138,7 +157,7 @@ export default {
       this.loading = true
       
       this.$store.dispatch('currentBanks/fetchCurrentBanks').then(() => {
-        this.currentBanks = this.$store.getters['currentBanks/currentBanks']
+        // this.currentBanks = this.$store.getters['currentBanks/currentBanks']
         this.loading = false
       }).catch((e) => {
           console.log(e)
@@ -154,7 +173,7 @@ export default {
     },
   },
   mounted() {
-    this.getCurrentCategories()
+    // this.getCurrentCategories()
   },
   components: {
     AppBankContainer, 
@@ -163,6 +182,7 @@ export default {
     AppPopupAddCurrentCategory,
     AppPopupDeleteCurrentBank,
     AppPopupCategoryAbout,
+    AppPopupAddCurrentBank
   },
 }
 
@@ -170,6 +190,8 @@ export default {
 
 
 <style lang="scss" scoped>
+  @import '../assets/css/variables';
+
   .loading {
     position: absolute;
     top: 0;
@@ -188,9 +210,27 @@ export default {
     }
   }
 
-  // .error {
-  //   text-align: center;
-  // }
+  .addCurrentBank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #4f92e0;
+    border-radius: 8px;
+    width: 150px;
+    height: 45px;
+    color: #4f92e0;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-top: 15px;
+    transition: 0.3s all;
+    background-color: white;
+
+    &:hover {
+      background-color: #4f92e0;
+      color: white;
+    }
+  }
 
   .error {
     width: 300px;

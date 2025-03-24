@@ -71,6 +71,7 @@ export default {
       // Здесь будет добавляться банк
       this.$store.dispatch('currentBanks/addCurrentBank', bankId)
         .then(() => {
+          // Вырезаем банк из массива
           var index = this.banks.map(bank => {
             return bank.id;
           }).indexOf(bankId);

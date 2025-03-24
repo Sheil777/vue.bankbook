@@ -5,7 +5,8 @@ export default {
 
     state() {
         return {
-            currentBanks: []
+            currentBanks: [],
+            loading: true
         }
     },
     mutations: {
@@ -31,8 +32,9 @@ export default {
         },
     },
     actions: {
-        async fetchCurrentBanks({ commit, rootGetters }) {
+        async fetchCurrentBanks({ commit, rootGetters, state }) {
             return new Promise((resolve, reject) => {
+                state.loading = true
                 const token = rootGetters['auth/token']
                 const config = {
                     headers: { Authorization: `Bearer ${token}` }
@@ -43,8 +45,10 @@ export default {
                     config
                 ).then((responseText) => {
                     commit('setCurrentBanks', responseText.data)
+                    state.loading = false
                     resolve()
                 }).catch((e) => {
+                    state.loading = false
                     reject(e)
                 });
             })
@@ -75,7 +79,7 @@ export default {
 
             })
         },
-        async addCurrentBank({ rootGetters }, bankId) {
+        async addCurrentBank({ rootGetters, dispatch }, bankId) {
             return new Promise((resolve, reject) => {
                 const body = {     
                     "bank_id": bankId,
@@ -92,7 +96,9 @@ export default {
                   `${process.env.VUE_APP_API_URL}/api/v1/currentCategory`,
                   body,
                   config
-                ).then(() => {
+                ).then((response) => {
+                    // Добавляем банк в массив
+                    dispatch('fetchCurrentBanks')
                     resolve()
                 }).catch((e) => {
                     reject(e)
