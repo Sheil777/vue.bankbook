@@ -36,7 +36,10 @@ export default {
     },
     computed: {
         month() {
-            return this.$store.state.selectDate.selectMonthName
+            if(this.$store.state.selectDate.selectMonthName == undefined)
+                return this.$store.state.selectDate.monthName[Number(new Date().getMonth() + 1)]
+            else
+                return this.$store.state.selectDate.selectMonthName
         },
         year() {
             try {
