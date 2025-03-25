@@ -1,7 +1,7 @@
 <template>
     <div class="button-edit">
       <div class="button-edit__container" :class="{'active': active}">
-          <div class="button-edit__edit" :class="{'active': active}" @click="$emit('toggleEditing')">
+          <div class="button-edit__edit" :class="{'active': active, 'disabled': buttonEditDisabled}" @click="$emit('toggleEditing')">
               <span :class="{'active': active}">Редактирование</span>
               <img src="../assets/img/icons/edit_white.svg" alt="">
           </div>
@@ -21,11 +21,28 @@
 <script>
 export default {
     emits: ['toggleEditing'],
+    // props: {
+    //     buttonEditDisabled: {
+    //         type: Boolean,
+    //         default: false,
+    //     }
+    // },
+    computed: {
+        buttonEditDisabled() {
+            if(this.$store.state.currentBanks.currentBanks.length != 0)
+                return false // Кнопка активна
+            else
+                return true // Кнопка не активна
+        }
+    },
     data(){
       return {
         active: false,
       }
     },
+    mounted() {
+        console.log(this.buttonEditDisabled)
+    }
 }
 </script>
 
@@ -142,6 +159,21 @@ export default {
               -webkit-filter: drop-shadow( 0px 0px 0px rgba(0, 0, 0, .7));
               filter: drop-shadow( 0px 0px 0px rgba(0, 0, 0, .7));
               transform: translateY(1px);
+          }
+
+          &.disabled {
+            background: #e7e7e7;
+            cursor: default;
+
+            span {
+                color: #a8a8a8;
+            }
+
+            &:active img {
+                -webkit-filter: drop-shadow( 1px 1px 1px rgba(0, 0, 0, .7));
+                filter: drop-shadow( 1px 1px 1px rgba(0, 0, 0, .7));
+                transform: none;
+            }
           }
       }
 
