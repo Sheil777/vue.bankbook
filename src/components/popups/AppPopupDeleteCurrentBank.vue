@@ -53,6 +53,9 @@ export default {
       this.$store.dispatch('currentBanks/removeCurrentBank', this.bankId).then(() => {
         // Удаление из массива
         this.$store.commit('currentBanks/removeCurrentBank', this.bankId)
+
+        // Обновляем банки, которые можно добавить
+        this.$store.dispatch('banks/fetchBanks')
       })
 
       // Закрыть попап

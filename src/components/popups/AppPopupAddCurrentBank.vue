@@ -32,7 +32,12 @@ export default {
   data() {
     return {
       isOpen: false,
-      banks: [],
+      // banks: [],
+    }
+  },
+  computed: {
+    banks() {
+      return this.$store.state.banks.banks;
     }
   },
   methods: {
@@ -50,23 +55,23 @@ export default {
         this.close()
       }
     },
-    getBanks() {
-      const url = `${process.env.VUE_APP_API_URL}/api/v1/currentBank/available`
+    // getBanks() {
+    //   const url = `${process.env.VUE_APP_API_URL}/api/v1/currentBank/available`
 
-      const token = this.$store.getters['auth/token']
+    //   const token = this.$store.getters['auth/token']
 
-      const config = {
-        headers: { Authorization: `Bearer ${token}` }
-      };
+    //   const config = {
+    //     headers: { Authorization: `Bearer ${token}` }
+    //   };
 
-      axios.get( 
-        url,
-        config
-      ).then((responseText) => {
-        this.banks = responseText.data
-      })
-       .catch(console.log);
-    },
+    //   axios.get( 
+    //     url,
+    //     config
+    //   ).then((responseText) => {
+    //     this.banks = responseText.data
+    //   })
+    //    .catch(console.log);
+    // },
     addCurrentBank(bankId) {
       // Здесь будет добавляться банк
       this.$store.dispatch('currentBanks/addCurrentBank', bankId)
@@ -80,7 +85,7 @@ export default {
     }
   },
   mounted() {
-    this.getBanks()
+    // this.getBanks()
   },
 
 }

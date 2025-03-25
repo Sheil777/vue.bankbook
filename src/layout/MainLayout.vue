@@ -19,6 +19,9 @@
           }
       })
 
+      // Получаем банки, который можно добавить
+      this.$store.dispatch('banks/fetchBanks')
+
       this.$store.dispatch('selectDate/get')
     },
   }

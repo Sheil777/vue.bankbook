@@ -2,6 +2,7 @@ import { createStore, createLogger } from "vuex"
 import auth from "./modules/auth.module"
 import currentBanks from "./modules/currentBanks.module"
 import selectDate from "./modules/selectDate.module"
+import banks from "./modules/banks.module"
 import axios from "axios"
 
 const plugins = []
@@ -297,6 +298,7 @@ export default createStore({
     modules: {
       auth,
       currentBanks,
-      selectDate
+      selectDate,
+      banks
     }
 })
