@@ -124,6 +124,7 @@ export default {
 
         },
         logout() {
+            this.$store.dispatch('auth/logout')
             this.$store.commit('auth/logout')
             this.$router.push('/login')
         }

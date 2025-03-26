@@ -65,6 +65,26 @@ export default {
                     }
                 })
             })
+        },
+
+        logout({ getters }) {
+            return new Promise((resolve, reject) => {
+                const token = getters['token']
+                const config = {
+                  headers: { Authorization: `Bearer ${token}` }
+                };
+          
+                axios.get( 
+                  `${process.env.VUE_APP_API_URL}/api/v1/logout`,
+                  config
+                ).then((responseText) => {
+                    resolve(responseText.data)
+                }).catch((e) => {
+                  reject(e)
+                });
+
+            })
+
         }
     },
     getters: {
