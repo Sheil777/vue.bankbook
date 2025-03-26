@@ -88,7 +88,7 @@ export default {
       timer: null,
       timerFlag: false,
       // loading: false,
-      error: false,
+      // error: false,
     }
   },
   computed: {
@@ -97,6 +97,9 @@ export default {
     },
     loading() {
       return this.$store.state.currentBanks.loading
+    },
+    error() {
+      return this.$store.state.currentBanks.error500
     }
   },
   methods: {
@@ -256,6 +259,43 @@ export default {
     
     &__text{
       font-size: 15pt;
+    }
+
+    @media (max-width: 550px) {
+      width: 230px;
+
+      &__code {
+        font-size: 30px;
+      }
+
+      &__text {
+        font-size: 18px;
+      }
+
+      svg {
+        width: 80px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      width: 190px;
+      padding: 15px;
+
+      &__code {
+        font-size: 24px;
+      }
+
+      &__text {
+        font-size: 13px;
+      }
+
+      svg {
+        width: 70px;
+      }
+    }
+
+    @media (max-width: 374px) {
+      
     }
   }
 </style>

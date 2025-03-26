@@ -6,7 +6,9 @@
   export default {
     created() {
       // Получаем текущие категории
-      this.$store.dispatch('currentBanks/fetchCurrentBanks')
+      this.$store.dispatch('currentBanks/fetchCurrentBanks').catch((e) => {
+        console.log(e)
+      })
 
       // Получаем все категории доступные пользователю
       this.$store.dispatch('fetchCategories').catch((e) => {

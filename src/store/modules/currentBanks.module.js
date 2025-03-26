@@ -6,7 +6,8 @@ export default {
     state() {
         return {
             currentBanks: [],
-            loading: true
+            loading: true,
+            error500: false
         }
     },
     mutations: {
@@ -49,6 +50,7 @@ export default {
                     resolve()
                 }).catch((e) => {
                     state.loading = false
+                    state.error500 = true
                     reject(e)
                 });
             })
