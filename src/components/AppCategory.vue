@@ -63,7 +63,7 @@ export default {
             display: flex;
             justify-content: left;
             align-items: center;
-            height: 50px;
+            min-height: 50px;
             font-size: 20px;
             border-bottom: 1px solid black;
             cursor: pointer;
@@ -110,6 +110,11 @@ export default {
                 height: 22px;
             }
             
+        }
+
+        &__text {
+            padding: 5px 0;
+            padding-right: 10px;
         }
     }
 </style>
