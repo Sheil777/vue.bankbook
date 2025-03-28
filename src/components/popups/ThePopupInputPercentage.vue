@@ -14,12 +14,12 @@
                             >
                         </div>
                         <div class="category__text">
-                            <input type="phone" ref="inputField" v-model="percent" @input="checkInput" required>
+                            <input :class="{'error': error}" type="tel" ref="inputField" v-model="percent" @input="checkInput" required>
                             <span>% {{ category.name }}</span>
                         </div>
                     </div>
                     <div class="popup-input-percentage__button">
-                        <button class="popup-input-percentage__submit" type="submit">Добавить</button>
+                        <button class="popup-input-percentage__submit" type="submit" :disabled="error">Добавить</button>
                     </div>
                 </form>
             </div>
@@ -38,6 +38,7 @@ export default {
             category: null,
             percent: null,
             bankId: null,
+            error: false
         }
     },
     methods: { 
@@ -66,6 +67,13 @@ export default {
         },
         checkInput(){
             this.percent = this.percent.replace(/[^0-9.]/g, '')
+            this.percent = this.percent.slice(0, 4)
+
+            if(this.percent > 999) 
+                this.error = true
+            else
+                this.error = false
+
         },
         submit() {
             console.log("submit")
@@ -168,6 +176,12 @@ export default {
             &:hover {
                 background-color: #5583c2;
             }
+
+            &[disabled] {
+                background: #e7e7e7;
+                color: #707070;
+                cursor: default;
+            }
         }
     }
 
@@ -188,6 +202,14 @@ export default {
 
                 &:focus {
                     outline: 1.5px solid $popup-categories-color;
+                }
+
+                &.error {
+                    border: 1px solid red;
+
+                    &:focus {
+                        outline: 1.5px solid red;
+                    }
                 }
             }
 

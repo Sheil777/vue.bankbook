@@ -162,8 +162,11 @@ export default createStore({
     }, 
     mutations: {
       addShopMutation(state, payload) {
-        const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
-        cat.shops.push({id: payload.idStore, name: payload.nameCategory})
+        const cat = state.categories.filter(item => {return item.mcc == payload.mcc})
+        cat.forEach(category => {
+          category.shops.push({id: payload.idStore, name: payload.nameCategory})
+        });
+        
       },
       removeShopMutation(state, payload) {
         const cat = state.categories.filter(item => {return item.id == payload.idCategory})[0]
@@ -234,10 +237,12 @@ export default createStore({
           body,
           config
         ).then((responseText) => {
+          // console.log(responseText)
           commit('addShopMutation', {
            idCategory: params.idCategory,
            nameCategory: responseText.data.name,
-           idStore: responseText.data.id
+           idStore: responseText.data.id,
+           mcc: responseText.data.mcc_id,
           })
         })
         .catch(console.log);
