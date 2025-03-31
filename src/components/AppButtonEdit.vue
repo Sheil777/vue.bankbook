@@ -1,7 +1,7 @@
 <template>
     <div class="button-edit">
       <div class="button-edit__container" :class="{'active': active}">
-          <div class="button-edit__edit" :class="{'active': active, 'disabled': buttonEditDisabled}" @click="$emit('toggleEditing')">
+          <div class="button-edit__edit" :class="{'active': active, 'disabled': buttonEditDisabled}" @click="toggleEditing">
               <span :class="{'active': active}">Редактирование</span>
               <img src="../assets/img/icons/edit_white.svg" alt="">
           </div>
@@ -21,12 +21,6 @@
 <script>
 export default {
     emits: ['toggleEditing'],
-    // props: {
-    //     buttonEditDisabled: {
-    //         type: Boolean,
-    //         default: false,
-    //     }
-    // },
     computed: {
         buttonEditDisabled() {
             if(this.$store.state.currentBanks.currentBanks.length != 0)
@@ -39,6 +33,12 @@ export default {
       return {
         active: false,
       }
+    },
+    methods: {
+        toggleEditing() {
+            this.$emit('toggleEditing')
+            this.active = false
+        }
     },
     mounted() {
         console.log(this.buttonEditDisabled)
