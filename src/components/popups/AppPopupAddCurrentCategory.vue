@@ -15,6 +15,7 @@
               :img="category.img"
               :background-color="category.backgroundColor"
               @click="clickOnCategory(category)"
+              :added="category.added"
             >{{ category.name }}</app-category>
 
         </div>
@@ -23,10 +24,12 @@
   
   <the-popup-input-percentage
     ref="popupInputPercentageRef"
+    @cur-category-added="markCategory"
   ></the-popup-input-percentage>
 </template>
 
 <script>
+import { getCurrentInstance } from 'vue';
 import AppCategory from '../AppCategory.vue';
 import ThePopupInputPercentage from '@/components/popups/ThePopupInputPercentage.vue';
 
@@ -35,9 +38,6 @@ export default {
     openPopupAddCurrentCategory: {
       type: Boolean
     },
-    // currentCategories: {
-    //   type: Array
-    // },
   },
   data() {
     return {
@@ -50,17 +50,34 @@ export default {
     currentCategories() {
       return this.$store.state.categories
     },
-    // categories() {
-
-    // }
   },
   methods: {
+    markCategory(categoryId){
+      const cat = this.categories.filter(cat => cat.id === categoryId)
+      cat[0].added = true
+
+      console.log(this.categories.filter(cat => cat.id === categoryId))
+    },
     open(bank) {
       this.isOpen = true;
       this.bankId = bank;
       this.categories = this.currentCategories.filter(category => category.bank == 0 || category.bank == this.bankId)
       this.bodyLock();
-      console.log(this.currentCategories)
+
+      const currentCategoriesForBank = this.getCurrentCategoriesInBank(this.bankId)
+      
+      // console.log(currentCategoriesForBank)
+      
+      this.categories.forEach(el => {
+        el.added = false
+        currentCategoriesForBank.forEach(el2 => {
+          if(el.id == el2.id){
+            el.added = true
+          }
+        })
+      });
+
+      // console.log(this.currentCategories)
     },
     close(e){
       // Если у родителей нажатой области нет .popup__content, значит это темная область
@@ -76,6 +93,19 @@ export default {
     clickOnCategory(category) {
       // this.$emit('add', category, this.bankId)
       this.$refs.popupInputPercentageRef.open(category, this.bankId)
+    },
+    getCurrentCategoriesInBank(bankId) {
+      // console.log(bankId)
+      // console.log(this.$store.state.banks.banks)
+      
+      const bank = this.$store.state.currentBanks.currentBanks.filter(bank => bank.id === bankId)
+
+      if (!bank) {
+        console.warn('Банк с указанным ID не найден');
+        return false;
+      }
+
+      return bank[0].categories;
     }
   },
   components: {

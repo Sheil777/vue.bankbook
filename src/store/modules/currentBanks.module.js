@@ -21,7 +21,7 @@ export default {
             Object.assign(newCat, payload.selectedCategory)
             newCat.name = payload.percent + '% ' +newCat.name
             newCat.noActive = false
-            newCat.idCC = payload.id;      
+            newCat.idCC = payload.id;   
             cats.push(newCat)
         },
         removeCurrentBank(state, bankId) {
@@ -75,6 +75,7 @@ export default {
                 ).then((responseText) => {
                     responseText.data.selectedCategory = rootGetters.category(payload.category_id)
                     commit('addCurrentCategory', responseText.data)
+                    resolve()
                 }).catch((e) => {
                   console.log(e)
                 });

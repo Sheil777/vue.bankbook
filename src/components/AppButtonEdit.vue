@@ -40,9 +40,6 @@ export default {
             this.active = false
         }
     },
-    mounted() {
-        console.log(this.buttonEditDisabled)
-    }
 }
 </script>
 

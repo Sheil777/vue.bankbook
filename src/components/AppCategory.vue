@@ -1,5 +1,5 @@
 <template>
-    <div class="bank__category bank__category_click" :class="{ 'noActive' : noActive }">
+    <div class="category bank__category_click" :class="{ 'noActive' : noActive }">
         <div class="category__logo _categoryLogo">
             <img 
                 :style="{backgroundColor: backgroundColor ? backgroundColor : 'rgb(108, 32, 183)'}" 
@@ -15,6 +15,9 @@
         </div>
         <div class="category__edit" :class="{'visible': editing}">
             <img src="../assets/img/icons/edit.svg">
+        </div>
+        <div class="category__accept" :class="{'visible': added}">
+            <img src="../assets/img/accepted.svg">
         </div>
     </div>
 </template>
@@ -35,6 +38,10 @@ export default {
             default: false,
         },
         editing: {
+            type: Boolean,
+            default: false,
+        },
+        added: {
             type: Boolean,
             default: false,
         }
@@ -60,21 +67,22 @@ export default {
 <style lang="scss" scoped>
     .bank {
         &__category {
-            display: flex;
-            justify-content: left;
-            align-items: center;
-            min-height: 50px;
-            font-size: 20px;
-            border-bottom: 1px solid black;
-            cursor: pointer;
-    
-            &.noActive {
-                background-color: rgb(194, 194, 194); 
-            }
         }
     }
 
     .category {
+        position: relative;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        min-height: 50px;
+        font-size: 20px;
+        border-bottom: 1px solid black;
+        cursor: pointer;
+
+        &.noActive {
+            background-color: rgb(194, 194, 194); 
+        }
 
         &__delete {
             margin-left: auto;
@@ -115,6 +123,23 @@ export default {
         &__text {
             padding: 5px 0;
             padding-right: 10px;
+        }
+
+        &__accept {
+            position: absolute;
+            right: 20px;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s;
+
+            img {
+                height: 22px;
+            }
+        
+            &.visible {
+                visibility: visible;
+                opacity: 1;
+            }
         }
     }
 </style>

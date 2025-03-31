@@ -83,6 +83,7 @@ export default {
                 percent: this.percent,
                 category_id: this.category.id,
             }).then(() => {
+                this.$emit('curCategoryAdded', this.category.id)
                 console.log('succ')
             }).catch(() => {
                 console.log('err')
