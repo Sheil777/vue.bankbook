@@ -35,9 +35,9 @@ export default {
     openPopupAddCurrentCategory: {
       type: Boolean
     },
-    currentCategories: {
-      type: Array
-    },
+    // currentCategories: {
+    //   type: Array
+    // },
   },
   data() {
     return {
@@ -46,13 +46,21 @@ export default {
       categories: null,
     }
   },
+  computed: {
+    currentCategories() {
+      return this.$store.state.categories
+    },
+    // categories() {
+
+    // }
+  },
   methods: {
     open(bank) {
       this.isOpen = true;
       this.bankId = bank;
       this.categories = this.currentCategories.filter(category => category.bank == 0 || category.bank == this.bankId)
       this.bodyLock();
-      // console.log(this.currentCategories)
+      console.log(this.currentCategories)
     },
     close(e){
       // Если у родителей нажатой области нет .popup__content, значит это темная область

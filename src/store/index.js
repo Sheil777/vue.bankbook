@@ -185,6 +185,7 @@ export default createStore({
             noActive: false,
             about: payload.about,
             shops: [],
+            bank: payload.bank
           }
         )
 
