@@ -164,7 +164,7 @@ export default createStore({
       addShopMutation(state, payload) {
         const cat = state.categories.filter(item => {return item.mcc == payload.mcc})
         cat.forEach(category => {
-          category.shops.push({id: payload.idStore, name: payload.nameCategory})
+          category.shops.push({id: payload.idStore, name: payload.nameCategory, user: payload.user})
         });
         
       },
@@ -226,8 +226,7 @@ export default createStore({
         const token = getters['auth/token']
         const body = {
           "mcc_id": params.mcc,
-          "name": params.name,
-          "user": 0
+          "name": params.name
         }
         const config = {
           headers: { Authorization: `Bearer ${token}` }
@@ -244,6 +243,7 @@ export default createStore({
            nameCategory: responseText.data.name,
            idStore: responseText.data.id,
            mcc: responseText.data.mcc_id,
+           user: responseText.data.user,
           })
         })
         .catch(console.log);

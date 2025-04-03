@@ -25,13 +25,13 @@
                       <span class="add-store__delete" :class="{'open': openShop == shop.id}" @click="removeShop(shop.id)">✕</span>
                     </li>
                     <li class="add-store" :class="{'active': addStoreVisible}">
-                      <input class="add-store__input" type="text" placeholder="Введите наименование" @keypress.enter="addStore" v-model="inputAddStore">
+                      <input class="add-store__input" type="text" placeholder="Введите наименование" ref="inputField" @keypress.enter="addStore" v-model="inputAddStore">
                       <div class="add-store__submit" @click="addStore" >&#10003;</div>
                     </li>
                 </ul>
             </div>
             <div class="_button add-store__button" :class="{'hidden': addStoreVisible}">
-              <a href="#" @click.prevent="addStoreVisible = true">Добавить магазин</a>
+              <a href="#" @click.prevent="showAddStore">Добавить магазин</a>
             </div>
         </div>
     </div>
@@ -40,6 +40,7 @@
 
 <script>
 import axios from 'axios';
+import { nextTick } from 'vue';
 
 export default {
     props: {
@@ -64,10 +65,12 @@ export default {
     },
     methods: {
       openShopMethod(id) {
-        if(this.openShop == id)
-          this.openShop = -1
-        else
-          this.openShop = id
+        // Если магазин принадлежит пользователю, то показываем крестик
+        if(this.shops.filter(shop => shop.id == id)[0].user != 0)
+          if(this.openShop == id)
+            this.openShop = -1
+          else
+            this.openShop = id
       },  
       addStore() {
         if(this.inputAddStore.trim() != '') {
@@ -79,6 +82,15 @@ export default {
           })
           this.inputAddStore = ''
         }
+      },
+      showAddStore() {
+        this.addStoreVisible = true
+
+        setTimeout(()=> {
+            nextTick(() => {
+                this.$refs.inputField.focus()
+            })
+        }, 250)
       },
       removeShop(idShop) {
         this.$store.dispatch('removeShopAction', {
