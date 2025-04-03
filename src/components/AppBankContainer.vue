@@ -15,7 +15,7 @@
         </div>
         <div
             class="bank__add-category add-category" 
-            :class="{'visible': editing}" 
+            :class="{'visible': editing || emptyBank}"
             href="#popup-categories" 
             @click="this.$emit('openPopup')"
         >
@@ -45,31 +45,15 @@ export default {
         },
         color: {
             type: String,
+        },
+        emptyBank: {
+            type: Boolean,
+            default: false,
         }
     },
     components: {  },
     methods: {
-        async() {
-            // // Создаём новый объект XMLHttpRequest
-            // var xhr = new XMLHttpRequest();
-
-            // // Настраиваем запрос: метод GET, адрес URL
-            // xhr.open('GET', '../assets/async.php', true); 
-
-            // // Определяем функцию, которая будет вызвана при получении ответа
-            // xhr.onload = function () {
-            // if (xhr.status >= 200 && xhr.status < 300) {
-            //     // Заказ успешно получен, выводим список материалов
-            //     console.log('Список материалов:', xhr.responseText);
-            // } else {
-            //     // Произошла ошибка при получении заказа
-            //     console.error('Ошибка загрузки:', xhr.statusText);
-            // }
-            // };
-
-            // // Отправляем запрос
-            // xhr.send();
-        },
+        
     },
     emits: ['openPopup', 'delete']
 }

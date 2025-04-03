@@ -13,6 +13,7 @@
       v-for="bank in currentBanks" :key="bank.id" 
       :backgroundColor="bank.backgroundColor" 
       :color="bank.color"
+      :emptyBank="bank.categories.length == 0"
       @openPopup="$refs.popupAddCurrentCategoryRef.open(bank.id)" 
       @delete="$refs.popupDeleteCurrentBankRef.open(bank.id, bank.name)"
     >
