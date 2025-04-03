@@ -1,6 +1,8 @@
 <template>
     <header>
+        <router-link to="/">
         <img src="../assets/img/logo.png" alt="Logo">
+        </router-link>
     </header> 
 </template>
 
@@ -8,7 +10,7 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     header {
         width: 100%;
         padding: 10px 0;

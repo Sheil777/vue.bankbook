@@ -1,6 +1,16 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import './assets/css/style.scss'
+import TheHeader from './components/TheHeader'
+import store from './store'
+import bodyLockMixin from './mixins/bodyLock'
 
-createApp(App).use(router).mount('#app')
+
+const app = createApp(App)
+
+
+app.component('the-header', TheHeader)
+    app.mixin(bodyLockMixin)
+    app.use(store)
+    app.use(router)
+    app.mount('#app')

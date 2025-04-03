@@ -1,19 +1,7 @@
-# vue.bankbook
+# BankBook
 
-## Project setup
-```
-npm install
-```
+## Сайт
+[BankBook](https://bankbook.site/)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+version: 1.0.0
+- Вышла в релиз новая версия BankBook теперь на фреймворке VUE

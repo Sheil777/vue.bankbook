@@ -1,7 +1,15 @@
+@import './variables';
+
 * {
     margin: 0;
     padding: 0;
     border: 0;
+
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 img {
@@ -43,6 +51,53 @@ body {
     margin: 0px auto;
     padding: 0 15px;
     box-sizing: content-box; /* Сам прибавляет padding */
+}
+
+._button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+
+    a {
+        padding: 4px;
+        box-sizing: border-box;
+        min-width: 130px;
+        min-height: 35px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid $popup-add-current-bank-color;
+        border-radius: 8px;
+        color: $popup-add-current-bank-color;
+        font-weight: 600;
+    }
+}
+
+._categoryLogo {
+    flex: 0 0 60px;
+    // width: 60px;
+    text-align: center;
+    img {
+        padding: 3px;
+        box-sizing: border-box;
+        width: 35px;
+        height: 35px;
+        // border-radius: 50%;
+    }
+}
+
+._menuHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-size: 20px;
+    font-weight: 600;
+    position: relative;
+    background-color: #5382c4; 
+    color: white;
 }
 
 @media (max-width: 600px) {
