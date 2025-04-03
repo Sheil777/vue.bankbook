@@ -8,6 +8,7 @@ module.exports = defineConfig({
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black-translucent',
     manifestOptions: {
+      version: '1.0.0',
       background_color: '#FFFFFF',
       icons: [
         {
