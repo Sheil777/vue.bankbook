@@ -44,6 +44,7 @@ export default {
       isOpen: false,
       bankId: null,
       categories: null,
+      allowedToAdd: false,
     }
   },
   computed: {
@@ -63,6 +64,7 @@ export default {
       this.bankId = bank;
       this.categories = this.currentCategories.filter(category => category.bank == 0 || category.bank == this.bankId)
       this.bodyLock();
+      this.allowedToAdd = true
 
       const currentCategoriesForBank = this.getCurrentCategoriesInBank(this.bankId)
       
@@ -84,15 +86,18 @@ export default {
       if(!e.target.closest('.popup__content')) {
         this.isOpen = false
         this.bodyUnlock()
+        this.allowedToAdd = false
       }
       if(e.target.closest('.popup-close')) {
         this.isOpen = false
         this.bodyUnlock()
+        this.allowedToAdd = false
       }
     },
     clickOnCategory(category) {
       // this.$emit('add', category, this.bankId)
-      this.$refs.popupInputPercentageRef.open(category, this.bankId)
+      if(this.allowedToAdd)
+        this.$refs.popupInputPercentageRef.open(category, this.bankId)
     },
     getCurrentCategoriesInBank(bankId) {
       // console.log(bankId)
