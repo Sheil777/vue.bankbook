@@ -67,7 +67,7 @@ export default {
                 about: this.about,
                 bank: this.bank,
             }).then((responseText)=> {
-                console.log(responseText)
+                // console.log(responseText)
                 this.showReport('Категория успешно добавлена')
                 this.clearFields()
 
