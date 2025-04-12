@@ -16,6 +16,11 @@ module.exports = defineConfig({
           sizes: "90x90",
           type: "image/png"
         },
+        {
+          src: "favicon.png",
+          sizes: "192x192",
+          type: "image/png"
+        },
       ]
     },
   }
