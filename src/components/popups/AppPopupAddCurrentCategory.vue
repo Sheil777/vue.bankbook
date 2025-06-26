@@ -10,6 +10,11 @@
             <a class="popup-categories__close popup-close" @click="close"><div></div></a>
             <div class="popup-categories__header">Выберите категорию</div>
             
+            <div class="search-categories">
+              <input type="text" placeholder="Начните вводить название">
+              <img src="../../assets/img/icons/search.svg" alt="">
+            </div>
+
             <app-category
               v-for="category in categories" :key="category.id"
               :img="category.img"
@@ -226,6 +231,33 @@ export default {
       & div:before {
         transform: rotate(45deg);
       }
+    }
+  }
+
+  .search-categories {
+    position: relative;
+    border-bottom: 1px solid black;
+
+    input {
+      width: 100%;
+      font-size: 20px;
+      padding-left: 60px;
+      padding-right: 10px;
+      box-sizing: border-box;
+      outline: none;
+      font-family: inherit;
+      height: 50px;
+
+      &::placeholder {
+        font-size: 16px;
+      }
+    }
+
+    img {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      height: 35px;
     }
   }
 </style>
