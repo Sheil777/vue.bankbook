@@ -8,8 +8,10 @@
                 <small v-if="loginError">{{ loginError }}</small>
             </div>
             <div class="password" :class="{invalid: passError}">
-                <input id='password' type="password" placeholder="Пароль" v-model="passValue" @blur="emailBlur">
+                <input id='password' :type="showPassword ? 'text' : 'password'" placeholder="Пароль" v-model="passValue" @blur="emailBlur">
                 <small  v-if="passError">{{ passError }}</small>
+                <img src="../assets/img/icons/eye-close.svg" alt="Показать пароль" v-show="!showPassword" @click="showPassword = !showPassword">
+                <img src="../assets/img/icons/eye.svg" alt="Cкрыть пароль" v-show="showPassword" @click="showPassword = !showPassword">
             </div>
             <div class="report" v-if="errorAuth">
                 {{ errorAuth }}
@@ -35,6 +37,7 @@ import { ref } from 'vue';
 export default {
     setup() {
         let errorAuth = ref(null) // Ошибки при авторизации
+        let showPassword = ref(false) // Показать пароль
         const store = useStore()
         const router = useRouter()
         const {handleSubmit, isSubmitting} = useForm()
@@ -68,7 +71,8 @@ export default {
             passBlur,
             onSubmit,
             isSubmitting,
-            errorAuth
+            errorAuth,
+            showPassword
         }
     }
 }
@@ -125,13 +129,14 @@ form {
     input:focus::-moz-placeholder          {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-moz-placeholder           {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-ms-input-placeholder      {text-indent: 500px; transition: text-indent 0.3s ease;}
-    
+
     &.invalid input {
         border-bottom: 1px solid red;
     }
 }
 
 .password {
+    position: relative;
     margin-top: 30px;
 
     input {
@@ -149,6 +154,9 @@ form {
             outline: none;
             content: "";
         }
+
+        padding: 0 40px;
+        box-sizing: border-box;
     }
 
     input::-webkit-input-placeholder       {text-indent: 0px;   transition: text-indent 0.3s ease;}
@@ -159,6 +167,17 @@ form {
     input:focus::-moz-placeholder          {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-moz-placeholder           {text-indent: 500px; transition: text-indent 0.3s ease;}
     input:focus:-ms-input-placeholder      {text-indent: 500px; transition: text-indent 0.3s ease;}
+    input[type="password"]::-ms-reveal {
+        display: none;
+    }
+
+    img {
+        position: absolute;
+        top: 0;
+        right: 5px;
+        width: 30px;
+        cursor: pointer;
+    }
 }
 
 form button {

@@ -11,12 +11,16 @@
               <small v-if="errors.email">{{ errors.email }}</small>
           </div>
           <div class="password" :class="{'invalid': errors.password}">
-              <input id="password" type="password" placeholder="Пароль" v-model.trim="password" @input="onInputPassword" required>
+              <input id="password" :type="showPassword ? 'text' : 'password'" placeholder="Пароль" v-model.trim="password" @input="onInputPassword" required>
               <small v-if="errors.password">{{ errors.password }}</small>
+              <img src="../assets/img/icons/eye-close.svg" alt="Показать пароль" v-show="!showPassword" @click="showPassword = !showPassword">
+              <img src="../assets/img/icons/eye.svg" alt="Cкрыть пароль" v-show="showPassword" @click="showPassword = !showPassword">
           </div>
           <div class="password-repeat" :class="{'invalid': errors.passwordRepeat}">
-              <input id="password-repeat" type="password" placeholder="Повторите пароль" v-model.trim="passwordRepeat" @input="onInputPasswordRepeat" required>
+              <input id="password-repeat" :type="showRepeatPassword ? 'text' : 'password'" placeholder="Повторите пароль" v-model.trim="passwordRepeat" @input="onInputPasswordRepeat" required>
               <small v-if="errors.passwordRepeat">{{ errors.passwordRepeat }}</small>
+              <img src="../assets/img/icons/eye-close.svg" alt="Показать пароль" v-show="!showRepeatPassword" @click="showRepeatPassword = !showRepeatPassword">
+              <img src="../assets/img/icons/eye.svg" alt="Cкрыть пароль" v-show="showRepeatPassword" @click="showRepeatPassword = !showRepeatPassword">
           </div>
           <input id="button-register" type="submit" class="registration__button" value='Зарегистрироваться' :disabled="disabledButton" />
       </form>
@@ -48,6 +52,8 @@ export default {
                 report: ''
             },
             isFormValid: true,
+            showPassword: false,
+            showRepeatPassword: false,
         }
     },
     methods: {
@@ -149,6 +155,10 @@ export default {
       }
   }
 
+  form {
+    width: 250px;
+    margin: 0 auto;
+  }
 
   .login, .email {
       margin-top: 50px;
@@ -184,22 +194,26 @@ export default {
   }
 
   .password, .password-repeat {
+      position: relative;
       margin-top: 30px;
 
       input {
-          display: block;
-          height: 30px;
-          width: 240px;
-          margin: 0 auto;
-          color: #43679b;
-          font-size: 20px;
-          border-bottom: 1px solid #334c72;
-          text-align: center;
+        display: block;
+        height: 30px;
+        width: 100%;
+        margin: 0 auto;
+        color: #43679b;
+        font-size: 20px;
+        border-bottom: 1px solid #334c72;
+        text-align: center;
 
-          &:focus {
-              outline: none;
-              content: "";
-          }
+        &:focus {
+            outline: none;
+            content: "";
+        }
+
+        padding: 0 40px;
+        box-sizing: border-box;
       }
 
       input::-webkit-input-placeholder       {text-indent: 0px;   transition: text-indent 0.3s ease;}
@@ -210,6 +224,17 @@ export default {
       input:focus::-moz-placeholder          {text-indent: 500px; transition: text-indent 0.3s ease;}
       input:focus:-moz-placeholder           {text-indent: 500px; transition: text-indent 0.3s ease;}
       input:focus:-ms-input-placeholder      {text-indent: 500px; transition: text-indent 0.3s ease;}
+      input[type="password"]::-ms-reveal {
+          display: none;
+      }
+
+      img {
+          position: absolute;
+          top: 0;
+          right: 5px;
+          width: 30px;
+          cursor: pointer;
+      }
   }
 
   .registration__button {
