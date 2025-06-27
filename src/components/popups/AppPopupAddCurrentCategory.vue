@@ -63,6 +63,7 @@ export default {
       return this.$store.state.categories
     },
   },
+  
   methods: {
     filterCategories(el) {
       this.searchQuery = el.target.value
@@ -107,16 +108,17 @@ export default {
 
     close(e){
       // Если у родителей нажатой области нет .popup__content, значит это темная область
-      if(!e.target.closest('.popup__content')) {
-        this.isOpen = false
-        this.bodyUnlock()
-        this.allowedToAdd = false
-      }
-      if(e.target.closest('.popup-close')) {
-        this.isOpen = false
-        this.bodyUnlock()
-        this.allowedToAdd = false
-      }
+      if(!e.target.closest('.popup__content') || e.target.closest('.popup-close')) {
+        this.closePopup()
+      } 
+    },
+
+    closePopup() {
+      if (!this.isOpen) return;
+      
+      this.isOpen = false;
+      this.bodyUnlock();
+      this.allowedToAdd = false;
     },
 
     clickOnCategory(category) {
@@ -135,6 +137,7 @@ export default {
       return bank[0].categories;
     },
   },
+
   components: {
     AppCategory,
     ThePopupInputPercentage,
