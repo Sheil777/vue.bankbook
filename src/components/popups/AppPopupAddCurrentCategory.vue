@@ -11,12 +11,17 @@
             <div class="popup-categories__header">Выберите категорию</div>
             
             <div class="search-categories">
-              <input type="text" placeholder="Начните вводить название">
+              <input 
+                type="text" 
+                placeholder="Начните вводить название"
+                @input="filterCategories"
+                :value="searchQuery"
+              >
               <img src="../../assets/img/icons/search.svg" alt="">
             </div>
 
             <app-category
-              v-for="category in categories" :key="category.id"
+              v-for="category in filteredCategories" :key="category.id"
               :img="category.img"
               :background-color="category.backgroundColor"
               @click="clickOnCategory(category)"
@@ -34,7 +39,6 @@
 </template>
 
 <script>
-import { getCurrentInstance } from 'vue';
 import AppCategory from '../AppCategory.vue';
 import ThePopupInputPercentage from '@/components/popups/ThePopupInputPercentage.vue';
 
@@ -50,6 +54,8 @@ export default {
       bankId: null,
       categories: null,
       allowedToAdd: false,
+      searchQuery: '',
+      filteredCategories: null,
     }
   },
   computed: {
@@ -58,22 +64,36 @@ export default {
     },
   },
   methods: {
+    filterCategories(el) {
+      this.searchQuery = el.target.value
+      
+      if (!this.searchQuery) {
+        this.filteredCategories = [...this.categories];
+        return;
+      }
+      
+      const query = this.searchQuery.toLowerCase();
+      this.filteredCategories = this.categories.filter(category => 
+        category.name.toLowerCase().includes(query)
+      );
+    },
     markCategory(categoryId){
       const cat = this.categories.filter(cat => cat.id === categoryId)
       cat[0].added = true
 
       console.log(this.categories.filter(cat => cat.id === categoryId))
     },
+
     open(bank) {
       this.isOpen = true;
       this.bankId = bank;
       this.categories = this.currentCategories.filter(category => category.bank == 0 || category.bank == this.bankId)
+      this.filteredCategories = [...this.categories]; // Показываем все категории, при открытии попапа
       this.bodyLock();
       this.allowedToAdd = true
+      this.searchQuery = ''; // Сбрасываем поисковый запрос
 
       const currentCategoriesForBank = this.getCurrentCategoriesInBank(this.bankId)
-      
-      // console.log(currentCategoriesForBank)
       
       this.categories.forEach(el => {
         el.added = false
@@ -83,9 +103,8 @@ export default {
           }
         })
       });
-
-      // console.log(this.currentCategories)
     },
+
     close(e){
       // Если у родителей нажатой области нет .popup__content, значит это темная область
       if(!e.target.closest('.popup__content')) {
@@ -99,15 +118,13 @@ export default {
         this.allowedToAdd = false
       }
     },
+
     clickOnCategory(category) {
-      // this.$emit('add', category, this.bankId)
       if(this.allowedToAdd)
         this.$refs.popupInputPercentageRef.open(category, this.bankId)
     },
+
     getCurrentCategoriesInBank(bankId) {
-      // console.log(bankId)
-      // console.log(this.$store.state.banks.banks)
-      
       const bank = this.$store.state.currentBanks.currentBanks.filter(bank => bank.id === bankId)
 
       if (!bank) {
@@ -116,7 +133,7 @@ export default {
       }
 
       return bank[0].categories;
-    }
+    },
   },
   components: {
     AppCategory,
