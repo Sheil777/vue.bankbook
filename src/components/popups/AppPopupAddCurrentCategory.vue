@@ -72,7 +72,7 @@ export default {
         return;
       }
       
-      const query = this.searchQuery.toLowerCase();
+      const query = this.searchQuery.toLowerCase().trim();
       this.filteredCategories = this.categories.filter(category => 
         category.name.toLowerCase().includes(query)
       );
