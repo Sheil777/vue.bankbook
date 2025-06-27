@@ -78,6 +78,7 @@ export default {
         category.name.toLowerCase().includes(query)
       );
     },
+
     markCategory(categoryId){
       const cat = this.categories.filter(cat => cat.id === categoryId)
       cat[0].added = true
@@ -86,6 +87,7 @@ export default {
     },
 
     open(bank) {
+      history.pushState(null, document.title, location.href);
       this.isOpen = true;
       this.bankId = bank;
       this.categories = this.currentCategories.filter(category => category.bank == 0 || category.bank == this.bankId)
@@ -110,6 +112,8 @@ export default {
       // Если у родителей нажатой области нет .popup__content, значит это темная область
       if(!e.target.closest('.popup__content') || e.target.closest('.popup-close')) {
         this.closePopup()
+        // history.back()
+        // history.replaceState(null, document.title, location.href);
       } 
     },
 
@@ -119,6 +123,9 @@ export default {
       this.isOpen = false;
       this.bodyUnlock();
       this.allowedToAdd = false;
+
+      // history.back()
+      // history.pushState(null, document.title, location.href);
     },
 
     clickOnCategory(category) {
@@ -136,6 +143,27 @@ export default {
 
       return bank[0].categories;
     },
+
+    handleBackButton() {
+      if (this.isOpen) {
+        // Закрываем попап при нажатии кнопки назад
+        this.closePopup();
+        // Добавляем новую запись в историю, чтобы следующее нажатие назад работало корректно
+        // history.pushState(null, document.title, location.href);
+      }
+    },
+  },
+
+  watch: {
+    isOpen(newVal) {
+      if (newVal) {
+        // Добавляем обработчик при открытии попапа
+        window.addEventListener('popstate', this.handleBackButton);
+      } else {
+        // Удаляем обработчик при закрытии попапа
+        window.removeEventListener('popstate', this.handleBackButton);
+      }
+    }
   },
 
   components: {
