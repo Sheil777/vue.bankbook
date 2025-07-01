@@ -38,7 +38,7 @@ export default {
             category: null,
             percent: null,
             bankId: null,
-            error: false
+            error: false,
         }
     },
     methods: { 
@@ -57,13 +57,17 @@ export default {
         close(e){
             // Если у родителей нажатой области нет .popup__content, значит это темная область
             if(!e.target.closest('.popup__content')) {
-                this.isOpen = false
-                // this.bodyUnlock()
+                this.closePopup()
             }
             if(e.target.closest('.popup-close')) {
-                this.isOpen = false
-                // this.bodyUnlock()
+                this.closePopup()
             }
+        },
+        closePopup(){
+            this.isOpen = false
+            // this.bodyUnlock()
+
+            this.percent = null
         },
         checkInput(){
             this.percent = this.percent.replace(/[^0-9.]/g, '')
@@ -76,7 +80,7 @@ export default {
 
         },
         submit() {
-            console.log("submit")
+            // console.log("submit")
 
             this.$store.dispatch('currentBanks/addCurrentCategory', {
                 bank_id: this.bankId,
@@ -84,15 +88,14 @@ export default {
                 category_id: this.category.id,
             }).then(() => {
                 this.$emit('curCategoryAdded', this.category.id)
-                console.log('succ')
+                // console.log('succ')
             }).catch(() => {
-                console.log('err')
+                // console.log('err')
             })
 
-            this.percent = null
-            this.isOpen = false
-        }
-    }
+            this.closePopup()
+        },
+    },
 }
 </script>
 

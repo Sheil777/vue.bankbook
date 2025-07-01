@@ -56,7 +56,7 @@ export default {
       allowedToAdd: false,
       searchQuery: '',
       filteredCategories: null,
-      routerGuard: null // Добавляем свойство для хранения функции удаления хука
+      routerGuard: null, // Добавляем свойство для хранения функции удаления хука
     }
   },
   computed: {
@@ -116,6 +116,9 @@ export default {
     closePopup() {
       if (!this.isOpen) return;
       
+      // Закрываем также внутренний попап
+      this.$refs.popupInputPercentageRef.closePopup();
+
       this.isOpen = false;
       this.bodyUnlock();
       this.allowedToAdd = false;
@@ -139,12 +142,12 @@ export default {
     },
 
     setupRouterGuard() {
-      this.routerGuard = this.$router.beforeEach((to, from, next) => {
+      this.routerGuard = this.$router.beforeEach((to, from) => {
         if (this.isOpen) {
           this.closePopup();
           return false; // Отменяем навигацию
         }
-        next();
+        // Неявно возвращается undefined, что разрешает навигацию
       });
     },
 

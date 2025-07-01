@@ -57,7 +57,7 @@ export default {
         try {
             this.imgSrc = require('../assets/img/icons/' + this.img);
         }catch(e){
-            console.warn('Несуществующая картинка в категории')
+            // console.warn('Несуществующая картинка в категории')
             // console.warn('Несуществующая картинка в категории ' + this.$slots + ': ' + this.img)
         }
     }
