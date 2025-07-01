@@ -20,6 +20,10 @@
               <img src="../../assets/img/icons/search.svg" alt="">
             </div>
 
+            <div class="search-report" v-if="filteredCategories.length == 0 && searchQuery">
+              <span>Категория не найдена</span>
+            </div>
+
             <app-category
               v-for="category in filteredCategories" :key="category.id"
               :img="category.img"
@@ -55,7 +59,7 @@ export default {
       categories: null,
       allowedToAdd: false,
       searchQuery: '',
-      filteredCategories: null,
+      filteredCategories: [],
       routerGuard: null, // Добавляем свойство для хранения функции удаления хука
     }
   },
@@ -314,5 +318,13 @@ export default {
       left: 10px;
       height: 35px;
     }
+  }
+
+  .search-report {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>

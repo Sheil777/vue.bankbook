@@ -65,11 +65,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .bank {
-        &__category {
-        }
-    }
-
     .category {
         position: relative;
         display: flex;
