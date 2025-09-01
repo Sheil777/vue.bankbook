@@ -1,11 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MenuView from '../views/MenuView.vue'
-// import CategoriesView from '../views/CategoriesView.vue'
 import NewCategoryView from '@/views/NewCategoryView.vue'
-// import LoginView from '@/views/LoginView.vue'
 import newBank from '@/views/newBankView.vue'
-// import RegistrationView from '@/views/RegistrationView.vue'
 import store from '../store'
 
 const routes = [
@@ -67,6 +64,15 @@ const routes = [
     path: '/registration',
     name: 'registration',
     component: () => import('../views/RegistrationView'),
+    meta: {
+      layout: 'auth',
+      auth: false
+    }
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('../views/AboutView.vue'),
     meta: {
       layout: 'auth',
       auth: false
