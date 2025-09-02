@@ -1,23 +1,23 @@
 <template>
-    <!-- <title>CashbackMaster - Все категории кэшбэка ваших банков в одном месте</title> -->
+    <!-- <title>BankBook - Все категории кэшбэка ваших банков в одном месте</title> -->
      
   <div class="wrapper">
     <header>
         <div class="container header-container">
             <a href="#" class="logo">
-              <img src="../assets/img/logo.png" alt="">
+              <img src="../assets/img/logo.png" alt="Логотип">
             </a>
             
             <nav class="nav-links">
-                <a href="#">Главная</a>
-                <a href="#features">Возможности</a>
+                <a href="#hero">Главная</a>
                 <a href="#demo">Демо</a>
-                <a href="#">Контакты</a>
+                <a href="#features">Возможности</a>
+                <!-- <a href="#">Контакты</a> -->
             </nav>
             
             <div class="auth-buttons">
-                <a href="#" class="btn btn-outline">Войти</a>
-                <a href="#" class="btn btn-primary">Регистрация</a>
+                <a href="/login" class="btn btn-outline">Войти</a>
+                <a href="/registration" class="btn btn-primary">Регистрация</a>
             </div>
             
             <button class="mobile-menu-btn">☰</button>
@@ -25,42 +25,37 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="hero">
         <div class="container">
             <h1>Все категории кэшбэка ваших банков в одном месте</h1>
             <p>Наведите порядок в своих финансах и перестаньте терять деньги. Управляйте всеми своими картами и категориями кэшбэка в едином личном кабинете.</p>
             
             <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Попробовать бесплатно</a>
+                <a href="/registration" class="btn btn-primary">Попробовать бесплатно</a>
                 <a href="#demo" class="btn btn-outline">Смотреть демо</a>
             </div>
             
-            <div class="hero-demo" id="demo">
-                <div class="demo-container">
-                    <div class="demo-header">
-                        <div>Личный кабинет CashbackMaster</div>
+            <div class="demo" id="demo">
+                <div class="demo__container">
+                    <div class="demo__header">
+                        <div>Личный кабинет BankBook</div>
                         <div>Демо-режим</div>
                     </div>
-                    <div class="demo-content">
+                    <div class="demo__content">
                         <div class="demo-card">
-                            <h3>💳 Мои карты</h3>
-                            <ul class="category-list">
-                                <li>Tinkoff Platinum <span class="cashback-badge">до 10%</span></li>
-                                <li>Сбербанк Visa Gold <span class="cashback-badge">до 5%</span></li>
-                                <li>Альфа-Банк Cashback <span class="cashback-badge">до 7%</span></li>
-                                <li>ВТБ Мир <span class="cashback-badge">до 3%</span></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="demo-card">
-                            <h3>🏆 Активные категории</h3>
-                            <ul class="category-list">
-                                <li>АЗС <span class="cashback-badge">10%</span></li>
-                                <li>Рестораны <span class="cashback-badge">5%</span></li>
-                                <li>Аптеки <span class="cashback-badge">7%</span></li>
-                                <li>Супермаркеты <span class="cashback-badge">3%</span></li>
-                                <li>Онлайн-кинотеатры <span class="cashback-badge">15%</span></li>
-                            </ul>
+                            <img src="../assets/img/logo.png" alt="Логотип">
+                            <app-bank-container title="Т-Банк" backgroundColor="yellow">
+                                <app-category>1% Все покупки</app-category>
+                                <app-category img="auto.svg" backgroundColor="dodgerblue">5% Автоуслуги</app-category>
+                            </app-bank-container>
+                            <app-bank-container title="Альфа-банк" backgroundColor="red" color="white">
+                                <app-category img="plug.svg" backgroundColor="rgb(44, 117, 255)">7% Электроника</app-category>
+                                <app-category img="burger.svg" backgroundColor="orange">5% Фастфуд</app-category>
+                            </app-bank-container>
+                            <app-bank-container title="Сбербанк" backgroundColor="green" color="white">
+                                <app-category img="fuel.svg" backgroundColor="rgb(66, 170, 255)">5% АЗС</app-category>
+                                <app-category img="pill.svg" backgroundColor="rgb(60, 170, 60)">10% Аптеки</app-category>
+                            </app-bank-container>
                         </div>
                     </div>
                 </div>
@@ -72,7 +67,7 @@
     <section class="features" id="features">
         <div class="container">
             <div class="section-title">
-                <h2>Почему выбирают CashbackMaster</h2>
+                <h2>Почему выбирают BankBook</h2>
                 <p>Мы делаем управление кэшбэком простым и эффективным</p>
             </div>
             
@@ -123,7 +118,7 @@
             <p>Присоединяйтесь к тысячам пользователей, которые уже получают максимальный кэшбек с каждой покупки</p>
             
             <div class="cta-buttons">
-                <a href="#" class="btn btn-light">Создать аккаунт</a>
+                <a href="/registration" class="btn btn-light">Создать аккаунт</a>
                 <a href="#demo" class="btn btn-outline" style="color: white; border-color: white;">Узнать больше</a>
             </div>
         </div>
@@ -134,7 +129,9 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <div class="footer-logo">CashbackMaster</div>
+                    <div class="footer-logo">
+                        <img src="../assets/img/logo.png" alt="Логотип">
+                    </div>
                     <p class="footer-description">Сервис для управления категориями кэшбэка всех ваших банков в одном личном кабинете.</p>
                 </div>
                 
@@ -169,7 +166,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>© 2023 CashbackMaster. Все права защищены.</p>
+                <p>© 2023 BankBook. Все права защищены.</p>
             </div>
         </div>
     </footer>
@@ -188,55 +185,69 @@
         </ul>
         
         <div class="mobile-auth-buttons">
-            <a href="#" class="btn btn-outline">Войти</a>
-            <a href="#" class="btn btn-primary">Регистрация</a>
+            <a href="/login" class="btn btn-outline">Войти</a>
+            <a href="/registration" class="btn btn-primary">Регистрация</a>
         </div>
     </div>
   </div>
 </template>
 
 <script>
-        // Mobile menu functionality
-        // const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        // const closeMenuBtn = document.querySelector('#close-menu');
-        // const mobileMenu = document.querySelector('#mobile-menu');
-        // const overlay = document.querySelector('#overlay');
-        
-        // function openMenu() {
-        //     mobileMenu.classList.add('active');
-        //     overlay.classList.add('active');
-        //     document.body.style.overflow = 'hidden';
-        // }
-        
-        // function closeMenu() {
-        //     mobileMenu.classList.remove('active');
-        //     overlay.classList.remove('active');
-        //     document.body.style.overflow = 'auto';
-        // }
-        
-        // mobileMenuBtn.addEventListener('click', openMenu);
-        // closeMenuBtn.addEventListener('click', closeMenu);
-        // overlay.addEventListener('click', closeMenu);
-        
-        // // Smooth scrolling for anchor links
-        // document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        //     anchor.addEventListener('click', function (e) {
-        //         e.preventDefault();
-                
-        //         const targetId = this.getAttribute('href');
-        //         if (targetId === '#') return;
-                
-        //         const targetElement = document.querySelector(targetId);
-        //         if (targetElement) {
-        //             closeMenu();
+    import AppBankContainer from "../components/AppBankContainer.vue";
+    import AppCategory from "../components/AppCategory.vue";
+
+    export default {
+        components: {
+            AppBankContainer,
+            AppCategory,
+        },
+        mounted() {
+            this.initSmoothScrolling();
+        },
+        methods: {
+            initSmoothScrolling() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
                     
-        //             window.scrollTo({
-        //                 top: targetElement.offsetTop - 80,
-        //                 behavior: 'smooth'
-        //             });
-        //         }
-        //     });
-        // });
+                    const targetId = anchor.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // this.closeMenu();
+                        
+                        window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                        });
+                    }
+                    });
+                });
+            },
+            closeMenu() {
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            },
+            openMenu() {
+                mobileMenu.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            },
+        }
+    }
+
+    // Mobile menu functionality
+    // const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    // const closeMenuBtn = document.querySelector('#close-menu');
+    // const mobileMenu = document.querySelector('#mobile-menu');
+    // const overlay = document.querySelector('#overlay');
+    
+    // mobileMenuBtn.addEventListener('click', openMenu);
+    // closeMenuBtn.addEventListener('click', closeMenu);
+    // overlay.addEventListener('click', closeMenu);
+        
 </script>
 
 <style lang="scss" scoped>
@@ -255,6 +266,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: text !important;
         }
         
         body {
@@ -385,76 +397,49 @@
             margin-bottom: 50px;
         }
         
-        .hero-demo {
+        .demo {
             background: white;
             border-radius: 12px;
             padding: 30px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             max-width: 900px;
             margin: 0 auto;
-        }
-        
-        .demo-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .demo-header {
-            background: var(--primary);
-            padding: 15px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .demo-content {
-            background: #f8fafc;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+
+            &__container {
+                position: relative;
+                overflow: hidden;
+                border-radius: 8px;
+                border: 1px solid #e5e7eb;
+            }
+
+            &__header {
+                background: var(--primary);
+                padding: 15px;
+                color: white;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            &__content {
+                background: #f8fafc;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+            }
         }
         
         .demo-card {
+            position: relative;
             background: white;
             border-radius: 8px;
             padding: 15px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-        
-        .demo-card h3 {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .category-list {
-            list-style: none;
-        }
-        
-        .category-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #f1f1f1;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .category-list li:last-child {
-            border-bottom: none;
-        }
-        
-        .cashback-badge {
-            background: var(--secondary);
-            color: white;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            max-width: 500px;
+
+            img {
+                width: 80%;
+            }
         }
         
         /* Features Section */
@@ -569,6 +554,10 @@
             font-weight: 700;
             margin-bottom: 15px;
             color: white;
+
+            img {
+                height: 30px;
+            }
         }
         
         .footer-description {
