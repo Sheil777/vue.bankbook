@@ -2,8 +2,8 @@
     <!-- <title>BankBook - Все категории кэшбэка ваших банков в одном месте</title> -->
      
   <div class="wrapper">
-    <header>
-        <div class="container header-container">
+    <header class="header">
+        <div class="container header__container">
             <a href="#" class="logo">
               <img src="../assets/img/logo.png" alt="Логотип">
             </a>
@@ -20,7 +20,7 @@
                 <a href="/registration" class="btn btn-primary">Регистрация</a>
             </div>
             
-            <button class="mobile-menu-btn">☰</button>
+            <button class="mobile-menu-btn" @click="openMenu">☰</button>
         </div>
     </header>
 
@@ -75,13 +75,13 @@
                 <div class="feature-card">
                     <div class="feature-icon">💸</div>
                     <h3>Максимизируйте доход</h3>
-                    <p>Получайте максимальный кэшбек с каждой покупки, используя правильную карту в нужной категории</p>
+                    <p>Получайте максимальный кэшбек с каждой покупки, используя правильную карту в&nbsp;нужной категории</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
                     <h3>Ведите учет</h3>
-                    <p>Анализируйте свои расходы и полученный кэшбек с помощью наглядной статистики</p>
+                    <p>Добавляйте магазины из своего города в&nbsp;приложение, чтобы не путать их с&nbsp;другими категориями</p>
                 </div>
                 
                 <div class="feature-card">
@@ -99,13 +99,13 @@
                 <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
                     <h3>Безопасность</h3>
-                    <p>Ваши данные надежно защищены — мы не храним номера карт и пароли от банков</p>
+                    <p>Ваши данные надежно защищены — мы не запрашиваем номера карт и пароли от банков</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">💼</div>
                     <h3>Все банки в одном месте</h3>
-                    <p>Управляйте картами Тинькофф, Сбербанка, Альфа-Банка и других банков в едином интерфейсе</p>
+                    <p>Управляйте категориями Тинькофф, Сбербанка, Альфа-Банка и других банков в едином интерфейсе</p>
                 </div>
             </div>
         </div>
@@ -115,7 +115,7 @@
     <section class="cta">
         <div class="container">
             <h2>Начните экономить умнее уже сегодня</h2>
-            <p>Присоединяйтесь к тысячам пользователей, которые уже получают максимальный кэшбек с каждой покупки</p>
+            <p>Присоединяйтесь к другим пользователям, которые уже получают максимальный кэшбек с каждой покупки</p>
             
             <div class="cta-buttons">
                 <a href="/registration" class="btn btn-light">Создать аккаунт</a>
@@ -136,16 +136,16 @@
                 </div>
                 
                 <div>
-                    <h3 class="footer-heading">Сервис</h3>
+                    <h3 class="footer-heading">Навигация</h3>
                     <ul class="footer-links">
-                        <li><a href="#">О нас</a></li>
-                        <li><a href="#">Возможности</a></li>
-                        <li><a href="#">Тарифы</a></li>
-                        <li><a href="#">Блог</a></li>
+                        <li><a href="#hero">Главная</a></li>
+                        <li><a href="#demo">Демо</a></li>
+                        <li><a href="#features">Возможности</a></li>
+                        <li><a href="/login">Авторизация</a></li>
                     </ul>
                 </div>
                 
-                <div>
+                <!-- <div>
                     <h3 class="footer-heading">Поддержка</h3>
                     <ul class="footer-links">
                         <li><a href="#">Помощь</a></li>
@@ -153,16 +153,16 @@
                         <li><a href="#">FAQ</a></li>
                         <li><a href="#">Сообщество</a></li>
                     </ul>
-                </div>
+                </div> -->
                 
-                <div>
+                <!-- <div>
                     <h3 class="footer-heading">Правовая информация</h3>
                     <ul class="footer-links">
                         <li><a href="#">Политика конфиденциальности</a></li>
                         <li><a href="#">Условия использования</a></li>
                         <li><a href="#">Политика cookies</a></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
             
             <div class="footer-bottom">
@@ -172,16 +172,15 @@
     </footer>
 
     <!-- Mobile Menu -->
-    <div class="overlay" id="overlay"></div>
+    <div :class="['overlay', {'active': isOpenMobileMenu}]" id="overlay" @click="closeMenu"></div>
     
-    <div class="mobile-menu" id="mobile-menu">
-        <button class="mobile-menu-close" id="close-menu">✕</button>
+    <div :class="['mobile-menu', {'active': isOpenMobileMenu}]" id="mobile-menu">
+        <button class="mobile-menu-close" id="close-menu" @click="closeMenu">✕</button>
         
         <ul class="mobile-nav-links">
-            <li><a href="#">Главная</a></li>
+            <li><a href="#hero">Главная</a></li>
             <li><a href="#features">Возможности</a></li>
             <li><a href="#demo">Демо</a></li>
-            <li><a href="#">Контакты</a></li>
         </ul>
         
         <div class="mobile-auth-buttons">
@@ -197,6 +196,11 @@
     import AppCategory from "../components/AppCategory.vue";
 
     export default {
+        data () {
+            return {
+                isOpenMobileMenu: false,
+            }
+        },
         components: {
             AppBankContainer,
             AppCategory,
@@ -215,7 +219,7 @@
                     
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        // this.closeMenu();
+                        this.closeMenu();
                         
                         window.scrollTo({
                         top: targetElement.offsetTop - 80,
@@ -226,13 +230,11 @@
                 });
             },
             closeMenu() {
-                mobileMenu.classList.remove('active');
-                overlay.classList.remove('active');
+                this.isOpenMobileMenu = false
                 document.body.style.overflow = 'auto';
             },
             openMenu() {
-                mobileMenu.classList.add('active');
-                overlay.classList.add('active');
+                this.isOpenMobileMenu = true
                 document.body.style.overflow = 'hidden';
             },
         }
@@ -244,8 +246,7 @@
     // const mobileMenu = document.querySelector('#mobile-menu');
     // const overlay = document.querySelector('#overlay');
     
-    // mobileMenuBtn.addEventListener('click', openMenu);
-    // closeMenuBtn.addEventListener('click', closeMenu);
+    
     // overlay.addEventListener('click', closeMenu);
         
 </script>
@@ -283,20 +284,20 @@
         }
         
         /* Header */
-        header {
+        .header {
             background-color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 100;
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
+
+            &__container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+            }
         }
         
         .logo {
@@ -405,6 +406,10 @@
             max-width: 900px;
             margin: 0 auto;
 
+            @media (max-width: 440px) {
+                padding: 0;
+            }
+
             &__container {
                 position: relative;
                 overflow: hidden;
@@ -426,6 +431,10 @@
                 padding: 20px;
                 display: flex;
                 justify-content: center;
+
+                @media (max-width: 480px) {
+                    padding: 0;
+                }
             }
         }
         
@@ -543,8 +552,9 @@
         }
         
         .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            display: flex;
+            // grid-template-columns: 2fr 1fr;
+            justify-content: space-between;
             gap: 30px;
             margin-bottom: 40px;
         }
@@ -643,6 +653,12 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .footer-grid {
+                display: block;
             }
         }
         

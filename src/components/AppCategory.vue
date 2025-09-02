@@ -13,9 +13,9 @@
         <div class="category__delete" :class="{'visible': editing}" @click="this.$emit('delete')">
             <img src="../assets/img/icons/delete.svg">
         </div>
-        <div class="category__edit" :class="{'visible': editing}">
+        <!-- <div class="category__edit" :class="{'visible': editing}">
             <img src="../assets/img/icons/edit.svg">
-        </div>
+        </div> -->
         <div class="category__accept" :class="{'visible': added}">
             <img src="../assets/img/accepted.svg">
         </div>
