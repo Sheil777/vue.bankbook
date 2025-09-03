@@ -118,6 +118,7 @@ export default {
         &__text {
             padding: 5px 0;
             padding-right: 10px;
+            text-align: left;
         }
 
         &__accept {

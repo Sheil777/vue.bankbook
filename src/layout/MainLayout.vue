@@ -17,7 +17,7 @@
           if(e.status == 401) {
             // Человек не авторизирован
             this.$store.commit('auth/logout')
-            this.$router.push('/login')
+            this.$router.push('/about')
           }
       })
 

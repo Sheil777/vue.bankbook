@@ -78,23 +78,23 @@
                     <p>Получайте максимальный кэшбек с каждой покупки, используя правильную карту в&nbsp;нужной категории</p>
                 </div>
                 
-                <div class="feature-card">
+                <!-- <div class="feature-card">
                     <div class="feature-icon">📊</div>
                     <h3>Ведите учет</h3>
                     <p>Добавляйте магазины из своего города в&nbsp;приложение, чтобы не путать их с&nbsp;другими категориями</p>
-                </div>
+                </div> -->
                 
-                <div class="feature-card">
+                <!-- <div class="feature-card">
                     <div class="feature-icon">🔔</div>
                     <h3>Получайте уведомления</h3>
                     <p>Будьте в курсе изменений в категориях кэшбэка и специальных акций банков</p>
-                </div>
+                </div> -->
                 
-                <div class="feature-card">
+                <!-- <div class="feature-card">
                     <div class="feature-icon">📱</div>
                     <h3>Доступ везде</h3>
                     <p>Пользуйтесь сервисом с любого устройства — компьютера, телефона или планшета</p>
-                </div>
+                </div> -->
                 
                 <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
@@ -145,28 +145,10 @@
                     </ul>
                 </div>
                 
-                <!-- <div>
-                    <h3 class="footer-heading">Поддержка</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Помощь</a></li>
-                        <li><a href="#">Контакты</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Сообщество</a></li>
-                    </ul>
-                </div> -->
-                
-                <!-- <div>
-                    <h3 class="footer-heading">Правовая информация</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Политика конфиденциальности</a></li>
-                        <li><a href="#">Условия использования</a></li>
-                        <li><a href="#">Политика cookies</a></li>
-                    </ul>
-                </div> -->
             </div>
             
             <div class="footer-bottom">
-                <p>© 2023 BankBook. Все права защищены.</p>
+                <p>© {{ currentYear }} BankBook. Все права защищены.</p>
             </div>
         </div>
     </footer>
@@ -199,6 +181,7 @@
         data () {
             return {
                 isOpenMobileMenu: false,
+                currentYear: new Date().getFullYear(),
             }
         },
         components: {
@@ -239,15 +222,6 @@
             },
         }
     }
-
-    // Mobile menu functionality
-    // const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    // const closeMenuBtn = document.querySelector('#close-menu');
-    // const mobileMenu = document.querySelector('#mobile-menu');
-    // const overlay = document.querySelector('#overlay');
-    
-    
-    // overlay.addEventListener('click', closeMenu);
         
 </script>
 
@@ -376,6 +350,10 @@
             padding: 150px 0 80px;
             background: linear-gradient(135deg, #f6f7ff 0%, #eef2ff 100%);
             text-align: center;
+
+            @media (max-width: 500px) {
+                padding-top: 100px;
+            }
         }
         
         .hero h1 {
@@ -643,6 +621,7 @@
             
             .features-grid {
                 grid-template-columns: 1fr;
+                gap: 0;
             }
             
             .footer-grid {
