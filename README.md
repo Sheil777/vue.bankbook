@@ -1,7 +1,6 @@
 # BankBook
 
-## Сайт
-[BankBook](https://bankbook.site/)
+## Сайт [BankBook](https://bankbook.tech/)
 
 version: 1.1.0
 - Теперь магазины эксклюзивны для каждого пользователя и нельзя удалить общий магазин
